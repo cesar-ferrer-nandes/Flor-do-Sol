@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Meu Carrinho - Flor do Sol</title>
+</head>
+
+<body class="bg-[#fdfdfd] text-[#1a2e1a]">
+
+<!-- NAVBAR -->
+<div id="navbar"></div>
+
+<!-- HEADER -->
+<section class="pt-28 pb-10 max-w-7xl mx-auto px-6">
+  <h1 class="text-4xl mb-2">Sua Sacola</h1>
+  <p id="cart-info" class="text-sm text-gray-400"></p>
+</section>
+
+<!-- CONTEÚDO -->
+<section class="max-w-7xl mx-auto px-6 pb-20">
+
+  <div id="cart-container" class="grid lg:grid-cols-3 gap-10">
+
+    <!-- LISTA -->
+    <div id="cart-items" class="lg:col-span-2 space-y-6"></div>
+
+    <!-- RESUMO -->
+    <div class="border rounded-xl p-6 h-fit">
+      <h2 class="text-xl mb-4">Resumo</h2>
+
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span>Subtotal</span>
+          <span id="subtotal">R$ 0</span>
+        </div>
+
+        <div class="flex justify-between text-gray-400">
+          <span>Frete</span>
+          <span>A combinar</span>
+        </div>
+
+        <div class="flex justify-between text-lg font-bold mt-4">
+          <span>Total</span>
+          <span id="total">R$ 0</span>
+        </div>
+      </div>
+
+      <!-- Cupom -->
+      <div class="mt-6 flex gap-2">
+        <input type="text" placeholder="Cupom"
+          class="flex-1 border rounded-full px-4 py-2">
+        <button class="border px-4 rounded-full">Aplicar</button>
+      </div>
+
+      <!-- CTA -->
+      <button onclick="finalizarPedido()"
+        class="w-full bg-[#1a2e1a] text-white py-3 rounded-full mt-6 hover:opacity-90 transition">
+        Finalizar via WhatsApp
+      </button>
+    </div>
+
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div id="empty-state" class="hidden text-center py-20">
+    <p class="text-gray-400 mb-4">Sua sacola está vazia 🌿</p>
+
+    <a href="catalogo.html"
+      class="border border-[#1a2e1a] px-6 py-2 rounded-full hover:bg-[#1a2e1a] hover:text-white transition">
+      Voltar ao catálogo
+    </a>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<div id="footer"></div>
+
+<!-- JS -->
+<script src="js/script.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/carrinho.js"></script>
+<script src="js/components.js"></script>
+
+</body>
+</html>
