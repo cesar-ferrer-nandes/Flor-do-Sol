@@ -28,7 +28,7 @@ function render(lista){
   empty.classList.add("hidden");
 
   grid.innerHTML = lista.map(p => `
-    <div class="group bg-white rounded-xl shadow-sm overflow-hidden relative transition duration-300">
+    <div class="fade-in group bg-white rounded-xl shadow-sm overflow-hidden relative transition duration-300">
 
       ${p.badge ? `
         <span class="absolute m-3 px-2 py-1 text-xs text-white rounded
@@ -52,10 +52,10 @@ function render(lista){
           Disponível
         </div>
 
-<button data-produto='${JSON.stringify(p)}'
-        class="btn-add-cart w-full bg-[#1a2e1a] text-white py-2 rounded-full mt-2 hover:opacity-90 transition">
-        Adicionar ao carrinho
-      </button>
+        <button data-produto='${JSON.stringify(p)}'
+          class="btn-add-cart w-full bg-[#1a2e1a] text-white py-2 rounded-full mt-2 hover:opacity-90 transition">
+          Adicionar ao carrinho
+        </button>
 
         <button onclick="comprar('${p.nome}', ${p.preco})"
           class="w-full border border-[#1a2e1a] text-[#1a2e1a] py-2 rounded-full mt-2 hover:bg-[#1a2e1a] hover:text-white transition">
@@ -65,19 +65,29 @@ function render(lista){
 
     </div>
   `).join("");
+
+  // animação fade-in
+  setTimeout(() => {
+    document.querySelectorAll(".fade-in").forEach(el => {
+      el.classList.add("show");
+    });
+  }, 50);
 }
 
 // ================= FILTROS =================
 function aplicarFiltros(){
   let lista = [...produtos];
 
+  // categoria
   if(categoriaAtual !== "todos"){
     lista = lista.filter(p => p.categoria === categoriaAtual);
   }
 
+  // busca
   const termo = search.value.toLowerCase();
   lista = lista.filter(p => p.nome.toLowerCase().includes(termo));
 
+  // ordenação
   if(sort.value === "menor"){
     lista.sort((a,b)=> a.preco - b.preco);
   }
@@ -89,8 +99,13 @@ function aplicarFiltros(){
 }
 
 // ================= EVENTOS =================
-search.addEventListener("input", aplicarFiltros);
-sort.addEventListener("change", aplicarFiltros);
+if(search){
+  search.addEventListener("input", aplicarFiltros);
+}
+
+if(sort){
+  sort.addEventListener("change", aplicarFiltros);
+}
 
 document.querySelectorAll(".tab").forEach(btn=>{
   btn.addEventListener("click", ()=>{
@@ -123,7 +138,31 @@ function handleAddToCart(produto){
 }
 
 // ================= INIT =================
-render(produtos);
+
+// pegar parâmetro da URL
+const params = new URLSearchParams(window.location.search);
+const catURL = params.get("cat");
+
+// garantir que DOM já carregou tabs
+window.addEventListener("DOMContentLoaded", () => {
+
+  if(catURL){
+    categoriaAtual = catURL;
+
+    document.querySelectorAll(".tab").forEach(btn=>{
+      btn.classList.remove("active");
+
+      if(btn.dataset.cat === catURL){
+        btn.classList.add("active");
+      }
+    });
+
+    aplicarFiltros();
+  } else {
+    render(produtos);
+  }
+
+});
 
 // ================= EVENT DELEGATION =================
 document.addEventListener("click", function(e) {

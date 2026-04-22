@@ -11,7 +11,14 @@ h1, h2, h3 {
 /* ================= ANIMAÇÕES ================= */
 
 .fade-in {
-  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @keyframes fadeUp {
@@ -28,21 +35,23 @@ h1, h2, h3 {
 /* ================= NAVBAR ================= */
 
 .nav-link {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-link:hover {
   color: #aea100;
+  transform: translateY(-1px);
 }
 
 /* ================= CARDS ================= */
 
 .card-hover {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-hover:hover {
-  transform: scale(1.03);
+  transform: scale(1.03) translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 /* ================= BOTÕES ================= */
@@ -50,22 +59,29 @@ h1, h2, h3 {
 .btn-ghost {
   border: 1px solid #1a2e1a;
   padding: 8px 16px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  border-radius: 999px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-ghost:hover {
   background: #1a2e1a;
   color: white;
+  transform: translateY(-2px);
+}
+
+/* efeito de clique mais realista */
+button:active {
+  transform: scale(0.97);
 }
 
 /* ================= CATÁLOGO ================= */
 
 .tab {
-  padding: 8px 16px;
-  border-radius: 9999px;
-  border: 1px solid #e5e5e5;
-  transition: all 0.3s ease;
+  border: 1px solid #ddd;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tab:hover {
@@ -74,13 +90,12 @@ h1, h2, h3 {
 }
 
 .tab.active {
-  background: #1a2e1a;
+  background-color: #1a2e1a;
   color: white;
-  border: none;
 }
 
 /* ================= UTILITÁRIOS ================= */
 
 .transition-default {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

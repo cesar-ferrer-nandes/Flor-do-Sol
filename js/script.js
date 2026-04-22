@@ -127,4 +127,6 @@ function finalizarPedido(){
 }
 
 // init
-navigate('home');
+if (document.getElementById("app")) {
+  navigate('home');
+}
