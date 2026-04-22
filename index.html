@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<link rel="stylesheet" href="css/style.css">
+
+  <title>Flor do Sol</title>
+
+</head>
+
+<body class="bg-[#fdfdfd] text-[#1a2e1a]">
+
+    <!-- ================= NAVBAR ================= -->
+    <div id="navbar"></div>
+<!-- ================= HERO ================= -->
+<section class="h-[85vh] relative flex items-center">
+  
+  <img src="assets/images/papoulas.jpg"
+       class="absolute w-full h-full object-cover">
+
+  <div class="absolute inset-0 bg-black/30"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 text-white fade-in">
+    <h1 class="text-4xl md:text-6xl mb-6">
+      Beleza natural para todos os momentos
+    </h1>
+
+    <p class="max-w-xl mb-8 opacity-90">
+      Descubra plantas e arranjos que transformam ambientes e criam experiências únicas com elegância e naturalidade.
+    </p>
+
+    <div class="flex gap-4 flex-wrap">
+      
+      <!-- LINK PARA CATÁLOGO -->
+      <a href="catalogo.html"
+         class="bg-[#1a2e1a] px-8 py-4 rounded-full text-white hover:opacity-90 transition duration-300 inline-block text-center">
+        Ver catálogo
+      </a>
+
+      <!-- BOTÃO SECUNDÁRIO -->
+      <button class="bg-[#aea100] px-8 py-4 rounded-full text-white hover:opacity-90 transition duration-300">
+        Nossos serviços
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATEGORIAS ================= -->
+<section class="py-16 max-w-7xl mx-auto px-6 fade-in">
+  <h2 class="text-center text-3xl mb-12">Explore por Categoria</h2>
+
+  <div class="grid md:grid-cols-3 gap-8">
+
+    <div class="relative overflow-hidden rounded-2xl group">
+      <img src="assets/images/plantas.jpeg"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
+      <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Plantas</div>
+    </div>
+
+    <div class="relative overflow-hidden rounded-2xl group">
+      <img src="assets/images/arranjos.jpeg"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
+      <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Arranjos</div>
+    </div>
+
+    <div class="relative overflow-hidden rounded-2xl group">
+      <img src="assets/images/serviços.jpeg"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
+      <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Serviços</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= POPULARES ================= -->
+<section class="py-16 max-w-7xl mx-auto px-6 fade-in">
+  <h2 class="text-3xl mb-12">Mais Populares do Jardim</h2>
+
+  <div class="grid md:grid-cols-4 gap-6">
+
+    <div class="bg-white shadow rounded-xl p-4 relative">
+      <span class="absolute top-3 left-3 bg-[#aea100] text-white px-2 py-1 text-xs rounded">
+        Popular
+      </span>
+
+      <div class="aspect-[4/5] bg-gray-200 mb-4"></div>
+
+      <h3 class="font-bold">Orquídea Branca</h3>
+      <p class="text-[#1a2e1a] font-semibold">R$ 89,90</p>
+
+      <div class="flex items-center gap-2 text-sm mb-3">
+        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+        Disponível
+      </div>
+
+      <button class="w-full bg-[#1a2e1a] text-white py-2 rounded">
+        Encomendar
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= DICAS ================= -->
+<section class="grid md:grid-cols-2 fade-in">
+
+  <div class="bg-gray-100 flex flex-col justify-center p-12">
+    <h2 class="text-3xl mb-4">Aprenda a cuidar das suas plantas</h2>
+    <p class="mb-6">
+      Descubra técnicas essenciais para manter suas plantas sempre saudáveis e bonitas.
+    </p>
+
+    <button class="border border-[#1a2e1a] px-6 py-3 rounded-full hover:bg-[#1a2e1a] hover:text-white transition">
+      Ler nosso blog
+    </button>
+  </div>
+
+  <img src="https://images.unsplash.com/photo-gardening" class="w-full h-full object-cover">
+
+</section>
+
+<!-- ================= DEPOIMENTO ================= -->
+<section class="py-16 text-center max-w-2xl mx-auto fade-in">
+  <div class="flex justify-center mb-4 text-[#aea100] text-xl">
+    ★★★★★
+  </div>
+
+  <p class="italic text-lg">
+    “As plantas chegaram perfeitas e transformaram completamente meu ambiente. Atendimento impecável!”
+  </p>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<div id="footer"></div>
+
+<footer class="bg-[#1a2e1a] text-white pt-12 pb-6">
+
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+
+    <div>
+      <h3 class="text-xl mb-4">Flor do Sol</h3>
+      <p class="text-sm opacity-80">
+        Levando beleza natural para todos os momentos.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="mb-4">Links</h4>
+      <ul class="space-y-2 text-sm opacity-80">
+        <li>Início</li>
+        <li>Catálogo</li>
+        <li>Dicas</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="mb-4">Políticas</h4>
+      <ul class="space-y-2 text-sm opacity-80">
+        <li>Privacidade</li>
+        <li>Termos</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="mb-4">Redes</h4>
+      <div class="flex gap-4">
+        <span>Instagram</span>
+        <span>Facebook</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="border-t border-white/20 mt-8 pt-4 text-center text-sm opacity-70">
+    © 2026 Flor do Sol - Todos os direitos reservados
+  </div>
+
+</footer>
+
+<!-- JS -->
+<script src="js/script.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/catalogo.js"></script>
+<script src="js/components.js"></script>
+
+</body>
+</html>

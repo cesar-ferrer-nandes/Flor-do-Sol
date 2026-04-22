@@ -1,0 +1,86 @@
+/* ================= BASE ================= */
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* ================= ANIMAÇÕES ================= */
+
+.fade-in {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= NAVBAR ================= */
+
+.nav-link {
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #aea100;
+}
+
+/* ================= CARDS ================= */
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: scale(1.03);
+}
+
+/* ================= BOTÕES ================= */
+
+.btn-ghost {
+  border: 1px solid #1a2e1a;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-ghost:hover {
+  background: #1a2e1a;
+  color: white;
+}
+
+/* ================= CATÁLOGO ================= */
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 1px solid #e5e5e5;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  border-color: #aea100;
+  color: #aea100;
+}
+
+.tab.active {
+  background: #1a2e1a;
+  color: white;
+  border: none;
+}
+
+/* ================= UTILITÁRIOS ================= */
+
+.transition-default {
+  transition: all 0.3s ease;
+}
