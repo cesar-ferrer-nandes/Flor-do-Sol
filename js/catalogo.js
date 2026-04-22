@@ -52,10 +52,10 @@ function render(lista){
           Disponível
         </div>
 
-        <button onclick='handleAddToCart(${JSON.stringify(p)})'
-          class="w-full bg-[#1a2e1a] text-white py-2 rounded-full mt-2 hover:opacity-90 transition">
-          Adicionar ao carrinho
-        </button>
+<button data-produto='${JSON.stringify(p)}'
+        class="btn-add-cart w-full bg-[#1a2e1a] text-white py-2 rounded-full mt-2 hover:opacity-90 transition">
+        Adicionar ao carrinho
+      </button>
 
         <button onclick="comprar('${p.nome}', ${p.preco})"
           class="w-full border border-[#1a2e1a] text-[#1a2e1a] py-2 rounded-full mt-2 hover:bg-[#1a2e1a] hover:text-white transition">
@@ -124,3 +124,12 @@ function handleAddToCart(produto){
 
 // ================= INIT =================
 render(produtos);
+
+// ================= EVENT DELEGATION =================
+document.addEventListener("click", function(e) {
+  const btn = e.target.closest(".btn-add-cart");
+  if (!btn) return;
+  
+  const produto = JSON.parse(btn.dataset.produto);
+  handleAddToCart(produto);
+});
