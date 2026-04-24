@@ -84,28 +84,8 @@
 <section class="py-16 max-w-7xl mx-auto px-6 fade-in">
   <h2 class="text-3xl mb-12">Mais Populares do Jardim</h2>
 
-  <div class="grid md:grid-cols-4 gap-6">
-
-    <div class="bg-white shadow rounded-xl p-4 relative">
-      <span class="absolute top-3 left-3 bg-[#aea100] text-white px-2 py-1 text-xs rounded">
-        Popular
-      </span>
-
-      <div class="aspect-[4/5] bg-gray-200 mb-4"></div>
-
-      <h3 class="font-bold">Orquídea Branca</h3>
-      <p class="text-[#1a2e1a] font-semibold">R$ 89,90</p>
-
-      <div class="flex items-center gap-2 text-sm mb-3">
-        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-        Disponível
-      </div>
-
-      <button class="w-full bg-[#1a2e1a] text-white py-2 rounded">
-        Encomendar
-      </button>
-    </div>
-
+  <div id="populares-grid" class="grid md:grid-cols-4 gap-6">
+    <!-- Cards inseridos via JS -->
   </div>
 </section>
 
@@ -118,12 +98,12 @@
       Descubra técnicas essenciais para manter suas plantas sempre saudáveis e bonitas.
     </p>
 
-    <button class="border border-[#1a2e1a] px-6 py-3 rounded-full hover:bg-[#1a2e1a] hover:text-white transition">
+    <a href="blog.html" class="border border-[#1a2e1a] px-6 py-3 rounded-full hover:bg-[#1a2e1a] hover:text-white transition">
       Ler nosso blog
-    </button>
+    </a>
   </div>
 
-  <img src="https://images.unsplash.com/photo-gardening" class="w-full h-full object-cover">
+  <img src="assets/images/cuidadosBlog.jpg" class="w-full h-full object-cover">
 
 </section>
 
@@ -138,13 +118,40 @@
   </p>
 </section>
 
+<!-- Toast Container -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
+
+
+<!-- MODAL PRODUTO -->
+<div id="modal-produto" class="fixed inset-0 z-50 hidden">
+  <div class="modal-backdrop absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="fecharModal()"></div>
+  
+  <div class="absolute inset-0 overflow-y-auto">
+    <div class="min-h-full flex items-center justify-center p-4">
+      
+      <div class="modal-content bg-[#fdfdfd] rounded-2xl w-full max-w-5xl shadow-2xl relative">
+        <button onclick="fecharModal()" class="absolute top-4 right-4 z-10 p-2 bg-white/80 rounded-full hover:bg-white transition">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        
+        <div id="modal-body"></div>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
 <!-- ================= FOOTER ================= -->
 <div id="footer"></div>
 
 
-
 <!-- JS -->
 <script src="js/cart.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/catalogo.js"></script>
+<script src="js/index.js"></script>
 <script src="js/components.js"></script>
 
 </body>

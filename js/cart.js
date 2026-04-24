@@ -8,9 +8,9 @@ function addToCart(product) {
   const existing = cart.find(p => p.name === product.name);
 
   if(existing){
-    existing.qty = (existing.qty || 1) + 1;
+    existing.qty = (existing.qty || 1) + (product.qty || 1);
   } else {
-    product.qty = 1;
+    product.qty = product.qty || 1;
     cart.push(product);
   }
 
