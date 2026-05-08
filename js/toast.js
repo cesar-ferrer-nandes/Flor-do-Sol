@@ -1,3 +1,6 @@
+// ================= NOTIFICAÇÃO TOAST =================
+
+// Exibe uma notificação temporária no canto inferior direito
 function showToast(message, type = "success") {
   const container = document.getElementById("toast-container");
   if (!container) return;
@@ -7,6 +10,7 @@ function showToast(message, type = "success") {
   toast.innerHTML = `<span>${message}</span>`;
   container.appendChild(toast);
 
+  // Remove automaticamente após 3 segundos
   setTimeout(() => {
     toast.classList.add("removing");
     setTimeout(() => toast.remove(), 300);

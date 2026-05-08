@@ -1,4 +1,5 @@
 /* ================= BASE ================= */
+/* Define as fontes do projeto: Inter para corpo, Playfair Display para títulos */
 
 body {
   font-family: 'Inter', sans-serif;
@@ -9,6 +10,8 @@ h1, h2, h3 {
 }
 
 /* ================= ANIMAÇÕES ================= */
+/* Fade-in controlado via IntersectionObserver (components.js) */
+/* A classe .show é adicionada quando o elemento entra na viewport */
 
 .fade-in {
   opacity: 0;
@@ -21,18 +24,8 @@ h1, h2, h3 {
   transform: translateY(0);
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* ================= NAVBAR ================= */
+/* Efeito hover nos links de navegação */
 
 .nav-link {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -43,38 +36,13 @@ h1, h2, h3 {
   transform: translateY(-1px);
 }
 
-/* ================= CARDS ================= */
-
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-  transform: scale(1.03) translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-/* ================= BOTÕES ================= */
-
-.btn-ghost {
-  border: 1px solid #1a2e1a;
-  padding: 8px 16px;
-  border-radius: 999px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-ghost:hover {
-  background: #1a2e1a;
-  color: white;
-  transform: translateY(-2px);
-}
-
-/* efeito de clique mais realista */
+/* Efeito de clique mais realista em todos os botões */
 button:active {
   transform: scale(0.97);
 }
 
 /* ================= CATÁLOGO ================= */
+/* Abas de filtro de categoria */
 
 .tab {
   border: 1px solid #ddd;
@@ -94,13 +62,8 @@ button:active {
   color: white;
 }
 
-/* ================= UTILITÁRIOS ================= */
-
-.transition-default {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 /* ================= MODAL PRODUTO ================= */
+/* Animações de entrada e saída do modal de detalhes */
 
 .modal-enter {
   animation: modalIn 0.3s ease-out forwards;
@@ -133,6 +96,7 @@ button:active {
 }
 
 /* ================= TOAST ================= */
+/* Notificações temporárias no canto inferior direito */
 
 .toast {
   background: #1a2e1a;
@@ -169,6 +133,7 @@ button:active {
   }
 }
 
+/* Utilitário para usar Playfair Display em elementos específicos */
 .font-playfair {
   font-family: 'Playfair Display', serif;
 }

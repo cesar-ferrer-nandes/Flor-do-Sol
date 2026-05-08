@@ -1,4 +1,6 @@
-// ================= DADOS =================
+// ================= DADOS DOS PRODUTOS =================
+
+// Array mestre de produtos (fonte única de verdade)
 const produtos = [
   {id:1, nome:"Orquídea Branca", preco:89.9, categoria:"plantas", badge:"Popular", imagem:"assets/images/rox.jpeg", avaliacao:5, reviews:24, tamanho:"25x35cm", embalagem:"Vaso de Cerâmica",rega:"2x por semana", sol:"Meia sombra", umidade:"60%"},
   {id:2, nome:"Samambaia Verde", preco:49.9, categoria:"plantas", imagem:"assets/images/pal.jpeg", avaliacao:4, reviews:18, tamanho:"20x30cm", embalagem:"Vaso Plástico",rega:"3x por semana", sol:"Sombra parcial", umidade:"70%"},
@@ -9,17 +11,23 @@ const produtos = [
 ];
 
 // ================= ESTADO =================
+
 let categoriaAtual = "todos";
 
-// ================= ELEMENTOS =================
+// ================= ELEMENTOS DO DOM =================
+
 const grid = document.getElementById("grid");
 const search = document.getElementById("search");
 const sort = document.getElementById("sort");
 const empty = document.getElementById("empty");
 
-// ================= RENDER =================
-function render(lista){
-  if(lista.length === 0){
+// ================= RENDERIZAÇÃO DO GRID =================
+
+// Renderiza os cards de produtos no grid
+function render(lista) {
+  if (!grid) return;
+
+  if (lista.length === 0) {
     empty.classList.remove("hidden");
     grid.innerHTML = "";
     return;
@@ -38,127 +46,117 @@ function render(lista){
       ` : ""}
 
       <div class="overflow-hidden cursor-pointer" onclick="abrirModalPorId(${p.id})">
-        <img src="${p.imagem}" alt="${p.nome}" 
+        <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
              class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-300">
       </div>
 
       <div class="p-4">
         <h3 class="font-medium">${p.nome}</h3>
         <p class="text-sm text-gray-400 capitalize">${p.categoria}</p>
-
         <p class="font-bold mt-1">R$ ${p.preco.toFixed(2)}</p>
-
         <div class="flex items-center gap-2 text-sm my-2">
           <span class="w-2 h-2 bg-green-500 rounded-full"></span>
           Disponível
         </div>
-
         <div class="flex gap-2">
           <button onclick="abrirModalPorId(${p.id})"
-            class="flex-1 bg-[#1a2e1a] text-white py-2 rounded-full mt-2 hover:opacity-90 transition">
+                  class="flex-1 bg-[#1a2e1a] text-white py-2 rounded-full mt-2 hover:opacity-90 transition">
             Ver detalhes
           </button>
         </div>
       </div>
-
     </div>
   `).join("");
 
-  // animação fade-in
+  // Ativa animação fade-in nos novos cards
   setTimeout(() => {
-    document.querySelectorAll(".fade-in").forEach(el => {
-      el.classList.add("show");
-    });
+    document.querySelectorAll(".fade-in").forEach(el => el.classList.add("show"));
   }, 50);
 }
 
 // ================= FILTROS =================
-function aplicarFiltros(){
+
+// Aplica filtros de categoria, busca textual e ordenação
+function aplicarFiltros() {
   let lista = [...produtos];
 
-  // categoria
-  if(categoriaAtual !== "todos"){
+  if (categoriaAtual !== "todos") {
     lista = lista.filter(p => p.categoria === categoriaAtual);
   }
 
-  // busca
   const termo = search.value.toLowerCase();
   lista = lista.filter(p => p.nome.toLowerCase().includes(termo));
 
-  // ordenação
-  if(sort.value === "menor"){
-    lista.sort((a,b)=> a.preco - b.preco);
-  }
-  if(sort.value === "maior"){
-    lista.sort((a,b)=> b.preco - a.preco);
+  if (sort.value === "menor") {
+    lista.sort((a, b) => a.preco - b.preco);
+  } else if (sort.value === "maior") {
+    lista.sort((a, b) => b.preco - a.preco);
   }
 
   render(lista);
 }
 
-// ================= EVENTOS =================
-if(search){
+// ================= EVENTOS DOS FILTROS =================
+
+if (search) {
   search.addEventListener("input", aplicarFiltros);
 }
 
-if(sort){
+if (sort) {
   sort.addEventListener("change", aplicarFiltros);
 }
 
-document.querySelectorAll(".tab").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    document.querySelectorAll(".tab").forEach(b=>{
-      b.classList.remove("active");
-    });
-
+// Eventos das abas de categoria
+document.querySelectorAll(".tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     categoriaAtual = btn.dataset.cat;
-
     aplicarFiltros();
   });
 });
 
-// ================= WHATSAPP =================
-function comprar(nome, preco){
+// ================= WHATSAPP DIRETO =================
+
+// Abre WhatsApp com mensagem sobre um produto específico
+function comprar(nome, preco) {
   const msg = `Olá! Tenho interesse em "${nome}" no valor de R$ ${preco.toFixed(2)}.`;
-  const url = `https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`;
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank");
 }
 
-// ================= MODAL PRODUTO =================
+// ================= MODAL DE PRODUTO =================
+
 const modal = document.getElementById("modal-produto");
 const modalBody = document.getElementById("modal-body");
 let produtoAtual = null;
 let quantidadeModal = 1;
 
+// Abre o modal com detalhes do produto pelo ID
 function abrirModalPorId(id) {
-  // Reset completo do estado antes de abrir
   produtoAtual = null;
   quantidadeModal = 1;
-  
+
   const produto = produtos.find(p => p.id === id);
   if (!produto) return;
-  
+
   produtoAtual = produto;
-  
-  // Remover estado de hidden e resetar classes
+
   modal.classList.remove("hidden");
-  
+
   const modalContent = document.querySelector(".modal-content");
   if (modalContent) {
     modalContent.classList.remove("modal-exit", "modal-enter");
   }
-  
-  // Limpar body anterior
+
   modalBody.innerHTML = "";
-  
+
   const imagemUrl = produto.imagem;
-  
+
   modalBody.innerHTML = `
-    <!-- Coluna Esquerda - Galeria -->
     <div class="relative">
       <div class="aspect-[4/5] bg-gray-100 rounded-2xl overflow-hidden relative group">
-        <img src="${imagemUrl}" alt="${produto.nome}" 
+        <img src="${imagemUrl}" alt="${produto.nome}" loading="lazy"
              class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
       </div>
       ${produto.badge ? `
@@ -168,21 +166,22 @@ function abrirModalPorId(id) {
         </span>
       ` : ''}
     </div>
-    
-    <!-- Coluna Direita - Detalhes -->
+
     <div class="flex flex-col gap-6">
-      <!-- Título e Avaliação -->
       <div>
         <h1 class="text-3xl lg:text-4xl font-playfair text-[#1a2e1a] mb-2">${produto.nome}</h1>
         <div class="flex items-center gap-2">
           <div class="flex text-[#aea100]">
-            ${Array(5).fill(0).map((_,i) => `<svg class="w-5 h-5 ${i < produto.avaliacao ? 'text-[#aea100]' : 'text-gray-300'}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`).join('')}
+            ${Array(5).fill(0).map((_, i) => `
+              <svg class="w-5 h-5 ${i < produto.avaliacao ? 'text-[#aea100]' : 'text-gray-300'}" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            `).join('')}
           </div>
           <span class="text-sm text-gray-500">(${produto.reviews} reviews)</span>
         </div>
       </div>
-      
-      <!-- Preço e Badges -->
+
       <div>
         <p class="text-4xl font-bold text-[#1a2e1a]">R$ ${produto.preco.toFixed(2)}</p>
         <div class="flex gap-2 mt-3">
@@ -193,14 +192,15 @@ function abrirModalPorId(id) {
           </span>
         </div>
       </div>
-      
-      <!-- Atributos Técnicos -->
+
       <div class="bg-gray-50 rounded-xl p-5">
         <h3 class="font-medium mb-4 text-[#1a2e1a]">Especificações</h3>
         <div class="grid grid-cols-2 gap-4">
           <div class="flex items-center gap-3">
             <div class="p-2 bg-white rounded-lg shadow-sm">
-              <svg class="w-5 h-5 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              <svg class="w-5 h-5 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+              </svg>
             </div>
             <div>
               <p class="text-xs text-gray-500">Tamanho</p>
@@ -209,7 +209,9 @@ function abrirModalPorId(id) {
           </div>
           <div class="flex items-center gap-3">
             <div class="p-2 bg-white rounded-lg shadow-sm">
-              <svg class="w-5 h-5 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h10M12 8a2 2 0 100-4 2 2 0 000 4z"/></svg>
+              <svg class="w-5 h-5 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h10M12 8a2 2 0 100-4 2 2 0 000 4z"/>
+              </svg>
             </div>
             <div>
               <p class="text-xs text-gray-500">Embalagem</p>
@@ -218,41 +220,46 @@ function abrirModalPorId(id) {
           </div>
         </div>
       </div>
-      
-      <!-- Dicas de Cuidados -->
+
       <div class="p-5 bg-[#fdfdfd] border border-[#aea100]/30 rounded-xl">
         <h3 class="font-medium mb-4 text-[#1a2e1a] flex items-center gap-2">
-          <svg class="w-5 h-5 text-[#aea100]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <svg class="w-5 h-5 text-[#aea100]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
           Dicas de Cuidados
         </h3>
         <div class="grid grid-cols-3 gap-4 text-center">
           <div>
-            <svg class="w-5 h-5 mx-auto mb-1 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/></svg>
+            <svg class="w-5 h-5 mx-auto mb-1 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/>
+            </svg>
             <p class="text-xs text-gray-500">Rega</p>
             <p class="text-sm font-medium">${produto.rega}</p>
           </div>
           <div>
-            <svg class="w-5 h-5 mx-auto mb-1 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg class="w-5 h-5 mx-auto mb-1 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
             <p class="text-xs text-gray-500">Sol</p>
             <p class="text-sm font-medium">${produto.sol}</p>
           </div>
           <div>
-            <svg class="w-5 h-5 mx-auto mb-1 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="w-5 h-5 mx-auto mb-1 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
             <p class="text-xs text-gray-500">Umidade</p>
             <p class="text-sm font-medium">${produto.umidade}</p>
           </div>
         </div>
       </div>
-      
-      <!-- Mensagem Opcional -->
+
       <div>
         <label class="block text-sm font-medium mb-2 text-[#1a2e1a]">Mensagem Opcional (para cartão)</label>
-        <textarea id="mensagem-cartao" 
-          placeholder="Escreva uma mensagem especial para o cartão..." 
-          class="w-full border border-gray-200 rounded-xl p-4 h-24 resize-none focus:border-[#1a2e1a] focus:ring-1 focus:ring-[#1a2e1a] outline-none transition duration-300"></textarea>
+        <textarea id="mensagem-cartao"
+                  placeholder="Escreva uma mensagem especial para o cartão..."
+                  class="w-full border border-gray-200 rounded-xl p-4 h-24 resize-none focus:border-[#1a2e1a] focus:ring-1 focus:ring-[#1a2e1a] outline-none transition duration-300"></textarea>
       </div>
-      
-      <!-- Seletor de Quantidade -->
+
       <div class="flex items-center gap-4">
         <span class="text-sm font-medium text-[#1a2e1a]">Quantidade:</span>
         <div class="flex items-center border border-[#1a2e1a] rounded-full">
@@ -265,87 +272,101 @@ function abrirModalPorId(id) {
           </button>
         </div>
       </div>
-      
-      <!-- Área de Conversão -->
+
       <div class="flex flex-col sm:flex-row gap-3 pt-2">
-        <button onclick="adicionarAoCarrinhoModal()" 
-          class="flex-1 border-2 border-[#1a2e1a] text-[#1a2e1a] px-6 py-4 rounded-full font-medium hover:bg-[#1a2e1a] hover:text-white transition duration-300">
+        <button onclick="adicionarAoCarrinhoModal()"
+                class="flex-1 border-2 border-[#1a2e1a] text-[#1a2e1a] px-6 py-4 rounded-full font-medium hover:bg-[#1a2e1a] hover:text-white transition duration-300">
           Adicionar à Sacola
         </button>
-        <button onclick="comprarViaWhatsAppModal()" 
-          class="flex-1 bg-[#1a2e1a] text-white px-6 py-4 rounded-full font-medium hover:opacity-90 transition duration-300">
+        <button onclick="comprarViaWhatsAppModal()"
+                class="flex-1 bg-[#1a2e1a] text-white px-6 py-4 rounded-full font-medium hover:opacity-90 transition duration-300">
           Comprar via WhatsApp
         </button>
       </div>
     </div>
-`;
+  `;
 
-  // Adicionar classes de grid ao container principal
+  // Animação de entrada do modal
+  if (modalContent) {
+    modalContent.classList.add("modal-enter");
+  }
+
   modalBody.className = "grid lg:grid-cols-2 gap-12 p-8";
-  
-  // Atualizar quantity display
+
   if (document.getElementById("qtd-modal")) {
     document.getElementById("qtd-modal").textContent = quantidadeModal;
   }
-  
+
   document.body.style.overflow = "hidden";
 }
 
+// Altera a quantidade no modal (mínimo 1)
 function alterarQuantidadeModal(delta) {
   quantidadeModal = Math.max(1, quantidadeModal + delta);
   document.getElementById("qtd-modal").textContent = quantidadeModal;
 }
 
+// Adiciona o produto do modal ao carrinho
 function adicionarAoCarrinhoModal() {
   if (!produtoAtual) return;
-  
   addToCart({
     name: produtoAtual.nome,
     price: produtoAtual.preco,
     qty: quantidadeModal
   });
-  
   showToast(`${quantidadeModal}x ${produtoAtual.nome} adicionado(s) ao carrinho!`);
   fecharModal();
 }
 
+// Abre WhatsApp com detalhes do produto do modal
 function comprarViaWhatsAppModal() {
   if (!produtoAtual) return;
-  
+
   const mensagem = document.getElementById("mensagem-cartao")?.value || "";
   const total = produtoAtual.preco * quantidadeModal;
-  
+
   let texto = `*Novo Pedido - Flor do Sol*%0A%0A`;
   texto += `📦 Produto: ${produtoAtual.nome}%0A`;
   texto += `💰 Preço Unitário: R$ ${produtoAtual.preco.toFixed(2)}%0A`;
   texto += `🔢 Quantidade: ${quantidadeModal}%0A`;
   texto += `📏 Tamanho: ${produtoAtual.tamanho}%0A`;
   texto += `🎁 Embalagem: ${produtoAtual.embalagem}%0A`;
-  
+
   if (mensagem) {
     texto += `%0A💬 Mensagem: "${mensagem}"`;
   }
-  
+
   texto += `%0A%0A💵 Total: R$ ${total.toFixed(2)}`;
-  
-  const url = `https://wa.me/5511999999999?text=${encodeURIComponent(texto)}`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`;
   window.open(url, "_blank");
 }
 
+// Fecha o modal com animação
 function fecharModal() {
-  modal.classList.add("hidden");
+  const modalContent = document.querySelector(".modal-content");
+  if (modalContent) {
+    modalContent.classList.remove("modal-enter");
+    modalContent.classList.add("modal-exit");
+    setTimeout(() => {
+      modal.classList.add("hidden");
+      modalContent.classList.remove("modal-exit");
+    }, 250);
+  } else {
+    modal.classList.add("hidden");
+  }
   document.body.style.overflow = "";
   produtoAtual = null;
 }
 
-// Helper para compatibilidade
+// Helper para compatibilidade (aceita objeto produto)
 function abrirModal(produto) {
   if (produto && produto.id) {
     abrirModalPorId(produto.id);
   }
 }
 
-// Expor funções para escopo global
+// Expõe funções do modal no escopo global (chamadas via onclick no HTML)
 window.abrirModalPorId = abrirModalPorId;
 window.abrirModal = abrirModal;
 window.fecharModal = fecharModal;
@@ -353,48 +374,34 @@ window.alterarQuantidadeModal = alterarQuantidadeModal;
 window.adicionarAoCarrinhoModal = adicionarAoCarrinhoModal;
 window.comprarViaWhatsAppModal = comprarViaWhatsAppModal;
 
-// ================= CARRINHO =================
-function handleAddToCart(produto){
+// ================= ADICIONAR AO CARRINHO (via JS) =================
+
+function handleAddToCart(produto) {
   addToCart({
     name: produto.nome,
     price: produto.preco
   });
-
   showToast(`${produto.nome} adicionado ao carrinho!`);
 }
 
 // ================= INIT =================
 
-// pegar parâmetro da URL
+// Lê parâmetro ?cat= da URL para filtrar categoria inicial
 const params = new URLSearchParams(window.location.search);
 const catURL = params.get("cat");
 
-// garantir que DOM já carregou tabs
+// Aguarda o DOM para renderizar os produtos
 window.addEventListener("DOMContentLoaded", () => {
-
-  if(catURL){
+  if (catURL) {
     categoriaAtual = catURL;
-
-    document.querySelectorAll(".tab").forEach(btn=>{
+    document.querySelectorAll(".tab").forEach(btn => {
       btn.classList.remove("active");
-
-      if(btn.dataset.cat === catURL){
+      if (btn.dataset.cat === catURL) {
         btn.classList.add("active");
       }
     });
-
     aplicarFiltros();
   } else {
     render(produtos);
   }
-
-});
-
-// ================= EVENT DELEGATION =================
-document.addEventListener("click", function(e) {
-  const btn = e.target.closest(".btn-add-cart");
-  if (!btn) return;
-  
-  const produto = JSON.parse(btn.dataset.produto);
-  handleAddToCart(produto);
 });

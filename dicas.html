@@ -1,153 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- METADADOS GLOBAIS -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts -->
+  <!-- Fontes do Google -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap">
 
-  <!-- Tailwind -->
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-
-  <!-- CSS -->
+  <!-- Estilos customizados -->
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- SEO e Open Graph -->
+  <meta name="description" content="Dicas e cuidados para manter suas plantas saudáveis e bonitas. Aprenda com a Flor do Sol.">
+  <meta property="og:title" content="Dicas - Flor do Sol">
+  <meta property="og:description" content="Dicas e cuidados para manter suas plantas saudáveis.">
+  <meta property="og:type" content="website">
   <title>Dicas - Flor do Sol</title>
 </head>
 
 <body class="bg-[#fdfdfd] text-[#1a2e1a]">
 
-<!-- ================= NAVBAR ================= -->
-<div id="navbar"></div>
+  <!-- NAVBAR: injetado via components.js -->
+  <div id="navbar"></div>
 
-<!-- ================= CONTEÚDO ================= -->
-<main class="pt-28">
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="pt-28">
 
-  <!-- HEADER -->
-  <section class="text-center mb-16 px-6">
-    <h1 class="text-4xl mb-3">Dicas e Cuidados</h1>
+    <!-- HEADER DA PÁGINA -->
+    <section class="text-center mb-16 px-6">
+      <h1 class="text-4xl mb-3">Dicas e Cuidados</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">
+        Inspirações e orientações para cuidar das suas plantas com elegância e harmonia.
+      </p>
+    </section>
 
-    <p class="text-gray-500 max-w-xl mx-auto">
-      Inspirações e orientações para cuidar das suas plantas com elegância e harmonia.
-    </p>
-  </section>
+    <!-- CONTAINER DE CONTEÚDO -->
+    <section class="max-w-6xl mx-auto px-6 pb-20">
 
-  <!-- CONTAINER -->
-  <section class="max-w-6xl mx-auto px-6 pb-20">
-
-    <!-- DESTAQUE -->
-    <article class="mb-16 fade-in">
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-
-        <!-- IMAGEM -->
-        <div class="overflow-hidden rounded-xl">
-          <img src="assets/images/jardimSofisticado.png" alt="Jardim Sofisticado" 
-               class="aspect-[4/5] w-full object-cover hover:scale-105 transition duration-500">
+      <!-- ARTIGO EM DESTAQUE -->
+      <article class="mb-16 fade-in">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div class="overflow-hidden rounded-xl">
+            <img src="assets/images/jardimSofisticado.png" alt="Jardim Sofisticado"
+                 class="aspect-[4/5] w-full object-cover hover:scale-105 transition duration-500">
+          </div>
+          <div>
+            <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">Destaque</p>
+            <h2 class="text-3xl mb-4 leading-snug">O guia completo para montar um jardim sofisticado</h2>
+            <p class="text-gray-500 mb-4">
+              Descubra como transformar seu ambiente com plantas selecionadas e composição visual elegante.
+            </p>
+            <span class="text-sm text-gray-400">10 Abril 2026</span>
+            <a href="blog.html"
+               class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-4 hover:text-[#aea100] transition">
+              Ler artigo completo
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
         </div>
+      </article>
 
-        <!-- TEXTO -->
-        <div>
-          <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">
-            Destaque
-          </p>
+      <!-- GRID DE ARTIGOS SECUNDÁRIOS -->
+      <div class="grid gap-12 md:grid-cols-2">
 
-          <h2 class="text-3xl mb-4 leading-snug">
-            O guia completo para montar um jardim sofisticado
-          </h2>
-
-          <p class="text-gray-500 mb-4">
-            Descubra como transformar seu ambiente com plantas selecionadas e composição visual elegante.
-          </p>
-
-          <span class="text-sm text-gray-400">10 Abril 2026</span>
-          
-          <a href="blog.html" class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-4 hover:text-[#aea100] transition">
+        <!-- CARD: Como cuidar da sua planta -->
+        <article class="group fade-in">
+          <div class="overflow-hidden rounded-xl mb-4">
+            <img src="assets/images/Cuidarplanta.png" alt="Cuidar Planta"
+                 class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-500">
+          </div>
+          <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">Cuidados</p>
+          <h2 class="text-2xl mb-2 leading-snug group-hover:opacity-80 transition">Como cuidar da sua planta</h2>
+          <p class="text-gray-500 text-sm mb-3">Aprenda técnicas essenciais para manter suas plantas sempre saudáveis.</p>
+          <span class="text-xs text-gray-400">10 Abril 2026</span>
+          <a href="blog.html"
+             class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-2 hover:text-[#aea100] transition">
             Ler artigo completo
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
           </a>
-        </div>
+        </article>
+
+        <!-- CARD: Rega ideal -->
+        <article class="group fade-in">
+          <div class="overflow-hidden rounded-xl mb-4">
+            <img src="assets/images/rega.png" alt="Rega"
+                 class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-500">
+          </div>
+          <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">Rega</p>
+          <h2 class="text-2xl mb-2 leading-snug group-hover:opacity-80 transition">Rega ideal para cada tipo de planta</h2>
+          <p class="text-gray-500 text-sm mb-3">Descubra a quantidade certa de água para manter o equilíbrio natural.</p>
+          <span class="text-xs text-gray-400">08 Abril 2026</span>
+          <a href="blog.html"
+             class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-2 hover:text-[#aea100] transition">
+            Ler artigo completo
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </article>
 
       </div>
-    </article>
+    </section>
+  </main>
 
-    <!-- GRID -->
-    <div class="grid gap-12 md:grid-cols-2">
+  <!-- FOOTER: injetado via components.js -->
+  <div id="footer"></div>
 
-      <!-- CARD 1 -->
-      <article class="group fade-in">
-
-        <div class="overflow-hidden rounded-xl mb-4">
-          <img src="assets/images/Cuidarplanta.png" alt="Cuidar Planta" 
-               class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-500">
-        </div>
-
-        <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">
-          Cuidados
-        </p>
-
-        <h2 class="text-2xl mb-2 leading-snug group-hover:opacity-80 transition">
-          Como cuidar da sua planta
-        </h2>
-
-        <p class="text-gray-500 text-sm mb-3">
-          Aprenda técnicas essenciais para manter suas plantas sempre saudáveis.
-        </p>
-
-        <span class="text-xs text-gray-400">10 Abril 2026</span>
-        
-        <a href="blog.html" class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-2 hover:text-[#aea100] transition">
-          Ler artigo completo
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </article>
-
-      <!-- CARD 2 -->
-      <article class="group fade-in">
-
-        <div class="overflow-hidden rounded-xl mb-4">
-          <img src="assets/images/rega.png" alt="Rega" 
-               class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-500">
-        </div>
-
-        <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">
-          Rega
-        </p>
-
-        <h2 class="text-2xl mb-2 leading-snug group-hover:opacity-80 transition">
-          Rega ideal para cada tipo de planta
-        </h2>
-
-        <p class="text-gray-500 text-sm mb-3">
-          Descubra a quantidade certa de água para manter o equilíbrio natural.
-        </p>
-
-        <span class="text-xs text-gray-400">08 Abril 2026</span>
-        
-        <a href="blog.html" class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-2 hover:text-[#aea100] transition">
-          Ler artigo completo
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </article>
-
-    </div>
-
-  </section>
-
-</main>
-
-<!-- ================= FOOTER ================= -->
-<div id="footer"></div>
-
-<!-- JS -->
-<script src="js/cart.js"></script>
-<script src="js/components.js"></script>
+  <!-- SCRIPTS -->
+  <script src="js/cart.js"></script>      <!-- Estado global do carrinho -->
+  <script src="js/components.js"></script> <!-- Injeção de navbar/footer -->
 
 </body>
 </html>

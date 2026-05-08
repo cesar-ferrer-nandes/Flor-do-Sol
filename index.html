@@ -1,158 +1,130 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- METADADOS GLOBAIS -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts -->
+  <!-- Fontes do Google: Playfair Display para títulos, Inter para textos -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap">
 
+  <!-- Tailwind CSS via CDN com plugin de tipografia -->
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-<link rel="stylesheet" href="css/style.css">
+  <!-- Estilos customizados -->
+  <link rel="stylesheet" href="css/style.css">
 
+  <!-- SEO e Open Graph -->
+  <meta name="description" content="Flor do Sol - Plantas, arranjos e serviços para transformar seu ambiente com elegância e naturalidade.">
+  <meta property="og:title" content="Flor do Sol">
+  <meta property="og:description" content="Plantas, arranjos e serviços para transformar seu ambiente com elegância e naturalidade.">
+  <meta property="og:type" content="website">
   <title>Flor do Sol</title>
 
 </head>
 
 <body class="bg-[#fdfdfd] text-[#1a2e1a]">
 
-    <!-- ================= NAVBAR ================= -->
-    <div id="navbar"></div>
-<!-- ================= HERO ================= -->
-<section class="h-[85vh] relative flex items-center">
-  
-  <img src="assets/images/papoulas.jpg"
-       class="absolute w-full h-full object-cover">
+  <!-- NAVBAR: injetado via components.js -->
+  <div id="navbar"></div>
 
-  <div class="absolute inset-0 bg-black/30"></div>
-
-  <div class="relative z-10 max-w-7xl mx-auto px-6 text-white fade-in">
-    <h1 class="text-4xl md:text-6xl mb-6">
-      Beleza natural para todos os momentos
-    </h1>
-
-    <p class="max-w-xl mb-8 opacity-90">
-      Descubra plantas e arranjos que transformam ambientes e criam experiências únicas com elegância e naturalidade.
-    </p>
-
-    <div class="flex gap-4 flex-wrap">
-      
-      <!-- LINK PARA CATÁLOGO -->
-      <a href="catalogo.html"
-         class="bg-[#1a2e1a] px-8 py-4 rounded-full text-white hover:opacity-90 transition duration-300 inline-block text-center">
-        Ver catálogo
-      </a>
-
-      <!-- BOTÃO SECUNDÁRIO -->
-      <a href="catalogo.html?cat=servicos"
-  class="bg-[#aea100] text-white px-6 py-3 rounded-full hover:opacity-90 transition">
-  Nossos serviços
-  </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- ================= CATEGORIAS ================= -->
-<section class="py-16 max-w-7xl mx-auto px-6 fade-in">
-  <h2 class="text-center text-3xl mb-12">Explore por Categoria</h2>
-
-  <div class="grid md:grid-cols-3 gap-8">
-
-    <a href="catalogo.html?cat=plantas" class="relative overflow-hidden rounded-2xl group cursor-pointer">
-      <img src="assets/images/plantas.jpeg"
-           class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
-      <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Plantas</div>
-    </a>
-
-    <a href="catalogo.html?cat=arranjos" class="relative overflow-hidden rounded-2xl group cursor-pointer">
-      <img src="assets/images/arranjos.jpeg"
-           class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
-      <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Arranjos</div>
-    </a>
-
-    <a href="catalogo.html?cat=servicos" class="relative overflow-hidden rounded-2xl group cursor-pointer">
-      <img src="assets/images/serviços.jpeg"
-           class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
-      <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Serviços</div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ================= POPULARES ================= -->
-<section class="py-16 max-w-7xl mx-auto px-6 fade-in">
-  <h2 class="text-3xl mb-12">Mais Populares do Jardim</h2>
-
-  <div id="populares-grid" class="grid md:grid-cols-4 gap-6">
-    <!-- Cards inseridos via JS -->
-  </div>
-</section>
-
-<!-- ================= DICAS ================= -->
-<section class="grid md:grid-cols-2 fade-in">
-
-  <div class="bg-gray-100 flex flex-col justify-center p-12">
-    <h2 class="text-3xl mb-4">Aprenda a cuidar das suas plantas</h2>
-    <p class="mb-6">
-      Descubra técnicas essenciais para manter suas plantas sempre saudáveis e bonitas.
-    </p>
-
-    <a href="blog.html" class="border border-[#1a2e1a] px-6 py-3 rounded-full hover:bg-[#1a2e1a] hover:text-white transition">
-      Ler nosso blog
-    </a>
-  </div>
-
-  <img src="assets/images/cuidadosBlog.jpg" class="w-full h-full object-cover">
-
-</section>
-
-<!-- ================= DEPOIMENTO ================= -->
-<section class="py-16 text-center max-w-2xl mx-auto fade-in">
-  <div class="flex justify-center mb-4 text-[#aea100] text-xl">
-    ★★★★★
-  </div>
-
-  <p class="italic text-lg">
-    “As plantas chegaram perfeitas e transformaram completamente meu ambiente. Atendimento impecável!”
-  </p>
-</section>
-
-<!-- Toast Container -->
-<div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
-
-
-<!-- MODAL PRODUTO -->
-<div id="modal-produto" class="fixed inset-0 z-50 hidden">
-  <div class="modal-backdrop absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="fecharModal()"></div>
-  
-  <div class="absolute inset-0 overflow-y-auto">
-    <div class="min-h-full flex items-center justify-center p-4">
-      
-      <div class="modal-content bg-[#fdfdfd] rounded-2xl w-full max-w-5xl shadow-2xl relative">
-        <button onclick="fecharModal()" class="absolute top-4 right-4 z-10 p-2 bg-white/80 rounded-full hover:bg-white transition">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-        
-        <div id="modal-body"></div>
-        
+  <!-- HERO: banner principal com call-to-action para catálogo e serviços -->
+  <section class="h-[85vh] relative flex items-center">
+    <img src="assets/images/papoulas.jpg"
+         class="absolute w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black/30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 text-white fade-in">
+      <h1 class="text-4xl md:text-6xl mb-6">Beleza natural para todos os momentos</h1>
+      <p class="max-w-xl mb-8 opacity-90">
+        Descubra plantas e arranjos que transformam ambientes e criam experiências únicas com elegância e naturalidade.
+      </p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="catalogo.html"
+           class="bg-[#1a2e1a] px-8 py-4 rounded-full text-white hover:opacity-90 transition duration-300 inline-block text-center">
+          Ver catálogo
+        </a>
+        <a href="catalogo.html?cat=servicos"
+           class="bg-[#aea100] text-white px-6 py-3 rounded-full hover:opacity-90 transition">
+          Nossos serviços
+        </a>
       </div>
-      
+    </div>
+  </section>
+
+  <!-- CATEGORIAS: navegação rápida para Plantas, Arranjos e Serviços -->
+  <section class="py-16 max-w-7xl mx-auto px-6 fade-in">
+    <h2 class="text-center text-3xl mb-12">Explore por Categoria</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <a href="catalogo.html?cat=plantas" class="relative overflow-hidden rounded-2xl group cursor-pointer">
+        <img src="assets/images/plantas.jpeg"
+             class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
+        <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Plantas</div>
+      </a>
+      <a href="catalogo.html?cat=arranjos" class="relative overflow-hidden rounded-2xl group cursor-pointer">
+        <img src="assets/images/arranjos.jpeg"
+             class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
+        <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Arranjos</div>
+      </a>
+      <a href="catalogo.html?cat=servicos" class="relative overflow-hidden rounded-2xl group cursor-pointer">
+        <img src="assets/images/serviços.jpeg"
+             class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
+        <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Serviços</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- POPULARES: grid de produtos em destaque, renderizado via index.js -->
+  <section class="py-16 max-w-7xl mx-auto px-6 fade-in">
+    <h2 class="text-3xl mb-12">Mais Populares do Jardim</h2>
+    <div id="populares-grid" class="grid md:grid-cols-4 gap-6"></div>
+  </section>
+
+  <!-- DICAS: seção de call-to-action para o blog -->
+  <section class="grid md:grid-cols-2 fade-in">
+    <div class="bg-gray-100 flex flex-col justify-center p-12">
+      <h2 class="text-3xl mb-4">Aprenda a cuidar das suas plantas</h2>
+      <p class="mb-6">Descubra técnicas essenciais para manter suas plantas sempre saudáveis e bonitas.</p>
+      <a href="blog.html" class="border border-[#1a2e1a] px-6 py-3 rounded-full hover:bg-[#1a2e1a] hover:text-white transition">
+        Ler nosso blog
+      </a>
+    </div>
+    <img src="assets/images/cuidadosBlog.jpg" class="w-full h-full object-cover">
+  </section>
+
+  <!-- DEPOIMENTO: bloco de prova social -->
+  <section class="py-16 text-center max-w-2xl mx-auto fade-in">
+    <div class="flex justify-center mb-4 text-[#aea100] text-xl">★★★★★</div>
+    <p class="italic text-lg">
+      “As plantas chegaram perfeitas e transformaram completamente meu ambiente. Atendimento impecável!”
+    </p>
+  </section>
+
+  <!-- Container para notificações toast (inseridas via toast.js) -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
+
+  <!-- MODAL DE PRODUTO: overlay com detalhes do produto, controlado via catalogo.js -->
+  <div id="modal-produto" class="fixed inset-0 z-50 hidden">
+    <div class="modal-backdrop absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="fecharModal()"></div>
+    <div class="absolute inset-0 overflow-y-auto">
+      <div class="min-h-full flex items-center justify-center p-4">
+        <div class="modal-content bg-[#fdfdfd] rounded-2xl w-full max-w-5xl shadow-2xl relative">
+          <button onclick="fecharModal()" class="absolute top-4 right-4 z-10 p-2 bg-white/80 rounded-full hover:bg-white transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+          <div id="modal-body"></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- FOOTER: injetado via components.js -->
+  <div id="footer"></div>
 
-<!-- ================= FOOTER ================= -->
-<div id="footer"></div>
-
-
-<!-- JS -->
-<script src="js/cart.js"></script>
-<script src="js/toast.js"></script>
-<script src="js/catalogo.js"></script>
-<script src="js/index.js"></script>
-<script src="js/components.js"></script>
+  <!-- SCRIPTS: ordem de carregamento respeita dependências -->
+  <script src="js/cart.js"></script>       <!-- Estado global do carrinho -->
+  <script src="js/toast.js"></script>      <!-- Notificações toast -->
+  <script src="js/catalogo.js"></script>   <!-- Catálogo, modal e funções de produto -->
+  <script src="js/index.js"></script>      <!-- Renderização da seção de populares -->
+  <script src="js/components.js"></script> <!-- Injeção de navbar/footer + scroll reveal -->
 
 </body>
 </html>

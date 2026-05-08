@@ -1,96 +1,91 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- METADADOS GLOBAIS -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap">
+  <!-- Fontes do Google -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap">
 
-  <!-- Tailwind -->
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-
-  <!-- CSS GLOBAL -->
+  <!-- Estilos customizados -->
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- SEO e Open Graph -->
+  <meta name="description" content="Entre em contato com a Flor do Sol. Estamos prontos para ajudar com suas dúvidas e pedidos.">
+  <meta property="og:title" content="Contato - Flor do Sol">
+  <meta property="og:description" content="Entre em contato com a Flor do Sol.">
+  <meta property="og:type" content="website">
   <title>Contato - Flor do Sol</title>
 </head>
 
 <body class="bg-[#fdfdfd] text-[#1a2e1a]">
 
-    <!-- ================= NAVBAR ================= -->
- <div id="navbar"></div>
+  <!-- NAVBAR: injetado via components.js -->
+  <div id="navbar"></div>
 
-<!-- ================= CONTEÚDO ================= -->
-<main class="pt-28 max-w-7xl mx-auto px-6 pb-20">
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="pt-28 max-w-7xl mx-auto px-6 pb-20">
 
-  <!-- Título -->
-  <section class="text-center mb-12 fade-in">
-    <h1 class="text-4xl mb-4">Fale Conosco</h1>
-    <p class="text-gray-500 max-w-xl mx-auto">
-      Estamos aqui para ajudar você. Envie sua mensagem e retornaremos o mais breve possível.
-    </p>
-  </section>
-
-  <!-- GRID -->
-  <section class="grid md:grid-cols-2 gap-10">
-
-    <!-- FORMULÁRIO -->
-    <form id="formContato" class="bg-white p-8 rounded-xl shadow-sm fade-in">
-
-      <div class="mb-4">
-        <label class="block mb-2 text-sm">Nome</label>
-        <input type="text" required
-          class="w-full border rounded-lg px-4 py-2 outline-none">
-      </div>
-
-      <div class="mb-4">
-        <label class="block mb-2 text-sm">Email</label>
-        <input type="email" required
-          class="w-full border rounded-lg px-4 py-2 outline-none">
-      </div>
-
-      <div class="mb-4">
-        <label class="block mb-2 text-sm">Mensagem</label>
-        <textarea required rows="5"
-          class="w-full border rounded-lg px-4 py-2 outline-none"></textarea>
-      </div>
-
-      <button type="submit"
-        class="w-full bg-[#1a2e1a] text-white py-3 rounded-full hover:opacity-90 transition">
-        Enviar mensagem
-      </button>
-
-    </form>
-
-    <!-- INFORMAÇÕES -->
-    <div class="flex flex-col justify-center fade-in">
-
-      <h2 class="text-2xl mb-4">Informações</h2>
-
-      <p class="mb-4 text-gray-600">
-        Entre em contato conosco através dos canais abaixo ou visite nossa loja física.
+    <!-- TÍTULO DA PÁGINA -->
+    <section class="text-center mb-12 fade-in">
+      <h1 class="text-4xl mb-4">Fale Conosco</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">
+        Estamos aqui para ajudar você. Envie sua mensagem e retornaremos o mais breve possível.
       </p>
+    </section>
 
-      <ul class="space-y-3 text-gray-600">
-        <li>📍 São Paulo - SP</li>
-        <li>📞 (11) 99999-9999</li>
-        <li>✉️ contato@flordosol.com</li>
-      </ul>
+    <!-- GRID: formulário + informações de contato -->
+    <section class="grid md:grid-cols-2 gap-10">
 
-    </div>
+      <!-- FORMULÁRIO DE CONTATO: envia mensagem via WhatsApp ao submeter -->
+      <form id="formContato" class="bg-white p-8 rounded-xl shadow-sm fade-in">
+        <div class="mb-4">
+          <label class="block mb-2 text-sm">Nome</label>
+          <input type="text" name="nome" required
+                 class="w-full border rounded-lg px-4 py-2 outline-none">
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2 text-sm">Email</label>
+          <input type="email" name="email" required
+                 class="w-full border rounded-lg px-4 py-2 outline-none">
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2 text-sm">Mensagem</label>
+          <textarea required rows="5" name="mensagem"
+                    class="w-full border rounded-lg px-4 py-2 outline-none"></textarea>
+        </div>
+        <button type="submit"
+                class="w-full bg-[#1a2e1a] text-white py-3 rounded-full hover:opacity-90 transition">
+          Enviar mensagem
+        </button>
+      </form>
 
-  </section>
+      <!-- INFORMAÇÕES DE CONTATO -->
+      <div class="flex flex-col justify-center fade-in">
+        <h2 class="text-2xl mb-4">Informações</h2>
+        <p class="mb-4 text-gray-600">
+          Entre em contato conosco através dos canais abaixo ou visite nossa loja física.
+        </p>
+        <ul class="space-y-3 text-gray-600">
+          <li>📍 São Paulo - SP</li>
+          <li>📞 (11) 99999-9999</li>
+          <li>✉️ contato@flordosol.com</li>
+        </ul>
+      </div>
 
-</main>
-<!-- ================= FOOTER ================= -->
-<div id="footer"></div>
+    </section>
+  </main>
 
-<!-- JS -->
-<script src="js/cart.js"></script>
-<script src="js/catalogo.js"></script>
-<script src="js/components.js"></script>
+  <!-- FOOTER: injetado via components.js -->
+  <div id="footer"></div>
+
+  <!-- SCRIPTS -->
+  <script src="js/cart.js"></script>      <!-- Constante WHATSAPP_NUMBER -->
+  <script src="js/contato.js"></script>    <!-- Lógica do formulário -->
+  <script src="js/components.js"></script> <!-- Injeção de navbar/footer -->
 
 </body>
-
 </html>

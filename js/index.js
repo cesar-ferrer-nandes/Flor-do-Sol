@@ -1,17 +1,16 @@
-// ================= DADOS =================
-const produtosPopulares = [
-  {id:1, nome:"Orquídea Branca", preco:89.9, categoria:"plantas", badge:"Popular", imagem:"assets/images/rox.jpeg"},
-  {id:3, nome:"Arranjo Luxo Rosas", preco:129.9, categoria:"arranjos", badge:"Popular", imagem:"assets/images/arranjos.jpeg"},
-  {id:5, nome:"Cesta Presente", preco:159.9, categoria:"servicos", badge:"Especial", imagem:"assets/images/arm.jpeg"},
-  {id:2, nome:"Samambaia Verde", preco:49.9, categoria:"plantas", imagem:"assets/images/pal.jpeg"},
-];
+// ================= PRODUTOS POPULARES (HOME) =================
 
-// ================= RENDER =================
+// Renderiza os 4 produtos em destaque na página inicial
+// Usa o array global 'produtos' definido em catalogo.js (carregado antes)
 function renderPopulares() {
   const grid = document.getElementById("populares-grid");
   if (!grid) return;
 
-  grid.innerHTML = produtosPopulares.map(p => `
+  // Seleciona produtos específicos por ID (mesma seleção do layout original)
+  const ids = [1, 3, 5, 2];
+  const items = ids.map(id => produtos.find(p => p.id === id)).filter(Boolean);
+
+  grid.innerHTML = items.map(p => `
     <div class="bg-white shadow rounded-xl p-4 relative transition duration-300 hover:shadow-lg">
       ${p.badge ? `
         <span class="absolute top-3 left-3 px-2 py-1 text-xs text-white rounded
@@ -20,7 +19,8 @@ function renderPopulares() {
         </span>
       ` : ""}
 
-      <img src="${p.imagem}" alt="${p.nome}" class="aspect-[4/5] w-full object-cover rounded-lg mb-4">
+      <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
+           class="aspect-[4/5] w-full object-cover rounded-lg mb-4">
 
       <h3 class="font-bold">${p.nome}</h3>
       <p class="text-[#1a2e1a] font-semibold">R$ ${p.preco.toFixed(2)}</p>
@@ -30,20 +30,13 @@ function renderPopulares() {
         Disponível
       </div>
 
-      <button onclick="abrirModalPorId(${p.id})" 
-        class="w-full bg-[#1a2e1a] text-white py-2 rounded hover:opacity-90 transition">
+      <button onclick="abrirModalPorId(${p.id})"
+              class="w-full bg-[#1a2e1a] text-white py-2 rounded hover:opacity-90 transition">
         Ver detalhes
       </button>
     </div>
   `).join("");
 }
 
-// ================= INIT =================
+// Inicializa ao carregar a página
 document.addEventListener("DOMContentLoaded", renderPopulares);
-
-// Expor função global
-window.abrirModalPorId = window.abrirModalPorId || function(id) {
-  const produto = produtosPopulares.find(p => p.id === id);
-  if (!produto) return;
-  alert(`Produto: ${produto.nome}\nPreço: R$ ${produto.preco.toFixed(2)}\n\nEm breve: página de detalhes!`);
-};
