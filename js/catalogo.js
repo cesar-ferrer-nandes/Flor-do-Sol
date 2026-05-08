@@ -1,4 +1,7 @@
 // ================= DADOS DOS PRODUTOS =================
+// Fonte única de verdade para o catálogo. Cada produto tem
+// id, nome, preço, categoria, badge opcional, imagem, avaliação,
+// especificações (tamanho, embalagem) e cuidados (rega, sol, umidade).
 
 const produtos = [
   {id:1, nome:"Orquídea Branca", preco:89.9, categoria:"plantas", badge:"Popular", imagem:"assets/images/rox.jpeg", avaliacao:5, reviews:24, tamanho:"25x35cm", embalagem:"Vaso de Cerâmica",rega:"2x por semana", sol:"Meia sombra", umidade:"60%"},
@@ -7,9 +10,16 @@ const produtos = [
   {id:4, nome:"Suculenta Mini", preco:29.9, categoria:"plantas", badge:"Novidade", imagem:"assets/images/sub.jpeg", avaliacao:4, reviews:12, tamanho:"10x15cm", embalagem:"Vaso de Barro",rega:"1x por semana", sol:"Sol direto", umidade:"40%"},
   {id:5, nome:"Cesta Presente", preco:159.9, categoria:"servicos", imagem:"assets/images/arm.jpeg", avaliacao:5, reviews:31, tamanho:"45x35cm", embalagem:"Cesta de Vime + Laço",rega:"Conforme item", sol:"Luz filtrada", umidade:"60%"},
   {id:6, nome:"Buquê Especial", preco:99.9, categoria:"arranjos", imagem:"assets/images/floo.jpeg", avaliacao:5, reviews:28, tamanho:"35x45cm", embalagem:"Papel Seda + Celofane",rega:"Não aplicável", sol:"Luz indireta", umidade:"55%"},
+  {id:7, nome:"Arranjo Flores do Campo", preco:69.9, categoria:"arranjos", badge:"Novidade", imagem:"assets/images/papoulas.jpg", avaliacao:4, reviews:15, tamanho:"30x40cm", embalagem:"Vaso de Vidro + Juta",rega:"Diariamente", sol:"Luz indireta", umidade:"60%"},
+  {id:8, nome:"Manutenção de Jardins", preco:79.9, categoria:"servicos", imagem:"assets/images/serviços.jpeg", avaliacao:5, reviews:22, tamanho:"Área externa", embalagem:"Kit profissional",rega:"Incluso", sol:"Conforme necessidade", umidade:"—"},
+  {id:9, nome:"Projeto Paisagístico", preco:149.9, categoria:"servicos", badge:"Popular", imagem:"assets/images/plantas.jpeg", avaliacao:5, reviews:35, tamanho:"Personalizado", embalagem:"Consultoria + Croqui",rega:"Orientação inclusa", sol:"Análise do local", umidade:"—"},
+  {id:10, nome:"Lírio da Paz", preco:69.9, categoria:"plantas", badge:"Novidade", imagem:"assets/images/jardimSofisticado.png", avaliacao:4, reviews:20, tamanho:"30x40cm", embalagem:"Vaso de Cerâmica",rega:"2x por semana", sol:"Meia sombra", umidade:"65%"},
+  {id:11, nome:"Vaso de Girassóis", preco:89.9, categoria:"arranjos", imagem:"assets/images/rega.png", avaliacao:4, reviews:17, tamanho:"35x45cm", embalagem:"Vaso Decorado + Fita",rega:"Diariamente", sol:"Sol direto", umidade:"50%"},
+  {id:12, nome:"Kit Terrário", preco:59.9, categoria:"servicos", badge:"Novidade", imagem:"assets/images/Cuidarplanta.png", avaliacao:4, reviews:14, tamanho:"20x20cm", embalagem:"Vidro + Kit montagem",rega:"1x por semana", sol:"Luz indireta", umidade:"70%"},
 ];
 
 // ================= CONFIGURAÇÃO DE PERSONALIZAÇÃO =================
+// Opções disponíveis no modal: embalagem padrão/premium e cores de fita.
 
 const OPCOES_EMBALAGEM = {
   padrao: { nome: "Embalagem Padrão", adicional: 0 },
@@ -26,6 +36,7 @@ const OPCOES_FITA = [
 ];
 
 // ================= ESTADO =================
+// Controla qual categoria está selecionada nos filtros.
 
 let categoriaAtual = "todos";
 
@@ -37,6 +48,9 @@ const sort = document.getElementById("sort");
 const empty = document.getElementById("empty");
 
 // ================= RENDERIZAÇÃO DO GRID =================
+// Converte a lista de produtos em HTML com cards.
+// Cada card tem: badge, imagem com hover zoom, nome, categoria, preço,
+// indicador de disponibilidade e botão "Ver detalhes".
 
 function render(lista) {
   if (!grid) return;
@@ -82,12 +96,14 @@ function render(lista) {
     </div>
   `).join("");
 
+  // Animação fade-in para novos cards.
   setTimeout(() => {
     document.querySelectorAll(".fade-in").forEach(el => el.classList.add("show"));
   }, 50);
 }
 
 // ================= FILTROS =================
+// Aplica filtro por categoria, busca textual e ordenação por preço.
 
 function aplicarFiltros() {
   let lista = [...produtos];
@@ -128,6 +144,7 @@ document.querySelectorAll(".tab").forEach(btn => {
 });
 
 // ================= WHATSAPP DIRETO =================
+// Abre WhatsApp com mensagem sobre um produto específico.
 
 function comprar(nome, preco) {
   const msg = `Olá! Tenho interesse em "${nome}" no valor de R$ ${preco.toFixed(2)}.`;
@@ -136,6 +153,7 @@ function comprar(nome, preco) {
 }
 
 // ================= MODAL DE PRODUTO =================
+// Estado do modal: referências ao DOM, produto atual e quantidade.
 
 const modal = document.getElementById("modal-produto");
 const modalBody = document.getElementById("modal-body");
@@ -143,6 +161,8 @@ let produtoAtual = null;
 let quantidadeModal = 1;
 
 // ================= FUNÇÕES DE PERSONALIZAÇÃO =================
+// Lê as opções selecionadas (embalagem, fita, mensagem, observações)
+// e calcula o acréscimo no preço.
 
 function obterDadosPersonalizacao() {
   const embalagem = document.querySelector('input[name="embalagem"]:checked');
@@ -181,6 +201,9 @@ function atualizarPersonalizacao() {
 }
 
 // ================= ABRIR MODAL =================
+// Busca o produto pelo ID, preenche o modal com dados completos:
+// imagem, nome, avaliação, preço, especificações, personalização,
+// cuidados, quantidade, e botões de ação.
 
 function abrirModalPorId(id) {
   produtoAtual = null;
@@ -396,6 +419,7 @@ function abrirModalPorId(id) {
 }
 
 // ================= QUANTIDADE =================
+// Ajusta a quantidade no modal (mínimo 1) e atualiza o preço total.
 
 function alterarQuantidadeModal(delta) {
   quantidadeModal = Math.max(1, quantidadeModal + delta);
@@ -404,6 +428,7 @@ function alterarQuantidadeModal(delta) {
 }
 
 // ================= ADICIONAR AO CARRINHO (via modal) =================
+// Captura personalização, calcula preço final e salva no carrinho global.
 
 function adicionarAoCarrinhoModal() {
   if (!produtoAtual) return;
@@ -429,6 +454,8 @@ function adicionarAoCarrinhoModal() {
 }
 
 // ================= COMPRAR VIA WHATSAPP (via modal) =================
+// Monta mensagem com todos os detalhes (incluindo personalização)
+// e abre WhatsApp diretamente.
 
 function comprarViaWhatsAppModal() {
   if (!produtoAtual) return;
@@ -462,6 +489,7 @@ function comprarViaWhatsAppModal() {
 }
 
 // ================= FECHAR MODAL =================
+// Fecha com animação e restaura o scroll da página.
 
 function fecharModal() {
   const modalContent = document.querySelector(".modal-content");
@@ -486,6 +514,7 @@ function abrirModal(produto) {
 }
 
 // ================= EXPOSIÇÃO GLOBAL =================
+// Torna funções do modal acessíveis via onclick no HTML.
 
 window.abrirModalPorId = abrirModalPorId;
 window.abrirModal = abrirModal;
@@ -496,6 +525,7 @@ window.comprarViaWhatsAppModal = comprarViaWhatsAppModal;
 window.atualizarPersonalizacao = atualizarPersonalizacao;
 
 // ================= ADICIONAR AO CARRINHO (via JS) =================
+// Função auxiliar para adicionar direto sem modal (usada na home).
 
 function handleAddToCart(produto) {
   addToCart({
@@ -506,6 +536,7 @@ function handleAddToCart(produto) {
 }
 
 // ================= INIT =================
+// Lê parâmetro ?cat= da URL e renderiza produtos correspondentes.
 
 const params = new URLSearchParams(window.location.search);
 const catURL = params.get("cat");

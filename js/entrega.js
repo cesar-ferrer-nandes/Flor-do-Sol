@@ -1,5 +1,10 @@
+// ================= DELIVERY ADDRESS FORM =================
+// Gerencia o formulário de endereço de entrega na página do carrinho.
+// Valida campos, consulta CEP via ViaCEP, e persiste dados na sessionStorage.
+
 const ENTREGA_KEY = "flordosol-entrega";
 
+// Elementos principais do formulário e do resumo.
 const EntregaElements = {
   section: document.getElementById("entrega-section"),
   form: document.getElementById("form-entrega"),
@@ -8,6 +13,7 @@ const EntregaElements = {
   btnEditar: document.getElementById("btn-editar-entrega"),
 };
 
+// Mapeamento dos campos do formulário para acesso rápido.
 const EntregaFields = {
   nome: document.querySelector('[name="nome"]'),
   cep: document.querySelector('[name="cep"]'),
@@ -20,18 +26,21 @@ const EntregaFields = {
 
 const CAMPOS_OBRIGATORIOS = ["nome", "cep", "rua", "numero", "bairro", "cidade"];
 
+// Formata CEP no padrão 00000-000 enquanto o usuário digita.
 function formatarCEP(valor) {
   const digits = valor.replace(/\D/g, "").slice(0, 8);
   if (digits.length <= 5) return digits;
   return `${digits.slice(0, 5)}-${digits.slice(5)}`;
 }
 
+// Valida se o CEP tem exatamente 8 dígitos.
 function validarCEP(cep) {
   const digits = cep.replace(/\D/g, "");
   if (digits.length !== 8) return false;
   return true;
 }
 
+// Exibe mensagem de erro abaixo do campo e pinta a borda de vermelho.
 function mostrarErro(campo, mensagem) {
   const wrapper = campo.closest("div");
   const erroEl = wrapper.querySelector(".erro");
@@ -42,6 +51,7 @@ function mostrarErro(campo, mensagem) {
   erroEl.classList.remove("hidden");
 }
 
+// Remove o estado de erro de um campo.
 function limparErro(campo) {
   const wrapper = campo.closest("div");
   const erroEl = wrapper.querySelector(".erro");
@@ -57,6 +67,7 @@ function limparTodosErros() {
   });
 }
 
+// Valida todos os campos obrigatórios antes de salvar.
 function validarFormulario() {
   let valido = true;
   limparTodosErros();
@@ -95,6 +106,7 @@ function validarFormulario() {
   return valido;
 }
 
+// Salva os dados de entrega na sessionStorage.
 function salvarDadosEntrega() {
   const dados = {
     nome: EntregaFields.nome.value.trim(),
@@ -109,6 +121,7 @@ function salvarDadosEntrega() {
   return dados;
 }
 
+// Recupera dados salvos anteriormente.
 function carregarDadosEntrega() {
   const raw = sessionStorage.getItem(ENTREGA_KEY);
   if (!raw) return null;
@@ -119,6 +132,7 @@ function carregarDadosEntrega() {
   }
 }
 
+// Preenche o formulário com dados existentes (útil ao editar).
 function preencherFormulario(dados) {
   if (!dados) return;
   EntregaFields.nome.value = dados.nome || "";
@@ -130,6 +144,7 @@ function preencherFormulario(dados) {
   EntregaFields.cidade.value = dados.cidade || "";
 }
 
+// Exibe o resumo do endereço salvo e esconde o formulário.
 function mostrarResumo(dados) {
   if (!dados) return;
   document.getElementById("resumo-nome").textContent = dados.nome;
@@ -146,6 +161,7 @@ function mostrarFormulario() {
   EntregaElements.resumo.classList.add("hidden");
 }
 
+// Limpa formulário e remove dados salvos.
 function limparFormulario() {
   Object.values(EntregaFields).forEach(campo => {
     if (campo) campo.value = "";
@@ -153,6 +169,10 @@ function limparFormulario() {
   limparTodosErros();
   sessionStorage.removeItem(ENTREGA_KEY);
 }
+
+// ================= CONSULTA DE CEP (ViaCEP) =================
+// Busca endereço automaticamente pela API gratuita ViaCEP.
+// Preenche rua, bairro e cidade ao encontrar o CEP.
 
 function buscarCEP(cep) {
   const digits = cep.replace(/\D/g, "");
@@ -180,6 +200,9 @@ function buscarCEP(cep) {
     });
 }
 
+// ================= EVENTOS =================
+
+// Submissão: valida, salva e mostra resumo.
 EntregaElements.form.addEventListener("submit", function (e) {
   e.preventDefault();
   if (!validarFormulario()) return;
@@ -187,16 +210,19 @@ EntregaElements.form.addEventListener("submit", function (e) {
   mostrarResumo(dados);
 });
 
+// Limpar: reseta formulário e dados salvos.
 EntregaElements.btnLimpar.addEventListener("click", function () {
   limparFormulario();
 });
 
+// Editar: volta ao formulário com dados preenchidos.
 EntregaElements.btnEditar.addEventListener("click", function () {
   const dados = carregarDadosEntrega();
   if (dados) preencherFormulario(dados);
   mostrarFormulario();
 });
 
+// CEP: formata enquanto digita e consulta ao sair do campo.
 EntregaFields.cep.addEventListener("input", function () {
   this.value = formatarCEP(this.value);
   limparErro(this);
@@ -211,6 +237,7 @@ EntregaFields.cep.addEventListener("blur", function () {
   }
 });
 
+// Limpa erro ao focar ou digitar em qualquer campo.
 Object.values(EntregaFields).forEach(campo => {
   if (!campo) return;
   campo.addEventListener("focus", function () {
@@ -221,6 +248,7 @@ Object.values(EntregaFields).forEach(campo => {
   });
 });
 
+// Ao carregar, restaura dados salvos se existirem.
 document.addEventListener("DOMContentLoaded", function () {
   const dados = carregarDadosEntrega();
   if (dados) {

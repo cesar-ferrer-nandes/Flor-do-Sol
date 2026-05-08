@@ -65,6 +65,21 @@
   <!-- Container para notificações toast -->
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
 
+  <!-- MODAL DE PRODUTO -->
+  <div id="modal-produto" class="fixed inset-0 z-50 hidden">
+    <div class="modal-backdrop absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="fecharModal()"></div>
+    <div class="absolute inset-0 overflow-y-auto">
+      <div class="min-h-full flex items-center justify-center p-4">
+        <div class="modal-content bg-[#fdfdfd] rounded-2xl w-full max-w-5xl shadow-2xl relative">
+          <button onclick="fecharModal()" class="absolute top-4 right-4 z-10 p-2 bg-white/80 rounded-full hover:bg-white transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+          <div id="modal-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER: injetado via components.js -->
   <div id="footer"></div>
 

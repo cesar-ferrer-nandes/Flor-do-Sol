@@ -1,10 +1,13 @@
 // ================= CONSTANTES =================
+// Número do WhatsApp, limite para frete grátis e valor padrão do frete.
 
 const WHATSAPP_NUMBER = "5511999999999";
 const FRETE_GRATIS_LIMITE = 100;
 const FRETE_VALOR_PADRAO = 15;
 
 // ================= ESTADO (sessionStorage) =================
+// Carrinho persiste apenas na aba atual (sessionStorage).
+// Compatilhado com cart.js via mesma chave.
 
 let carrinho = JSON.parse(sessionStorage.getItem("flordosol-cart")) || [];
 
@@ -13,6 +16,7 @@ function salvarCarrinho() {
 }
 
 // ================= ELEMENTOS DO DOM =================
+// Mapeamento dos elementos da página de carrinho para facilitar acesso.
 
 const CartElements = {
   container: document.getElementById("cart-items"),
@@ -25,12 +29,15 @@ const CartElements = {
 };
 
 // ================= FORMATAR MOEDA =================
+// Formata valor numérico para padrão brasileiro (R$ 1.234,56).
 
 function formatarMoeda(valor) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
 // ================= ADICIONAR AO CARRINHO =================
+// Adiciona um produto ao carrinho. Se não houver personalização,
+// agrupa pelo nome; caso contrário, mantém itens separados.
 
 function adicionarAoCarrinho(produto) {
   const semPersonalizacao = !produto.personalizacao;
@@ -54,6 +61,7 @@ function adicionarAoCarrinho(produto) {
 }
 
 // ================= REMOVER ITEM =================
+// Remove um item do carrinho pelo índice.
 
 function removerItem(indice) {
   carrinho.splice(indice, 1);
@@ -62,6 +70,7 @@ function removerItem(indice) {
 }
 
 // ================= ATUALIZAR QUANTIDADE =================
+// Incrementa/decrementa a quantidade. Se chegar a 0, remove o item.
 
 function atualizarQuantidade(indice, delta) {
   if (!carrinho[indice]) return;
@@ -77,6 +86,7 @@ function atualizarQuantidade(indice, delta) {
 }
 
 // ================= CALCULAR FRETE =================
+// Frete grátis acima do limite. Valor fixo para compras menores.
 
 function calcularFrete(subtotal) {
   if (subtotal === 0) return 0;
@@ -85,6 +95,7 @@ function calcularFrete(subtotal) {
 }
 
 // ================= ATUALIZAR SUBTOTAL / FRETE / TOTAL =================
+// Recalcula e exibe os valores no resumo do pedido.
 
 function atualizarResumo() {
   const subtotal = carrinho.reduce((acc, item) => {
@@ -100,6 +111,8 @@ function atualizarResumo() {
 }
 
 // ================= RENDERIZAR CARRINHO =================
+// Renderiza a lista de itens, mostra/esconde estado vazio,
+// exibe dados de personalização se houver, e atualiza badge.
 
 function renderizarCarrinho() {
   const vazio = carrinho.length === 0;
@@ -157,6 +170,8 @@ function renderizarCarrinho() {
 }
 
 // ================= FINALIZAR PEDIDO (WhatsApp) =================
+// Gera mensagem com resumo completo: itens, personalização,
+// subtotal, frete, total e endereço de entrega se preenchido.
 
 function finalizarPedido() {
   if (carrinho.length === 0) return;
@@ -203,6 +218,7 @@ function finalizarPedido() {
 }
 
 // ================= EXPOR FUNÇÕES GLOBAIS =================
+// Torna funções acessíveis via onclick no HTML da página de carrinho.
 
 window.adicionarAoCarrinho = adicionarAoCarrinho;
 window.removerItem = removerItem;
@@ -210,5 +226,6 @@ window.atualizarQuantidade = atualizarQuantidade;
 window.finalizarPedido = finalizarPedido;
 
 // ================= INIT =================
+// Renderiza o carrinho ao carregar a página.
 
 renderizarCarrinho();

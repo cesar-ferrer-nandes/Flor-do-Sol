@@ -1,3 +1,7 @@
+// ================= LOGIN / CADASTRO =================
+// Controla a abertura/fechamento do modal de autenticação
+// e alternância entre os formulários de login e cadastro.
+
 function abrirLogin() {
   const modal = document.getElementById("modal-login");
   if (modal) modal.classList.remove("hidden");
@@ -8,6 +12,7 @@ function fecharLogin() {
   if (modal) modal.classList.add("hidden");
 }
 
+// Alterna entre as abas "Entrar" e "Cadastrar" no modal.
 function alternarAuth(modo) {
   document.querySelectorAll(".tab-auth").forEach(tab => {
     tab.classList.remove("active", "border-[#1a2e1a]", "text-[#1a2e1a]");
@@ -27,6 +32,7 @@ function alternarAuth(modo) {
   if (form) form.classList.remove("hidden");
 }
 
+// Inicializa: valida senha no cadastro e submete os formulários.
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".auth-form").forEach(form => {
     form.addEventListener("submit", function (e) {
