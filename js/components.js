@@ -25,7 +25,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadComponent("footer", "components/footer.html");
 
   // Re-sincroniza o badge do carrinho agora que a navbar existe no DOM
-  if (typeof updateCartUI === "function") updateCartUI();
+  const badge = document.getElementById("cart-count");
+  if (badge) {
+    const dados = JSON.parse(sessionStorage.getItem("flordosol-cart"));
+    badge.innerText = dados ? dados.length : 0;
+  }
 
   // Scroll reveal: ativa fade-in conforme o usuário rola a página
   const observer = new IntersectionObserver((entries) => {

@@ -1,6 +1,5 @@
 // ================= DADOS DOS PRODUTOS =================
 
-// Array mestre de produtos (fonte única de verdade)
 const produtos = [
   {id:1, nome:"Orquídea Branca", preco:89.9, categoria:"plantas", badge:"Popular", imagem:"assets/images/rox.jpeg", avaliacao:5, reviews:24, tamanho:"25x35cm", embalagem:"Vaso de Cerâmica",rega:"2x por semana", sol:"Meia sombra", umidade:"60%"},
   {id:2, nome:"Samambaia Verde", preco:49.9, categoria:"plantas", imagem:"assets/images/pal.jpeg", avaliacao:4, reviews:18, tamanho:"20x30cm", embalagem:"Vaso Plástico",rega:"3x por semana", sol:"Sombra parcial", umidade:"70%"},
@@ -8,6 +7,22 @@ const produtos = [
   {id:4, nome:"Suculenta Mini", preco:29.9, categoria:"plantas", badge:"Novidade", imagem:"assets/images/sub.jpeg", avaliacao:4, reviews:12, tamanho:"10x15cm", embalagem:"Vaso de Barro",rega:"1x por semana", sol:"Sol direto", umidade:"40%"},
   {id:5, nome:"Cesta Presente", preco:159.9, categoria:"servicos", imagem:"assets/images/arm.jpeg", avaliacao:5, reviews:31, tamanho:"45x35cm", embalagem:"Cesta de Vime + Laço",rega:"Conforme item", sol:"Luz filtrada", umidade:"60%"},
   {id:6, nome:"Buquê Especial", preco:99.9, categoria:"arranjos", imagem:"assets/images/floo.jpeg", avaliacao:5, reviews:28, tamanho:"35x45cm", embalagem:"Papel Seda + Celofane",rega:"Não aplicável", sol:"Luz indireta", umidade:"55%"},
+];
+
+// ================= CONFIGURAÇÃO DE PERSONALIZAÇÃO =================
+
+const OPCOES_EMBALAGEM = {
+  padrao: { nome: "Embalagem Padrão", adicional: 0 },
+  premium: { nome: "Embalagem Premium", adicional: 10 },
+};
+
+const OPCOES_FITA = [
+  { valor: "sem", nome: "Sem fita" },
+  { valor: "vermelha", nome: "Vermelha" },
+  { valor: "dourada", nome: "Dourada" },
+  { valor: "prateada", nome: "Prateada" },
+  { valor: "verde", nome: "Verde" },
+  { valor: "azul", nome: "Azul" },
 ];
 
 // ================= ESTADO =================
@@ -23,7 +38,6 @@ const empty = document.getElementById("empty");
 
 // ================= RENDERIZAÇÃO DO GRID =================
 
-// Renderiza os cards de produtos no grid
 function render(lista) {
   if (!grid) return;
 
@@ -68,7 +82,6 @@ function render(lista) {
     </div>
   `).join("");
 
-  // Ativa animação fade-in nos novos cards
   setTimeout(() => {
     document.querySelectorAll(".fade-in").forEach(el => el.classList.add("show"));
   }, 50);
@@ -76,7 +89,6 @@ function render(lista) {
 
 // ================= FILTROS =================
 
-// Aplica filtros de categoria, busca textual e ordenação
 function aplicarFiltros() {
   let lista = [...produtos];
 
@@ -106,7 +118,6 @@ if (sort) {
   sort.addEventListener("change", aplicarFiltros);
 }
 
-// Eventos das abas de categoria
 document.querySelectorAll(".tab").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
@@ -118,7 +129,6 @@ document.querySelectorAll(".tab").forEach(btn => {
 
 // ================= WHATSAPP DIRETO =================
 
-// Abre WhatsApp com mensagem sobre um produto específico
 function comprar(nome, preco) {
   const msg = `Olá! Tenho interesse em "${nome}" no valor de R$ ${preco.toFixed(2)}.`;
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
@@ -132,7 +142,46 @@ const modalBody = document.getElementById("modal-body");
 let produtoAtual = null;
 let quantidadeModal = 1;
 
-// Abre o modal com detalhes do produto pelo ID
+// ================= FUNÇÕES DE PERSONALIZAÇÃO =================
+
+function obterDadosPersonalizacao() {
+  const embalagem = document.querySelector('input[name="embalagem"]:checked');
+  const fita = document.querySelector('input[name="fita"]:checked');
+  const mensagem = document.getElementById("mensagem-cartao")?.value || "";
+  const observacoes = document.getElementById("observacoes")?.value || "";
+
+  return {
+    embalagem: embalagem ? embalagem.value : "padrao",
+    fita: fita ? fita.value : "sem",
+    mensagem,
+    observacoes,
+  };
+}
+
+function calcularAdicionais() {
+  const dados = obterDadosPersonalizacao();
+  let adicional = 0;
+
+  if (dados.embalagem === "premium") {
+    adicional += OPCOES_EMBALAGEM.premium.adicional;
+  }
+
+  return adicional;
+}
+
+function atualizarPersonalizacao() {
+  if (!produtoAtual) return;
+
+  const adicional = calcularAdicionais();
+  const total = (produtoAtual.preco + adicional) * quantidadeModal;
+  const el = document.getElementById("preco-total-modal");
+  if (el) {
+    el.innerText = `R$ ${total.toFixed(2)}`;
+  }
+}
+
+// ================= ABRIR MODAL =================
+
 function abrirModalPorId(id) {
   produtoAtual = null;
   quantidadeModal = 1;
@@ -152,6 +201,15 @@ function abrirModalPorId(id) {
   modalBody.innerHTML = "";
 
   const imagemUrl = produto.imagem;
+
+  const opcoesFitaHTML = OPCOES_FITA.map(f => `
+    <label class="flex items-center gap-2 cursor-pointer">
+      <input type="radio" name="fita" value="${f.valor}" ${f.valor === "sem" ? "checked" : ""}
+             onchange="atualizarPersonalizacao()"
+             class="accent-[#1a2e1a]">
+      <span class="text-sm">${f.nome}</span>
+    </label>
+  `).join("");
 
   modalBody.innerHTML = `
     <div class="relative">
@@ -214,14 +272,53 @@ function abrirModalPorId(id) {
               </svg>
             </div>
             <div>
-              <p class="text-xs text-gray-500">Embalagem</p>
+              <p class="text-xs text-gray-500">Embalagem Padrão</p>
               <p class="font-medium">${produto.embalagem}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="p-5 bg-[#fdfdfd] border border-[#aea100]/30 rounded-xl">
+      <div class="border border-gray-200 rounded-xl p-5">
+        <h3 class="font-medium mb-4 text-[#1a2e1a]">Personalização</h3>
+
+        <div class="mb-4">
+          <p class="text-sm font-medium mb-2">Tipo de Embalagem</p>
+          <label class="flex items-center gap-2 cursor-pointer mb-2">
+            <input type="radio" name="embalagem" value="padrao" checked
+                   onchange="atualizarPersonalizacao()" class="accent-[#1a2e1a]">
+            <span class="text-sm">${produto.embalagem} (incluso)</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="embalagem" value="premium"
+                   onchange="atualizarPersonalizacao()" class="accent-[#1a2e1a]">
+            <span class="text-sm">Embalagem Premium +R$ 10,00</span>
+          </label>
+        </div>
+
+        <div class="mb-4">
+          <p class="text-sm font-medium mb-2">Cor da Fita</p>
+          <div class="grid grid-cols-3 gap-2">
+            ${opcoesFitaHTML}
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-2">Mensagem para Cartão</label>
+          <textarea id="mensagem-cartao"
+                    placeholder="Escreva uma mensagem especial..."
+                    class="w-full border border-gray-200 rounded-xl p-4 h-20 resize-none focus:border-[#1a2e1a] focus:ring-1 focus:ring-[#1a2e1a] outline-none transition duration-300"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-2">Observações Adicionais</label>
+          <textarea id="observacoes"
+                    placeholder="Ex: Prefiro entrega em horário comercial, indicar presente..."
+                    class="w-full border border-gray-200 rounded-xl p-4 h-16 resize-none focus:border-[#1a2e1a] focus:ring-1 focus:ring-[#1a2e1a] outline-none transition duration-300"></textarea>
+        </div>
+      </div>
+
+      <div class="bg-gray-50 rounded-xl p-5">
         <h3 class="font-medium mb-4 text-[#1a2e1a] flex items-center gap-2">
           <svg class="w-5 h-5 text-[#aea100]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
@@ -253,13 +350,6 @@ function abrirModalPorId(id) {
         </div>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium mb-2 text-[#1a2e1a]">Mensagem Opcional (para cartão)</label>
-        <textarea id="mensagem-cartao"
-                  placeholder="Escreva uma mensagem especial para o cartão..."
-                  class="w-full border border-gray-200 rounded-xl p-4 h-24 resize-none focus:border-[#1a2e1a] focus:ring-1 focus:ring-[#1a2e1a] outline-none transition duration-300"></textarea>
-      </div>
-
       <div class="flex items-center gap-4">
         <span class="text-sm font-medium text-[#1a2e1a]">Quantidade:</span>
         <div class="flex items-center border border-[#1a2e1a] rounded-full">
@@ -271,6 +361,11 @@ function abrirModalPorId(id) {
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
           </button>
         </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <span class="text-sm text-gray-500">Valor total:</span>
+        <span id="preco-total-modal" class="text-2xl font-bold text-[#1a2e1a]">R$ ${produto.preco.toFixed(2)}</span>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 pt-2">
@@ -286,7 +381,6 @@ function abrirModalPorId(id) {
     </div>
   `;
 
-  // Animação de entrada do modal
   if (modalContent) {
     modalContent.classList.add("modal-enter");
   }
@@ -297,43 +391,68 @@ function abrirModalPorId(id) {
     document.getElementById("qtd-modal").textContent = quantidadeModal;
   }
 
+  atualizarPersonalizacao();
   document.body.style.overflow = "hidden";
 }
 
-// Altera a quantidade no modal (mínimo 1)
+// ================= QUANTIDADE =================
+
 function alterarQuantidadeModal(delta) {
   quantidadeModal = Math.max(1, quantidadeModal + delta);
   document.getElementById("qtd-modal").textContent = quantidadeModal;
+  atualizarPersonalizacao();
 }
 
-// Adiciona o produto do modal ao carrinho
+// ================= ADICIONAR AO CARRINHO (via modal) =================
+
 function adicionarAoCarrinhoModal() {
   if (!produtoAtual) return;
+
+  const personalizacao = obterDadosPersonalizacao();
+  const adicional = calcularAdicionais();
+  const precoFinal = produtoAtual.preco + adicional;
+
   addToCart({
     name: produtoAtual.nome,
-    price: produtoAtual.preco,
-    qty: quantidadeModal
+    price: precoFinal,
+    qty: quantidadeModal,
+    personalizacao: {
+      embalagem: personalizacao.embalagem === "premium" ? "Embalagem Premium" : produtoAtual.embalagem,
+      fita: OPCOES_FITA.find(f => f.valor === personalizacao.fita)?.nome || "Sem fita",
+      mensagem: personalizacao.mensagem,
+      observacoes: personalizacao.observacoes,
+    },
   });
+
   showToast(`${quantidadeModal}x ${produtoAtual.nome} adicionado(s) ao carrinho!`);
   fecharModal();
 }
 
-// Abre WhatsApp com detalhes do produto do modal
+// ================= COMPRAR VIA WHATSAPP (via modal) =================
+
 function comprarViaWhatsAppModal() {
   if (!produtoAtual) return;
 
-  const mensagem = document.getElementById("mensagem-cartao")?.value || "";
-  const total = produtoAtual.preco * quantidadeModal;
+  const personalizacao = obterDadosPersonalizacao();
+  const adicional = calcularAdicionais();
+  const precoFinal = produtoAtual.preco + adicional;
+  const total = precoFinal * quantidadeModal;
 
   let texto = `*Novo Pedido - Flor do Sol*%0A%0A`;
   texto += `📦 Produto: ${produtoAtual.nome}%0A`;
-  texto += `💰 Preço Unitário: R$ ${produtoAtual.preco.toFixed(2)}%0A`;
+  texto += `💰 Preço Unitário: R$ ${precoFinal.toFixed(2)}%0A`;
   texto += `🔢 Quantidade: ${quantidadeModal}%0A`;
   texto += `📏 Tamanho: ${produtoAtual.tamanho}%0A`;
-  texto += `🎁 Embalagem: ${produtoAtual.embalagem}%0A`;
 
-  if (mensagem) {
-    texto += `%0A💬 Mensagem: "${mensagem}"`;
+  const nomeEmbalagem = personalizacao.embalagem === "premium" ? "Embalagem Premium" : produtoAtual.embalagem;
+  texto += `🎁 Embalagem: ${nomeEmbalagem}%0A`;
+  texto += `🎀 Fita: ${OPCOES_FITA.find(f => f.valor === personalizacao.fita)?.nome || "Sem fita"}%0A`;
+
+  if (personalizacao.mensagem) {
+    texto += `%0A💬 Mensagem: "${personalizacao.mensagem}"`;
+  }
+  if (personalizacao.observacoes) {
+    texto += `%0A📝 Obs: "${personalizacao.observacoes}"`;
   }
 
   texto += `%0A%0A💵 Total: R$ ${total.toFixed(2)}`;
@@ -342,7 +461,8 @@ function comprarViaWhatsAppModal() {
   window.open(url, "_blank");
 }
 
-// Fecha o modal com animação
+// ================= FECHAR MODAL =================
+
 function fecharModal() {
   const modalContent = document.querySelector(".modal-content");
   if (modalContent) {
@@ -359,38 +479,37 @@ function fecharModal() {
   produtoAtual = null;
 }
 
-// Helper para compatibilidade (aceita objeto produto)
 function abrirModal(produto) {
   if (produto && produto.id) {
     abrirModalPorId(produto.id);
   }
 }
 
-// Expõe funções do modal no escopo global (chamadas via onclick no HTML)
+// ================= EXPOSIÇÃO GLOBAL =================
+
 window.abrirModalPorId = abrirModalPorId;
 window.abrirModal = abrirModal;
 window.fecharModal = fecharModal;
 window.alterarQuantidadeModal = alterarQuantidadeModal;
 window.adicionarAoCarrinhoModal = adicionarAoCarrinhoModal;
 window.comprarViaWhatsAppModal = comprarViaWhatsAppModal;
+window.atualizarPersonalizacao = atualizarPersonalizacao;
 
 // ================= ADICIONAR AO CARRINHO (via JS) =================
 
 function handleAddToCart(produto) {
   addToCart({
     name: produto.nome,
-    price: produto.preco
+    price: produto.preco,
   });
   showToast(`${produto.nome} adicionado ao carrinho!`);
 }
 
 // ================= INIT =================
 
-// Lê parâmetro ?cat= da URL para filtrar categoria inicial
 const params = new URLSearchParams(window.location.search);
 const catURL = params.get("cat");
 
-// Aguarda o DOM para renderizar os produtos
 window.addEventListener("DOMContentLoaded", () => {
   if (catURL) {
     categoriaAtual = catURL;

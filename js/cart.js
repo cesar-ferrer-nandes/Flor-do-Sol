@@ -5,12 +5,13 @@ const WHATSAPP_NUMBER = "5511999999999";
 
 // ================= ESTADO DO CARRINHO =================
 
-// Carrega o carrinho do localStorage ou inicia vazio
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+// Carrega o carrinho da sessão (sessionStorage) ou inicia vazio
+// sessionStorage persiste entre páginas na mesma aba, mas é limpo ao fechar a aba
+let cart = JSON.parse(sessionStorage.getItem("flordosol-cart")) || [];
 
-// Persiste o carrinho no localStorage
+// Persiste o carrinho na sessão atual
 function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(cart));
+  sessionStorage.setItem("flordosol-cart", JSON.stringify(cart));
 }
 
 // Adiciona um produto ao carrinho (incrementa quantidade se já existir)
