@@ -52,7 +52,8 @@
 
   <!-- CATEGORIAS: navegação rápida para Plantas, Arranjos e Serviços -->
   <section class="py-16 max-w-7xl mx-auto px-6 fade-in">
-    <h2 class="text-center text-3xl mb-12">Explore por Categoria</h2>
+    <h2 class="text-center text-3xl mb-4">Explore por Categoria</h2>
+    <p class="text-center text-gray-500 max-w-xl mx-auto mb-12">Encontre exatamente o que você precisa para dar vida ao seu espaço ou presentear alguém especial.</p>
     <div class="grid md:grid-cols-3 gap-8">
       <a href="catalogo.html?cat=plantas" class="relative overflow-hidden rounded-2xl group cursor-pointer">
         <img src="assets/images/plantas.jpeg"
@@ -74,7 +75,8 @@
 
   <!-- POPULARES: grid de produtos em destaque, renderizado via index.js -->
   <section class="py-16 max-w-7xl mx-auto px-6 fade-in">
-    <h2 class="text-3xl mb-12">Mais Populares do Jardim</h2>
+    <h2 class="text-3xl mb-4">Mais Populares do Jardim</h2>
+    <p class="text-gray-500 mb-12">Nossos queridinhos e as tendências da estação.</p>
     <div id="populares-grid" class="grid md:grid-cols-4 gap-6"></div>
   </section>
 
@@ -91,11 +93,26 @@
   </section>
 
   <!-- DEPOIMENTO: bloco de prova social -->
-  <section class="py-16 text-center max-w-2xl mx-auto fade-in">
-    <div class="flex justify-center mb-4 text-[#aea100] text-xl">★★★★★</div>
-    <p class="italic text-lg">
-      “As plantas chegaram perfeitas e transformaram completamente meu ambiente. Atendimento impecável!”
-    </p>
+  <section class="container mx-auto px-4 text-center py-16 fade-in">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex justify-center gap-1 mb-6">
+        <svg class="w-6 h-6 text-[#aea100]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="w-6 h-6 text-[#aea100]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="w-6 h-6 text-[#aea100]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="w-6 h-6 text-[#aea100]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="w-6 h-6 text-[#aea100]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <h2 class="font-heading text-3xl font-bold italic">
+        &ldquo;As plantas chegaram perfeitas e transformaram completamente meu ambiente. Atendimento impecável!&rdquo;
+      </h2>
+      <div class="flex items-center justify-center gap-4 mt-8">
+        <img src="assets/images/maria.jpg" alt="Maria Silva" class="w-12 h-12 rounded-full object-cover">
+        <div class="text-left">
+          <p class="font-bold">Maria Silva</p>
+          <p class="text-sm text-gray-500">Cliente desde 2024</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Container para notificações toast (inseridas via toast.js) -->

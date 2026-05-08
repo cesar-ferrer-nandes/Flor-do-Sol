@@ -133,8 +133,12 @@ button:active {
   }
 }
 
-/* Utilitário para usar Playfair Display em elementos específicos */
+/* Utilitários para usar Playfair Display em elementos específicos */
 .font-playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-heading {
   font-family: 'Playfair Display', serif;
 }
 
