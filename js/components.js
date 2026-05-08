@@ -24,11 +24,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadComponent("navbar", "components/navbar.html");
   await loadComponent("footer", "components/footer.html");
 
-  // Re-sincroniza o badge do carrinho agora que a navbar existe no DOM
-  const badge = document.getElementById("cart-count");
-  if (badge) {
-    const dados = JSON.parse(sessionStorage.getItem("flordosol-cart"));
-    badge.innerText = dados ? dados.length : 0;
+  // Re-sincroniza os badges do carrinho e favoritos agora que a navbar existe no DOM
+  const cartBadge = document.getElementById("cart-count");
+  if (cartBadge) {
+    const cartData = JSON.parse(sessionStorage.getItem("flordosol-cart"));
+    cartBadge.innerText = cartData ? cartData.length : 0;
+  }
+
+  // Badge de favoritos: mostra o contador e oculta quando vazio
+  const favBadge = document.getElementById("favoritos-count");
+  if (favBadge) {
+    const favData = JSON.parse(sessionStorage.getItem("flordosol-favoritos"));
+    const count = favData ? favData.length : 0;
+    favBadge.innerText = count;
+    favBadge.classList.toggle("hidden", count === 0);
   }
 
   // Scroll reveal: ativa fade-in conforme o usuário rola a página

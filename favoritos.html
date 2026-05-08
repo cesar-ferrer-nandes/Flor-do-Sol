@@ -14,12 +14,11 @@
   <link rel="stylesheet" href="css/style.css">
 
   <!-- SEO e Open Graph -->
-  <meta name="description" content="Flor do Sol - Plantas, arranjos e serviços para transformar seu ambiente com elegância e naturalidade.">
-  <meta property="og:title" content="Flor do Sol">
-  <meta property="og:description" content="Plantas, arranjos e serviços para transformar seu ambiente com elegância e naturalidade.">
+  <meta name="description" content="Meus Favoritos - Flor do Sol. Sua seleção especial de plantas e arranjos preferidos.">
+  <meta property="og:title" content="Meus Favoritos - Flor do Sol">
+  <meta property="og:description" content="Sua seleção especial de plantas e arranjos preferidos.">
   <meta property="og:type" content="website">
-  <title>Flor do Sol</title>
-
+  <title>Meus Favoritos - Flor do Sol</title>
 </head>
 
 <body class="bg-[#fdfdfd] text-[#1a2e1a]">
@@ -27,75 +26,32 @@
   <!-- NAVBAR: injetado via components.js -->
   <div id="navbar"></div>
 
-  <!-- HERO: banner principal com call-to-action para catálogo e serviços -->
-  <section class="h-[85vh] relative flex items-center">
-    <img src="assets/images/papoulas.jpg"
-         class="absolute w-full h-full object-cover">
-    <div class="absolute inset-0 bg-black/30"></div>
-    <div class="relative z-10 px-6 md:pl-16 text-white">
-      <h1 class="hero-slide-in hero-slide-in-delay-1 max-w-2xl text-4xl md:text-6xl mb-6">Beleza natural para todos os momentos</h1>
-      <p class="hero-slide-in hero-slide-in-delay-2 max-w-xl mb-8 opacity-90">
-        Descubra plantas e arranjos que transformam ambientes e criam experiências únicas com elegância e naturalidade.
-      </p>
-      <div class="hero-slide-in hero-slide-in-delay-3 flex gap-4 flex-wrap">
-        <a href="catalogo.html"
-           class="bg-[#1a2e1a] px-8 py-4 rounded-full text-white hover:opacity-90 transition duration-300 text-center">
-          Ver catálogo
-        </a>
-        <a href="catalogo.html?cat=servicos"
-           class="bg-[#aea100] text-white px-8 py-4 rounded-full hover:opacity-90 transition duration-300 text-center">
-          Nossos serviços
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CATEGORIAS: navegação rápida para Plantas, Arranjos e Serviços -->
-  <section class="py-16 max-w-7xl mx-auto px-6 fade-in">
-    <h2 class="text-center text-3xl mb-12">Explore por Categoria</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <a href="catalogo.html?cat=plantas" class="relative overflow-hidden rounded-2xl group cursor-pointer">
-        <img src="assets/images/plantas.jpeg"
-             class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
-        <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Plantas</div>
-      </a>
-      <a href="catalogo.html?cat=arranjos" class="relative overflow-hidden rounded-2xl group cursor-pointer">
-        <img src="assets/images/arranjos.jpeg"
-             class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
-        <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Arranjos</div>
-      </a>
-      <a href="catalogo.html?cat=servicos" class="relative overflow-hidden rounded-2xl group cursor-pointer">
-        <img src="assets/images/serviços.jpeg"
-             class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
-        <div class="absolute bottom-0 bg-black/40 w-full p-4 text-white text-xl">Serviços</div>
-      </a>
-    </div>
-  </section>
-
-  <!-- POPULARES: grid de produtos em destaque, renderizado via index.js -->
-  <section class="py-16 max-w-7xl mx-auto px-6 fade-in">
-    <h2 class="text-3xl mb-12">Mais Populares do Jardim</h2>
-    <div id="populares-grid" class="grid md:grid-cols-4 gap-6"></div>
-  </section>
-
-  <!-- DICAS: seção de call-to-action para o blog -->
-  <section class="grid md:grid-cols-2 fade-in">
-    <div class="bg-gray-100 flex flex-col justify-center p-12">
-      <h2 class="text-3xl mb-4">Aprenda a cuidar das suas plantas</h2>
-      <p class="mb-6">Descubra técnicas essenciais para manter suas plantas sempre saudáveis e bonitas.</p>
-      <a href="blog.html" class="border border-[#1a2e1a] px-6 py-3 rounded-full hover:bg-[#1a2e1a] hover:text-white transition">
-        Ler nosso blog
-      </a>
-    </div>
-    <img src="assets/images/cuidadosBlog.jpg" class="w-full h-full object-cover">
-  </section>
-
-  <!-- DEPOIMENTO: bloco de prova social -->
-  <section class="py-16 text-center max-w-2xl mx-auto fade-in">
-    <div class="flex justify-center mb-4 text-[#aea100] text-xl">★★★★★</div>
-    <p class="italic text-lg">
-      “As plantas chegaram perfeitas e transformaram completamente meu ambiente. Atendimento impecável!”
+  <!-- HEADER DA PÁGINA: breadcrumb, título e subtítulo -->
+  <section class="pt-28 pb-10 text-center">
+    <p class="text-sm text-gray-400 mb-2">Início > Favoritos</p>
+    <h1 class="text-4xl mb-3">Meus Favoritos</h1>
+    <p class="text-gray-500 max-w-xl mx-auto">
+      Sua seleção especial — as plantas e arranjos que mais encantaram você.
     </p>
+    <p id="favoritos-count-info" class="text-sm text-gray-400 mt-2"></p>
+  </section>
+
+  <!-- GRID DE FAVORITOS: renderizado via favoritos.js -->
+  <section class="max-w-7xl mx-auto px-6 pb-20">
+    <div id="favoritos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+
+    <!-- ESTADO VAZIO: exibido quando não há favoritos salvos -->
+    <div id="empty-state" class="hidden text-center py-20">
+      <svg class="w-16 h-16 mx-auto mb-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+      </svg>
+      <p class="text-gray-400 text-lg mb-2">Você ainda não escolheu suas plantas favoritas</p>
+      <p class="text-gray-400 text-sm mb-8">Explore nosso catálogo e salve seus itens preferidos.</p>
+      <a href="catalogo.html"
+         class="inline-block bg-[#1a2e1a] text-white px-8 py-3 rounded-full hover:opacity-90 transition">
+        Explorar Catálogo
+      </a>
+    </div>
   </section>
 
   <!-- Container para notificações toast (inseridas via toast.js) -->
@@ -170,11 +126,10 @@
   </div>
 
   <!-- SCRIPTS: ordem de carregamento respeita dependências -->
-  <script src="js/cart.js"></script>       <!-- Estado global do carrinho -->
+  <script src="js/cart.js"></script>       <!-- Constante WHATSAPP_NUMBER e estado do carrinho -->
   <script src="js/toast.js"></script>      <!-- Notificações toast -->
-  <script src="js/catalogo.js"></script>   <!-- Catálogo, modal e funções de produto -->
+  <script src="js/catalogo.js"></script>   <!-- Dados dos produtos e funções de modal -->
   <script src="js/favoritos.js"></script>  <!-- Gerenciamento de favoritos -->
-  <script src="js/index.js"></script>      <!-- Renderização da seção de populares -->
   <script src="js/login.js"></script>      <!-- Modal de login -->
   <script src="js/components.js"></script> <!-- Injeção de navbar/footer + scroll reveal -->
 

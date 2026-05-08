@@ -124,15 +124,15 @@ function renderizarCarrinho() {
   const entregaSection = document.getElementById("entrega-section");
   if (entregaSection) entregaSection.classList.toggle("hidden", vazio);
 
+  const badge = document.getElementById("cart-count");
+  if (badge) badge.innerText = carrinho.length;
+
   if (vazio) {
     CartElements.container.innerHTML = "";
     return;
   }
 
   CartElements.info.innerText = `${carrinho.length} ite${carrinho.length > 1 ? "ns" : "m"}`;
-
-  const badge = document.getElementById("cart-count");
-  if (badge) badge.innerText = carrinho.length;
 
   CartElements.container.innerHTML = carrinho.map((item, indice) => {
     const p = item.personalizacao;
