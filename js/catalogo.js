@@ -143,15 +143,6 @@ document.querySelectorAll(".tab").forEach(btn => {
   });
 });
 
-// ================= WHATSAPP DIRETO =================
-// Abre WhatsApp com mensagem sobre um produto específico.
-
-function comprar(nome, preco) {
-  const msg = `Olá! Tenho interesse em "${nome}" no valor de R$ ${preco.toFixed(2)}.`;
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
-}
-
 // ================= MODAL DE PRODUTO =================
 // Estado do modal: referências ao DOM, produto atual e quantidade.
 
@@ -441,6 +432,7 @@ function adicionarAoCarrinhoModal() {
     name: produtoAtual.nome,
     price: precoFinal,
     qty: quantidadeModal,
+    imagem: produtoAtual.imagem,
     personalizacao: {
       embalagem: personalizacao.embalagem === "premium" ? "Embalagem Premium" : produtoAtual.embalagem,
       fita: OPCOES_FITA.find(f => f.valor === personalizacao.fita)?.nome || "Sem fita",
@@ -531,6 +523,7 @@ function handleAddToCart(produto) {
   addToCart({
     name: produto.nome,
     price: produto.preco,
+    imagem: produto.imagem,
   });
   showToast(`${produto.nome} adicionado ao carrinho!`);
 }

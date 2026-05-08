@@ -14,9 +14,13 @@ function saveCart() {
   sessionStorage.setItem("flordosol-cart", JSON.stringify(cart));
 }
 
-// Adiciona um produto ao carrinho (incrementa quantidade se já existir)
+// Adiciona um produto ao carrinho
+// Só mescla por nome se ambos (existente e novo) NÃO tiverem personalização
 function addToCart(product) {
-  const existing = cart.find(p => p.name === product.name);
+  const semPersonalizacao = !product.personalizacao;
+  const existing = semPersonalizacao
+    ? cart.find(p => p.name === product.name && !p.personalizacao)
+    : undefined;
 
   if (existing) {
     existing.qty = (existing.qty || 1) + (product.qty || 1);

@@ -52,6 +52,7 @@ function adicionarAoCarrinho(produto) {
       name: produto.name,
       price: produto.price,
       qty: produto.qty || 1,
+      imagem: produto.imagem || null,
       personalizacao: produto.personalizacao || null,
     });
   }
@@ -137,9 +138,11 @@ function renderizarCarrinho() {
     const p = item.personalizacao;
     const temPersonalizacao = p && (p.embalagem || p.fita !== "Sem fita" || p.mensagem || p.observacoes);
 
+    const imgSrc = item.imagem || "assets/images/placeholder.jpg";
     return `
     <div class="flex items-start gap-4 border-b pb-4">
-      <div class="w-20 aspect-[4/5] bg-gray-200 rounded-lg shrink-0"></div>
+      <img src="${imgSrc}" alt="${item.name}"
+           class="w-20 aspect-[4/5] object-cover rounded-lg shrink-0">
       <div class="flex-1 min-w-0">
         <h3 class="font-medium">${item.name}</h3>
         <p class="text-sm text-gray-400">${formatarMoeda(item.price)}</p>
@@ -226,6 +229,6 @@ window.atualizarQuantidade = atualizarQuantidade;
 window.finalizarPedido = finalizarPedido;
 
 // ================= INIT =================
-// Renderiza o carrinho ao carregar a página.
+// Renderiza o carrinho após o DOM estar pronto e a navbar injetada.
 
-renderizarCarrinho();
+document.addEventListener("DOMContentLoaded", renderizarCarrinho);

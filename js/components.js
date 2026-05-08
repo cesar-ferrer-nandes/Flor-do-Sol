@@ -43,7 +43,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
 
   // Destaca o link da página atual no navbar
-  const currentPage = window.location.pathname.split("/").pop();
+  let currentPage = window.location.pathname.split("/").pop();
+  if (!currentPage) currentPage = "index.html";
   document.querySelectorAll("header a").forEach(link => {
     if (link.getAttribute("href") === currentPage) {
       link.classList.add("text-[#aea100]");
