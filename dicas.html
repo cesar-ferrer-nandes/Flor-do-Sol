@@ -1,116 +1,439 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- METADADOS GLOBAIS -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fontes do Google -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap">
 
-  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-  <!-- Estilos customizados -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- SEO e Open Graph -->
   <meta name="description" content="Dicas e cuidados para manter suas plantas saudáveis e bonitas. Aprenda com a Flor do Sol.">
-  <meta property="og:title" content="Dicas - Flor do Sol">
+  <meta property="og:title" content="Dicas e Cuidados - Flor do Sol">
   <meta property="og:description" content="Dicas e cuidados para manter suas plantas saudáveis.">
   <meta property="og:type" content="website">
-  <title>Dicas - Flor do Sol</title>
+  <title>Dicas e Cuidados - Flor do Sol</title>
 </head>
 
 <body class="bg-[#fdfdfd] text-[#1a2e1a]">
 
-  <!-- NAVBAR: injetado via components.js -->
   <div id="navbar"></div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main class="pt-28">
+  <main>
 
-    <!-- HEADER DA PÁGINA -->
-    <section class="text-center mb-16 px-6">
-      <h1 class="text-4xl mb-3">Dicas e Cuidados</h1>
-      <p class="text-gray-500 max-w-xl mx-auto">
-        Inspirações e orientações para cuidar das suas plantas com elegância e harmonia.
-      </p>
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- HERO — Banner principal com parallax e gradiente escuro  -->
+    <!-- Exibe título, subtítulo e CTA com animações de entrada   -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+      <!-- Imagem de fundo com parallax -->
+      <div class="absolute inset-0 parallax-bg" style="background-image: url('assets/images/cuidadosBlog.jpg');"></div>
+      <!-- Overlay gradiente escuro para contraste do texto -->
+      <div class="absolute inset-0 bg-gradient-to-r from-[#1a2e1a]/90 to-[#1a2e1a]/50"></div>
+
+      <div class="relative z-10 text-center px-6 max-w-3xl">
+        <!-- Badge de categoria com animação slide-in -->
+        <p class="text-[#aea100] tracking-[0.3em] text-sm uppercase mb-4 hero-slide-in hero-slide-in-delay-1">
+          Guia completo
+        </p>
+        <!-- Título principal com fonte serifada -->
+        <h1 class="text-5xl md:text-6xl lg:text-7xl text-white mb-6 hero-slide-in hero-slide-in-delay-1 leading-tight">
+          Dicas &<br>Cuidados
+        </h1>
+        <!-- Subtítulo descritivo -->
+        <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto hero-slide-in hero-slide-in-delay-2">
+          Tudo o que você precisa saber para manter suas plantas saudáveis, bonitas e cheias de vida durante todo o ano.
+        </p>
+        <!-- Botão CTA com sombra dourada -->
+        <div class="mt-10 hero-slide-in hero-slide-in-delay-3">
+          <a href="#categorias" class="inline-block bg-[#aea100] text-white px-8 py-3.5 rounded-full hover:opacity-90 transition font-medium shadow-lg shadow-[#aea100]/20">
+            Explorar Dicas
+          </a>
+        </div>
+      </div>
+
+      <!-- Indicador de scroll animado no centro inferior -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-pulse-soft">
+        <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+      </div>
     </section>
 
-    <!-- CONTAINER DE CONTEÚDO -->
-    <section class="max-w-6xl mx-auto px-6 pb-20">
-
-      <!-- ARTIGO EM DESTAQUE -->
-      <article class="mb-16 fade-in">
-        <div class="grid md:grid-cols-2 gap-10 items-center">
-          <div class="overflow-hidden rounded-xl">
-            <img src="assets/images/jardimSofisticado.png" alt="Jardim Sofisticado"
-                 class="aspect-[4/5] w-full object-cover hover:scale-105 transition duration-500">
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- CATEGORIAS RÁPIDAS — 4 cards-atalho flutuando sobre hero  -->
+    <!-- Cada card é um link âncora para a seção correspondente   -->
+    <!-- Ícones SVG mudam de cor no hover (grupo -> bg verde)     -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section id="categorias" class="max-w-6xl mx-auto px-6 -mt-16 relative z-20 fade-in">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <a href="#rega" class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center group">
+          <div class="w-14 h-14 bg-[#1a2e1a]/5 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-[#1a2e1a] transition-colors duration-300">
+            <svg class="w-7 h-7 text-[#1a2e1a] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+            </svg>
           </div>
+          <h3 class="text-sm font-medium">Rega</h3>
+        </a>
+        <a href="#luz" class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center group">
+          <div class="w-14 h-14 bg-[#1a2e1a]/5 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-[#1a2e1a] transition-colors duration-300">
+            <svg class="w-7 h-7 text-[#1a2e1a] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-sm font-medium">Luminosidade</h3>
+        </a>
+        <a href="#solo" class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center group">
+          <div class="w-14 h-14 bg-[#1a2e1a]/5 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-[#1a2e1a] transition-colors duration-300">
+            <svg class="w-7 h-7 text-[#1a2e1a] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+          </div>
+          <h3 class="text-sm font-medium">Solo & Adubo</h3>
+        </a>
+        <a href="#pragas" class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center group">
+          <div class="w-14 h-14 bg-[#1a2e1a]/5 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-[#1a2e1a] transition-colors duration-300">
+            <svg class="w-7 h-7 text-[#1a2e1a] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="text-sm font-medium">Pragas</h3>
+        </a>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- ARTIGO EM DESTAQUE — guia principal com 3 steps          -->
+    <!-- Layout lado a lado (imagem + conteúdo numerado)          -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section class="max-w-6xl mx-auto px-6 py-24 fade-in">
+      <div class="text-center mb-14">
+        <p class="text-[#aea100] tracking-[0.2em] text-sm uppercase mb-3">Em destaque</p>
+        <h2 class="text-4xl md:text-5xl mb-4">Guia Completo para um Jardim Sofisticado</h2>
+        <!-- Divisor floral decorativo (✦ entre linhas) -->
+        <div class="divider-floral">
+          <span class="text-[#aea100] text-2xl">✦</span>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Imagem do artigo com hover zoom -->
+        <div class="overflow-hidden rounded-2xl">
+          <img src="assets/images/jardinagem.jpg" alt="Jardim Sofisticado"
+               class="w-full aspect-[4/5] object-cover hover:scale-105 transition duration-700">
+        </div>
+        <!-- Conteúdo textual com steps numerados -->
+        <div class="space-y-6">
+          <span class="inline-block px-3 py-1 text-xs text-white bg-[#aea100] rounded-full">Guia</span>
+          <p class="text-gray-600 leading-relaxed">
+            Transformar um ambiente comum em um espaço verde e elegante é mais do que simplesmente colocar plantas aleatórias. Um jardim sofisticado requer planejamento, conhecimento das espécies e uma composição visual pensada nos mínimos detalhes.
+          </p>
+          <div class="space-y-4">
+            <!-- Step 1 -->
+            <div class="flex gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#1a2e1a]/5 flex items-center justify-center shrink-0">
+                <span class="text-sm font-bold text-[#1a2e1a]">1</span>
+              </div>
+              <div>
+                <h3 class="font-medium">Escolha das plantas</h3>
+                <p class="text-sm text-gray-500">Opte por espécies que se complementem em alturas, texturas e cores. Samambaias, orquídeas e philodendrons são excelentes para ambientes internos.</p>
+              </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="flex gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#1a2e1a]/5 flex items-center justify-center shrink-0">
+                <span class="text-sm font-bold text-[#1a2e1a]">2</span>
+              </div>
+              <div>
+                <h3 class="font-medium">Composição visual</h3>
+                <p class="text-sm text-gray-500">Agrupe plantas em números ímpares e misture vasos de diferentes materiais — cerâmica, vidro, vime — para criar profundidade.</p>
+              </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="flex gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#1a2e1a]/5 flex items-center justify-center shrink-0">
+                <span class="text-sm font-bold text-[#1a2e1a]">3</span>
+              </div>
+              <div>
+                <h3 class="font-medium">Manutenção consistente</h3>
+                <p class="text-sm text-gray-500">Cada planta tem necessidades específicas. Invista tempo em entender a rega ideal, luminosidade e adubação de cada espécie.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Metadados do artigo -->
+          <div class="flex items-center gap-3 pt-2">
+            <span class="text-xs text-gray-400">10 Abril 2026</span>
+            <span class="text-gray-200">|</span>
+            <span class="text-xs text-gray-400">5 min de leitura</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO REGA — cards com ícones coloridos por tipo          -->
+    <!-- Cada card tem bullet verde/azul/teal conforme a planta    -->
+    <!-- Layout lado a lado com imagem ilustrativa                 -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section id="rega" class="bg-[#f8f8f5] py-20 fade-in">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-14 items-center">
+          <!-- Cards de dicas -->
           <div>
-            <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">Destaque</p>
-            <h2 class="text-3xl mb-4 leading-snug">O guia completo para montar um jardim sofisticado</h2>
-            <p class="text-gray-500 mb-4">
-              Descubra como transformar seu ambiente com plantas selecionadas e composição visual elegante.
+            <span class="inline-block px-3 py-1 text-xs text-white bg-[#1a2e1a] rounded-full mb-4">Rega</span>
+            <h2 class="text-3xl md:text-4xl mb-6">Rega ideal para cada tipo de planta</h2>
+            <p class="text-gray-600 leading-relaxed mb-6">
+              Um dos erros mais comuns de quem cuida de plantas é acertar a frequência da rega. Cada espécie tem necessidades diferentes e entender isso é fundamental para o cultivo saudável.
             </p>
-            <span class="text-sm text-gray-400">10 Abril 2026</span>
-            <a href="blog.html"
-               class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-4 hover:text-[#aea100] transition">
-              Ler artigo completo
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            <div class="space-y-4">
+              <!-- Card Suculentas -->
+              <div class="bg-white rounded-xl p-5 flex items-start gap-4 shadow-sm">
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-medium text-sm">Suculentas e Cactos</h3>
+                  <p class="text-xs text-gray-500">Regue apenas quando o solo estiver completamente seco. Em média, 1 vez por semana no verão e 1 vez por mês no inverno.</p>
+                </div>
+              </div>
+              <!-- Card Tropicais -->
+              <div class="bg-white rounded-xl p-5 flex items-start gap-4 shadow-sm">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-medium text-sm">Plantas Tropicais</h3>
+                  <p class="text-xs text-gray-500">Mantenha o solo levemente úmido, não encharcado. Regue 2 a 3 vezes por semana no verão, reduzindo no inverno.</p>
+                </div>
+              </div>
+              <!-- Card Samambaias -->
+              <div class="bg-white rounded-xl p-5 flex items-start gap-4 shadow-sm">
+                <div class="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-medium text-sm">Samambaias</h3>
+                  <p class="text-xs text-gray-500">Apreciam solo constantemente úmido. Se as bordas das folhas ficarem douradas, é sinal de que precisam de mais água.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Imagem lateral -->
+          <div class="overflow-hidden rounded-2xl">
+            <img src="assets/images/Rega_Rega.jpg" alt="Rega de plantas"
+                 class="w-full aspect-[4/5] object-cover hover:scale-105 transition duration-700">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO LUMINOSIDADE — 3 dicas com borda lateral colorida   -->
+    <!-- Layout espelhado (imagem à esquerda, texto à direita)     -->
+    <!-- Inclui box "Dica" destacada no final                      -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section id="luz" class="py-20 fade-in">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-14 items-center">
+          <!-- Imagem (ordem 2 em mobile, 1 em desktop) -->
+          <div class="overflow-hidden rounded-2xl order-2 md:order-1">
+            <img src="assets/images/Jardinagem_Sol.jpg" alt="Luminosidade para plantas"
+                 class="w-full aspect-[4/5] object-cover hover:scale-105 transition duration-700">
+          </div>
+          <!-- Conteúdo (ordem 1 em mobile, 2 em desktop) -->
+          <div class="order-1 md:order-2">
+            <span class="inline-block px-3 py-1 text-xs text-white bg-[#1a2e1a] rounded-full mb-4">Luminosidade</span>
+            <h2 class="text-3xl md:text-4xl mb-6">A importância da luz certa</h2>
+            <p class="text-gray-600 leading-relaxed mb-6">
+              A luz é o combustível das plantas. Cada espécie evoluiu em condições específicas de luminosidade e recriar esse ambiente é essencial para seu desenvolvimento.
+            </p>
+            <!-- Dicas com borda lateral (gold, verde, cinza) -->
+            <div class="grid gap-4">
+              <div class="border-l-4 border-[#aea100] pl-5">
+                <h3 class="font-medium">Luz indireta brilhante</h3>
+                <p class="text-sm text-gray-500">Ideal para a maioria das plantas de interior. Posicione próximo a janelas voltadas para leste ou norte.</p>
+              </div>
+              <div class="border-l-4 border-[#1a2e1a] pl-5">
+                <h3 class="font-medium">Sombra parcial</h3>
+                <p class="text-sm text-gray-500">Perfeita para samambaias, marantas e lírios da paz. Funciona bem em ambientes com luz filtrada.</p>
+              </div>
+              <div class="border-l-4 border-gray-300 pl-5">
+                <h3 class="font-medium">Sol direto</h3>
+                <p class="text-sm text-gray-500">Reservado para suculentas, cactos e algumas espécies de flores. Cuidado com queimaduras nas folhas.</p>
+              </div>
+            </div>
+            <!-- Box de dica destacada -->
+            <div class="mt-6 bg-gray-50 rounded-xl p-5">
+              <p class="text-sm text-gray-500 flex items-start gap-3">
+                <svg class="w-5 h-5 text-[#aea100] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span><strong class="text-[#1a2e1a]">Dica:</strong> Observe sua planta! Folhas menores, cor mais pálida e crescimento lento são sinais de pouca luz.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO SOLO & ADUBO — accordions interativos (<details>)   -->
+    <!-- Cada accordion abre/fecha com rotação do ícone SVG        -->
+    <!-- Layout lado a lado com imagem ilustrativa                 -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section id="solo" class="bg-[#f8f8f5] py-20 fade-in">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-14 items-center">
+          <!-- Accordions de dicas -->
+          <div>
+            <span class="inline-block px-3 py-1 text-xs text-white bg-[#1a2e1a] rounded-full mb-4">Solo & Adubo</span>
+            <h2 class="text-3xl md:text-4xl mb-6">A base de tudo: solo e nutrientes</h2>
+            <p class="text-gray-600 leading-relaxed mb-6">
+              Um solo de qualidade é o alicerce para plantas saudáveis. A escolha do substrato correto e a adubação na frequência certa fazem toda a diferença.
+            </p>
+            <div class="space-y-4">
+              <!-- Accordion 1: Substrato -->
+              <details class="bg-white rounded-xl p-5 shadow-sm group open:ring-1 open:ring-[#aea100] transition">
+                <summary class="cursor-pointer font-medium text-sm flex items-center justify-between">
+                  Qual substrato usar?
+                  <svg class="w-4 h-4 text-gray-400 group-open:rotate-180 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="text-xs text-gray-500 mt-3 leading-relaxed">
+                  Plantas verdes preferem substrato rico em matéria orgânica. Suculentas precisam de areia e drenagem. Orquídeas requerem casca de pinus. Use sempre vasos com furos.
+                </p>
+              </details>
+              <!-- Accordion 2: Adubação -->
+              <details class="bg-white rounded-xl p-5 shadow-sm group open:ring-1 open:ring-[#aea100] transition">
+                <summary class="cursor-pointer font-medium text-sm flex items-center justify-between">
+                  Quando adubar?
+                  <svg class="w-4 h-4 text-gray-400 group-open:rotate-180 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="text-xs text-gray-500 mt-3 leading-relaxed">
+                  A adubação deve ser feita na primavera e no verão, quando as plantas estão em crescimento ativo. No outono e inverno, reduza ou suspenda. Prefira adubos orgânicos.
+                </p>
+              </details>
+              <!-- Accordion 3: Deficiência -->
+              <details class="bg-white rounded-xl p-5 shadow-sm group open:ring-1 open:ring-[#aea100] transition">
+                <summary class="cursor-pointer font-medium text-sm flex items-center justify-between">
+                  Como saber se falta nutriente?
+                  <svg class="w-4 h-4 text-gray-400 group-open:rotate-180 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <p class="text-xs text-gray-500 mt-3 leading-relaxed">
+                  Folhas amareladas indicam falta de nitrogênio. Bordas queimadas sugerem excesso de sais. Crescimento lento pode ser falta de fósforo. Observe e ajuste.
+                </p>
+              </details>
+            </div>
+          </div>
+          <!-- Imagem lateral -->
+          <div class="overflow-hidden rounded-2xl">
+            <img src="assets/images/Jardinagem_Substrato.jpg" alt="Solo e nutrientes"
+                 class="w-full aspect-[4/5] object-cover hover:scale-105 transition duration-700">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO PRAGAS — 3 cards com borda superior colorida        -->
+    <!-- Cada card: ícone, descrição, solução prática              -->
+    <!-- Card do meio deslocado para baixo (md:mt-8) para efeito   -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section id="pragas" class="py-20 fade-in">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-14">
+          <p class="text-[#aea100] tracking-[0.2em] text-sm uppercase mb-3">Problemas comuns</p>
+          <h2 class="text-3xl md:text-4xl mb-4">Pragas e Doenças: como identificar e tratar</h2>
+          <div class="divider-floral">
+            <span class="text-[#aea100] text-2xl">✦</span>
+          </div>
+          <p class="text-gray-500 max-w-2xl mx-auto mt-6">
+            Identificar cedo o problema é o segredo para salvar sua planta. Confira os sinais mais comuns e como agir em cada caso.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Card Cochonilhas (borda vermelha) -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-red-400">
+            <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-5">
+              <svg class="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/>
               </svg>
+            </div>
+            <h3 class="text-lg mb-3">Cochonilhas</h3>
+            <p class="text-sm text-gray-500 mb-4">Pequenas manchas brancas ou marrons nas folhas e caules. Elas sugam a seiva e enfraquecem a planta.</p>
+            <p class="text-xs font-medium text-[#1a2e1a]">✅ Solução: Álcool 70% com cotonete ou óleo de neem.</p>
+          </div>
+
+          <!-- Card Fungos (borda amarela, deslocado) -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-yellow-400 md:mt-8">
+            <div class="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center mb-5">
+              <svg class="w-7 h-7 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg mb-3">Fungos nas folhas</h3>
+            <p class="text-sm text-gray-500 mb-4">Manchas escuras ou esbranquiçadas, geralmente causadas por excesso de umidade e má circulação de ar.</p>
+            <p class="text-xs font-medium text-[#1a2e1a]">✅ Solução: Remova folhas afetadas e aplique fungicida caseiro (bicarbonato + água).</p>
+          </div>
+
+          <!-- Card Pulgões (borda verde) -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-t-4 border-green-400">
+            <div class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mb-5">
+              <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+            </div>
+            <h3 class="text-lg mb-3">Ácaros e pulgões</h3>
+            <p class="text-sm text-gray-500 mb-4">Folhas enroladas, manchas amareladas e teias finas. Infestações avançadas podem matar a planta.</p>
+            <p class="text-xs font-medium text-[#1a2e1a]">✅ Solução: Calda de fumo ou sabão neutro diluído em água.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- CTA FINAL                                               -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section class="max-w-6xl mx-auto px-6 pb-20 fade-in">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1a2e1a] to-[#0d1a0d] py-16 px-8 text-center">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-[#aea100]/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-[#aea100]/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <span class="text-5xl block mb-6">🌿</span>
+          <h2 class="text-3xl md:text-4xl text-white mb-4">Quer ver essas dicas na prática?</h2>
+          <p class="text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed">
+            Explore nosso catálogo e encontre as plantas perfeitas para começar seu jardim ou presentear alguém especial.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="catalogo.html" class="inline-block bg-[#aea100] text-white px-10 py-4 rounded-full hover:opacity-90 transition font-medium shadow-lg shadow-[#aea100]/20">
+              Ver Catálogo
+            </a>
+            <a href="blog.html" class="inline-block border-2 border-white/20 text-white px-10 py-4 rounded-full hover:bg-white/10 transition font-medium">
+              Sobre Nós
             </a>
           </div>
         </div>
-      </article>
-
-      <!-- GRID DE ARTIGOS SECUNDÁRIOS -->
-      <div class="grid gap-12 md:grid-cols-2">
-
-        <!-- CARD: Como cuidar da sua planta -->
-        <article class="group fade-in">
-          <div class="overflow-hidden rounded-xl mb-4">
-            <img src="assets/images/Cuidarplanta.png" alt="Cuidar Planta"
-                 class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-500">
-          </div>
-          <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">Cuidados</p>
-          <h2 class="text-2xl mb-2 leading-snug group-hover:opacity-80 transition">Como cuidar da sua planta</h2>
-          <p class="text-gray-500 text-sm mb-3">Aprenda técnicas essenciais para manter suas plantas sempre saudáveis.</p>
-          <span class="text-xs text-gray-400">10 Abril 2026</span>
-          <a href="blog.html"
-             class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-2 hover:text-[#aea100] transition">
-            Ler artigo completo
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </article>
-
-        <!-- CARD: Rega ideal -->
-        <article class="group fade-in">
-          <div class="overflow-hidden rounded-xl mb-4">
-            <img src="assets/images/rega.png" alt="Rega"
-                 class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-500">
-          </div>
-          <p class="text-xs text-[#aea100] mb-2 uppercase tracking-wide">Rega</p>
-          <h2 class="text-2xl mb-2 leading-snug group-hover:opacity-80 transition">Rega ideal para cada tipo de planta</h2>
-          <p class="text-gray-500 text-sm mb-3">Descubra a quantidade certa de água para manter o equilíbrio natural.</p>
-          <span class="text-xs text-gray-400">08 Abril 2026</span>
-          <a href="blog.html"
-             class="inline-flex items-center gap-1 text-sm text-[#1a2e1a] mt-2 hover:text-[#aea100] transition">
-            Ler artigo completo
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </article>
-
       </div>
     </section>
+
   </main>
 
-  <!-- FOOTER: injetado via components.js -->
   <div id="footer"></div>
 
   <!-- MODAL DE LOGIN -->
@@ -163,7 +486,6 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
   <script src="js/cart.js"></script>
   <script src="js/login.js"></script>
   <script src="js/components.js"></script>

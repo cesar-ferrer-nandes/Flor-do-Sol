@@ -136,7 +136,7 @@ function renderizarCarrinho() {
 
   CartElements.container.innerHTML = carrinho.map((item, indice) => {
     const p = item.personalizacao;
-    const temPersonalizacao = p && (p.embalagem || p.fita !== "Sem fita" || p.mensagem || p.observacoes);
+    const temPersonalizacao = p && (p.embalagem || p.vaso || p.fita !== "Sem fita" || p.mensagem || p.observacoes);
 
     const imgSrc = item.imagem || "assets/images/placeholder.jpg";
     return `
@@ -149,7 +149,8 @@ function renderizarCarrinho() {
 
         ${temPersonalizacao ? `
         <div class="mt-2 space-y-1 text-xs text-gray-500">
-          ${p.embalagem ? `<p>🎁 Embalagem: ${p.embalagem}</p>` : ""}
+          ${p.embalagem ? `<p>🎁 ${p.embalagem}${p.urso ? ' 🧸' : ''}</p>` : ""}
+          ${p.vaso ? `<p>🏺 ${p.vaso}</p>` : ""}
           ${p.fita && p.fita !== "Sem fita" ? `<p>🎀 Fita: ${p.fita}</p>` : ""}
           ${p.mensagem ? `<p>💬 "${p.mensagem}"</p>` : ""}
           ${p.observacoes ? `<p>📝 ${p.observacoes}</p>` : ""}
@@ -194,7 +195,8 @@ function finalizarPedido() {
 
     const p = item.personalizacao;
     if (p) {
-      if (p.embalagem) mensagem += `  Embalagem: ${p.embalagem}\n`;
+      if (p.embalagem) mensagem += `  Embalagem: ${p.embalagem}${p.urso ? ' (com urso 🧸)' : ''}\n`;
+      if (p.vaso) mensagem += `  Vaso: ${p.vaso}\n`;
       if (p.fita && p.fita !== "Sem fita") mensagem += `  Fita: ${p.fita}\n`;
       if (p.mensagem) mensagem += `  Mensagem: "${p.mensagem}"\n`;
       if (p.observacoes) mensagem += `  Obs: ${p.observacoes}\n`;

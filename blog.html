@@ -1,147 +1,342 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- METADADOS GLOBAIS -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fontes do Google -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap">
 
-  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-  <!-- Estilos customizados -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- SEO e Open Graph -->
-  <meta name="description" content="Blog da Flor do Sol com artigos sobre jardinagem, cuidados com plantas e decoração natural.">
-  <meta property="og:title" content="Blog - Flor do Sol">
-  <meta property="og:description" content="Artigos sobre jardinagem, cuidados com plantas e decoração natural.">
+  <meta name="description" content="Conheça a história da Flor do Sol, nossa missão, visão e valores. Uma floricultura apaixonada por levar natureza e elegância para sua vida.">
+  <meta property="og:title" content="Sobre Nós - Flor do Sol">
+  <meta property="og:description" content="Conheça a história da Flor do Sol, nossa missão, visão e valores.">
   <meta property="og:type" content="website">
-  <title>Blog - Flor do Sol</title>
+  <title>Sobre Nós - Flor do Sol</title>
+
+  <style>
+    .gradient-overlay {
+      background: linear-gradient(135deg, rgba(26, 46, 26, 0.85) 0%, rgba(26, 46, 26, 0.4) 100%);
+    }
+    .gradient-overlay-light {
+      background: linear-gradient(180deg, transparent 0%, rgba(253, 253, 253, 1) 100%);
+    }
+    .stat-number {
+      font-size: 3rem;
+      line-height: 1;
+    }
+    @media (min-width: 768px) {
+      .stat-number { font-size: 4rem; }
+    }
+  </style>
 </head>
 
 <body class="bg-[#fdfdfd] text-[#1a2e1a]">
 
-  <!-- NAVBAR: injetado via components.js -->
   <div id="navbar"></div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main class="pt-28 pb-20">
+  <main>
 
-    <!-- HEADER DA PÁGINA -->
-    <section class="text-center mb-16 px-6">
-      <p class="text-sm text-gray-400 mb-2">Início > Blog</p>
-      <h1 class="text-4xl mb-3">Blog - Flor do Sol</h1>
-      <p class="text-gray-500 max-w-xl mx-auto">
-        Dicas, orientações e inspiração para transformar seu espaço com plantas.
-      </p>
-    </section>
+    <!-- ════════════════════════════════════════════ -->
+    <!-- HERO — FULLSCREEN COM PARALLAX              -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 parallax-bg" style="background-image: url('assets/images/Blog_Banner.png');"></div>
+      <div class="absolute inset-0 gradient-overlay"></div>
 
-    <!-- LISTA DE ARTIGOS -->
-    <section class="max-w-4xl mx-auto px-6">
+      <!-- Elementos decorativos flutuantes -->
+      <div class="absolute top-20 left-10 w-24 h-24 border border-[#aea100]/30 rounded-full animate-float hidden md:block"></div>
+      <div class="absolute bottom-32 right-16 w-16 h-16 border border-[#aea100]/20 rounded-full animate-float-delayed hidden md:block"></div>
+      <div class="absolute top-1/3 right-20 w-8 h-8 bg-[#aea100]/10 rounded-full animate-pulse-soft hidden md:block"></div>
+      <div class="absolute bottom-1/4 left-20 w-12 h-12 bg-white/5 rounded-full animate-float hidden md:block" style="animation-delay: 2s;"></div>
 
-      <!-- ARTIGO 1: Jardim Sofisticado -->
-      <article class="mb-16 fade-in">
-        <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
-          <img src="assets/images/jardimSofisticado.png" alt="Jardim Sofisticado" class="w-full h-80 object-cover">
-          <div class="p-8">
-            <span class="text-xs text-[#aea100] uppercase tracking-wide">Destaque</span>
-            <h2 class="text-2xl font-playfair mt-2 mb-4">O guia completo para montar um jardim sofisticado</h2>
-            <p class="text-gray-600 mb-4">
-              Transformar um ambiente comum em um espaço verde e elegante é mais do que simplesmente colocar plantas aleatórias. Um jardim sofisticado requer planejamento, conhecimento das espécies e uma composição visual pensado.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">1. Escolha das plantas</h3>
-            <p class="text-gray-600 mb-4">
-              Opte por espécies que complementem-se entre si. Considere alturas diferentes, texturas variadas e cores que harmonicem. Plantas como samambaias, orquídeas e philodendrons são excelentes opções para ambientes internos.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">2. Composição visual</h3>
-            <p class="text-gray-600 mb-4">
-              Agrupe plantas em números ímpares (3, 5, 7) para criar equilíbrio visual. Misture vasos de diferentes tamanhos e materiais - cerâmica, vidro, vime - para adicionar dimensão.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">3. Manutenção</h3>
-            <p class="text-gray-600 mb-4">
-              Cada planta tem necessidades específicas. Invista tempo em entender a rega ideal, luminosidade e adubação de cada espécie. Um cuidado consistente trará resultados surpreendentes.
-            </p>
-            <div class="mt-8 pt-6 border-t">
-              <span class="text-sm text-gray-400">10 Abril 2026</span>
-            </div>
-          </div>
+      <div class="relative z-10 text-center px-6 max-w-4xl">
+        <p class="text-[#aea100] tracking-[0.3em] text-sm uppercase mb-6 hero-slide-in hero-slide-in-delay-1">
+          Desde 2018 cultivando sonhos
+        </p>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl text-white mb-6 hero-slide-in hero-slide-in-delay-1 leading-tight">
+          Sobre a<br>
+          <span class="gradient-text text-[#aea100]" style="-webkit-text-fill-color: #aea100;">Flor do Sol</span>
+        </h1>
+        <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto hero-slide-in hero-slide-in-delay-2">
+          Mais que uma floricultura, um refúgio de beleza natural onde cada flor conta uma história e cada arranjo é uma obra de arte.
+        </p>
+        <div class="mt-10 flex flex-wrap justify-center gap-4 hero-slide-in hero-slide-in-delay-3">
+          <a href="#historia" class="inline-block bg-[#aea100] text-white px-8 py-3.5 rounded-full hover:opacity-90 transition font-medium">
+            Conheça nossa história
+          </a>
+          <a href="catalogo.html" class="inline-block border-2 border-white/40 text-white px-8 py-3.5 rounded-full hover:bg-white/10 transition font-medium">
+            Ver Catálogo
+          </a>
         </div>
-      </article>
-
-      <!-- ARTIGO 2: Como cuidar da sua planta -->
-      <article class="mb-16 fade-in">
-        <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
-          <img src="assets/images/Cuidarplanta.png" alt="Cuidar Planta" class="w-full h-80 object-cover">
-          <div class="p-8">
-            <span class="text-xs text-[#aea100] uppercase tracking-wide">Cuidados</span>
-            <h2 class="text-2xl font-playfair mt-2 mb-4">Como cuidar da sua planta</h2>
-            <p class="text-gray-600 mb-4">
-              Manter plantas saudáveis requer atenção e conhecimento. Aqui estão as práticas essenciais para garantir que suas plantas prosperem.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">Luminosidade</h3>
-            <p class="text-gray-600 mb-4">
-              A maioria das plantas de interior prefere luz indireta brilhante. Evite sol direto que queimará as folhas. Observe sinais de pouca luz: folhas menores, cor mais pálida, crescimento lento.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">Rega adequada</h3>
-            <p class="text-gray-600 mb-4">
-              O excesso de água é mais perigoso que a falta. Antes de regar, insira o dedo 2cm no solo. Se estiver úmido, aguarde. Ao regar, água até escorrer pelos furos de drenagem.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">Umidade</h3>
-            <p class="text-gray-600 mb-4">
-              Plantas tropicais precisam de umidade. Use um prato com pedras e água embaixo do pote, grupo borrifador ou um umidificador próximo.
-            </p>
-            <div class="mt-8 pt-6 border-t">
-              <span class="text-sm text-gray-400">10 Abril 2026</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- ARTIGO 3: Rega ideal -->
-      <article class="mb-16 fade-in">
-        <div class="bg-white rounded-2xl overflow-hidden shadow-lg">
-          <img src="assets/images/rega.png" alt="Rega" class="w-full h-80 object-cover">
-          <div class="p-8">
-            <span class="text-xs text-[#aea100] uppercase tracking-wide">Rega</span>
-            <h2 class="text-2xl font-playfair mt-2 mb-4">Rega ideal para cada tipo de planta</h2>
-            <p class="text-gray-600 mb-4">
-              Diferentes plantas têm diferentes necessidades de água. Entender estas diferenças é fundamental para manter suas plantas saudáveis.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">Suculentas e cactos</h3>
-            <p class="text-gray-600 mb-4">
-              Regue apenas quando o solo estiver completamente seco. Em média, 1 vez por semana no verão e 1 vez por mês no inverno. Menos é mais para estas espécies.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">Plantas tropicais</h3>
-            <p class="text-gray-600 mb-4">
-              Mantenha o solo levemente úmido, não encharcado. Regue 2-3 vezes por semana no verão, menos no inverno. Estas plantas apreciam mais umidade.
-            </p>
-            <h3 class="font-medium mt-6 mb-2">Samambaias</h3>
-            <p class="text-gray-600 mb-4">
-              Estas adoram água! Mantenha o solo constantemente úmido. Se as bordas das folhas ficarem douradas, precisa de mais água.
-            </p>
-            <div class="mt-8 pt-6 border-t">
-              <span class="text-sm text-gray-400">08 Abril 2026</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- LINK DE VOLTAR -->
-      <div class="text-center mt-12">
-        <a href="dicas.html" class="inline-flex items-center gap-2 text-[#1a2e1a] hover:text-[#aea100] transition">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-          </svg>
-          Voltar para Dicas
-        </a>
       </div>
 
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-pulse-soft">
+        <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+      </div>
     </section>
+
+    <!-- ════════════════════════════════════════════ -->
+
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- LINHA DO TEMPO                              -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="max-w-5xl mx-auto px-6 py-24 fade-in">
+      <div class="text-center mb-16">
+        <p class="text-[#aea100] tracking-[0.2em] text-sm uppercase mb-3">Marcos importantes</p>
+        <h2 class="text-4xl md:text-5xl mb-4">Nossa trajetória</h2>
+        <div class="divider-floral">
+          <span class="text-[#aea100] text-2xl">✦</span>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="timeline-line hidden md:block"></div>
+
+        <div class="space-y-12 md:space-y-0">
+          <!-- 2018 -->
+          <div class="relative md:grid md:grid-cols-2 md:gap-16 md:mb-20">
+            <div class="md:text-right md:pr-8 mb-4 md:mb-0">
+              <span class="inline-block text-4xl md:text-5xl font-playfair text-[#aea100]">2018</span>
+            </div>
+            <div class="relative pl-8 md:pl-0">
+              <div class="timeline-dot absolute left-0 md:left-[-9px] top-1 w-4 h-4 bg-[#aea100] rounded-full border-4 border-[#fdfdfd] shadow hidden md:block"></div>
+              <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-l-4 border-[#aea100]">
+                <h3 class="font-playfair text-lg mb-2">O começo de tudo</h3>
+                <p class="text-gray-500 text-sm">Fundação da Flor do Sol em uma pequena estufa caseira. As primeiras vendas foram para amigos e familiares, mas a qualidade já chamava atenção.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2020 -->
+          <div class="relative md:grid md:grid-cols-2 md:gap-16 md:mb-20">
+            <div class="md:text-right md:pr-8 mb-4 md:mb-0 md:col-start-2 md:pl-8">
+              <span class="inline-block text-4xl md:text-5xl font-playfair text-[#aea100]">2020</span>
+            </div>
+            <div class="relative pl-8 md:pl-0 md:col-start-1 md:row-start-1 md:text-right md:pr-8">
+              <div class="timeline-dot absolute left-0 md:left-auto md:right-[-9px] top-1 w-4 h-4 bg-[#aea100] rounded-full border-4 border-[#fdfdfd] shadow hidden md:block"></div>
+              <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-r-4 border-[#aea100] md:border-l-0">
+                <h3 class="font-playfair text-lg mb-2">Primeira grande expansão</h3>
+                <p class="text-gray-500 text-sm">Mudança para o espaço próprio e contratação da primeira equipe fixa. A Flor do Sol passou a atender eventos e decorar empresas.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2022 -->
+          <div class="relative md:grid md:grid-cols-2 md:gap-16 md:mb-20">
+            <div class="md:text-right md:pr-8 mb-4 md:mb-0">
+              <span class="inline-block text-4xl md:text-5xl font-playfair text-[#aea100]">2022</span>
+            </div>
+            <div class="relative pl-8 md:pl-0">
+              <div class="timeline-dot absolute left-0 md:left-[-9px] top-1 w-4 h-4 bg-[#aea100] rounded-full border-4 border-[#fdfdfd] shadow hidden md:block"></div>
+              <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-l-4 border-[#aea100]">
+                <h3 class="font-playfair text-lg mb-2">Reconhecimento regional</h3>
+                <p class="text-gray-500 text-sm">Premiação de melhores do setor e início das operações online com entrega em toda a região. O e-commerce nasceu para levar a Flor do Sol ainda mais longe.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2024 -->
+          <div class="relative md:grid md:grid-cols-2 md:gap-16">
+            <div class="md:text-right md:pr-8 mb-4 md:mb-0 md:col-start-2 md:pl-8">
+              <span class="inline-block text-4xl md:text-5xl font-playfair text-[#aea100]">2024</span>
+            </div>
+            <div class="relative pl-8 md:pl-0 md:col-start-1 md:row-start-1 md:text-right md:pr-8">
+              <div class="timeline-dot absolute left-0 md:left-auto md:right-[-9px] top-1 w-4 h-4 bg-[#aea100] rounded-full border-4 border-[#fdfdfd] shadow hidden md:block"></div>
+              <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-r-4 border-[#aea100] md:border-l-0">
+                <h3 class="font-playfair text-lg mb-2">Inovação e crescimento</h3>
+                <p class="text-gray-500 text-sm">Lançamento do clube de assinatura de flores, consultoria paisagística online e parcerias com arquitetos e designers de interiores.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- MISSÃO, VISÃO E VALORES                     -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="relative py-24 fade-in">
+      <div class="absolute inset-0 bg-pattern"></div>
+      <div class="relative max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <p class="text-[#aea100] tracking-[0.2em] text-sm uppercase mb-3">Nossos pilares</p>
+          <h2 class="text-4xl md:text-5xl mb-4">Missão, Visão & Valores</h2>
+          <div class="divider-floral">
+            <span class="text-[#aea100] text-2xl">✦</span>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Missão -->
+          <div class="bg-white rounded-3xl p-10 shadow-xl card-hover text-center group">
+            <div class="w-20 h-20 bg-[#1a2e1a] rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:bg-[#aea100] transition-colors duration-500" style="transform: rotate(45deg);">
+              <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transform: rotate(-45deg);">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl mb-4">Missão</h3>
+            <p class="text-gray-500 leading-relaxed">
+              Transformar ambientes e emoções através da beleza natural das flores e plantas, oferecendo produtos de excelência e um atendimento que encanta e inspira.
+            </p>
+          </div>
+
+          <!-- Visão -->
+          <div class="bg-white rounded-3xl p-10 shadow-xl card-hover text-center group md:mt-8">
+            <div class="w-20 h-20 bg-[#1a2e1a] rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:bg-[#aea100] transition-colors duration-500" style="transform: rotate(45deg);">
+              <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transform: rotate(-45deg);">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl mb-4">Visão</h3>
+            <p class="text-gray-500 leading-relaxed">
+              Ser referência nacional em floricultura e decoração natural, reconhecida pela excelência dos produtos e pela experiência única e acolhedora proporcionada a cada cliente.
+            </p>
+          </div>
+
+          <!-- Valores -->
+          <div class="bg-white rounded-3xl p-10 shadow-xl card-hover text-center group">
+            <div class="w-20 h-20 bg-[#1a2e1a] rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:bg-[#aea100] transition-colors duration-500" style="transform: rotate(45deg);">
+              <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transform: rotate(-45deg);">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl mb-4">Valores</h3>
+            <ul class="text-gray-500 space-y-3 text-left max-w-[200px] mx-auto">
+              <li class="flex items-start gap-3">
+                <span class="text-[#aea100] mt-0.5">✦</span>
+                <span>Paixão pela natureza</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-[#aea100] mt-0.5">✦</span>
+                <span>Qualidade acima de tudo</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-[#aea100] mt-0.5">✦</span>
+                <span>Sustentabilidade</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-[#aea100] mt-0.5">✦</span>
+                <span>Atendimento humanizado</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-[#aea100] mt-0.5">✦</span>
+                <span>Criatividade e inovação</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- FUNDADOR                                   -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="bg-[#f8f8f5] py-24 fade-in">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <p class="text-[#aea100] tracking-[0.2em] text-sm uppercase mb-3">Quem criou</p>
+          <h2 class="text-4xl md:text-5xl mb-4">A Fundadora</h2>
+          <div class="divider-floral">
+            <span class="text-[#aea100] text-2xl">✦</span>
+          </div>
+        </div>
+
+        <div class="max-w-md mx-auto text-center">
+          <div class="relative overflow-hidden rounded-3xl mb-8 aspect-[4/5] max-w-sm mx-auto shadow-2xl">
+            <img src="assets/images/Mulher_Flor.jpg" alt="Fundadora" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-2xl mb-2">Ana Laura</h3>
+          <p class="text-[#aea100] text-sm uppercase tracking-wider mb-4">Fundadora & Designer Floral</p>
+          <p class="text-gray-500 leading-relaxed max-w-lg mx-auto">
+          Idealizadora da Flor do Sol, Ana Laura transformou sua paixão por plantas em um negócio que inspira e encanta. Com mais de 6 anos de dedicação, ela está à frente de cada criação, garantindo que cada arranjo carregue a essência única da marca.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- GALERIA                                    -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="py-24 fade-in">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <p class="text-[#aea100] tracking-[0.2em] text-sm uppercase mb-3">Registros</p>
+          <h2 class="text-4xl md:text-5xl mb-4">Galeria de momentos</h2>
+          <div class="divider-floral">
+            <span class="text-[#aea100] text-2xl">✦</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img src="assets/images/papoulas.jpg" alt="Arranjo 1" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+          </div>
+          <div class="overflow-hidden rounded-2xl aspect-square md:mt-6">
+            <img src="assets/images/pal.jpeg" alt="Arranjo 2" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+          </div>
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img src="assets/images/sub.jpeg" alt="Arranjo 3" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+          </div>
+          <div class="overflow-hidden rounded-2xl aspect-square md:mt-6">
+            <img src="assets/images/rox.jpeg" alt="Arranjo 4" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+          </div>
+          <div class="overflow-hidden rounded-2xl aspect-square md:-mt-6">
+            <img src="assets/images/arm.jpeg" alt="Arranjo 5" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+          </div>
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img src="assets/images/floo.jpeg" alt="Arranjo 6" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+          </div>
+          <div class="overflow-hidden rounded-2xl aspect-square md:-mt-6">
+            <img src="assets/images/serviços.jpeg" alt="Arranjo 7" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+          </div>
+          <div class="overflow-hidden rounded-2xl aspect-square">
+            <img src="assets/images/arranjos.jpeg" alt="Arranjo 8" class="w-full h-full object-cover hover:scale-110 transition duration-700">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!-- CTA FINAL                                  -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="max-w-6xl mx-auto px-6 pb-24 fade-in">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1a2e1a] to-[#0d1a0d] py-20 px-8 text-center">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-[#aea100]/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-[#aea100]/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <span class="inline-block text-5xl mb-6">🌻</span>
+          <h2 class="text-3xl md:text-4xl text-white mb-4">Vamos transformar seu espaço?</h2>
+          <p class="text-gray-300 mb-10 max-w-lg mx-auto leading-relaxed">
+            Explore nosso catálogo completo e descubra as flores, plantas e arranjos perfeitos para cada momento da sua vida.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="catalogo.html" class="inline-block bg-[#aea100] text-white px-10 py-4 rounded-full hover:opacity-90 transition font-medium shadow-lg shadow-[#aea100]/20">
+              Ver Catálogo Completo
+            </a>
+            <a href="dicas.html" class="inline-block border-2 border-white/20 text-white px-10 py-4 rounded-full hover:bg-white/10 transition font-medium">
+              Dicas e Cuidados
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- FOOTER: injetado via components.js -->
   <div id="footer"></div>
 
   <!-- MODAL DE LOGIN -->
@@ -194,7 +389,6 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
   <script src="js/cart.js"></script>
   <script src="js/login.js"></script>
   <script src="js/components.js"></script>
