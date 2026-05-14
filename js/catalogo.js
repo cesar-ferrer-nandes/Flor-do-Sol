@@ -19,16 +19,17 @@ const produtos = [
 ];
 
 // ================= CONFIGURAÇÃO DE PERSONALIZAÇÃO =================
-// Opções disponíveis no modal: embalagem (simples/premium), tipo de vaso e cores de fita.
+// Opções disponíveis no modal: embalagem (simples/premium), tipo de vaso (plástico/barro),
+// urso de pelúcia (sim/não) e cores de fita.
 
 const OPCOES_EMBALAGEM = {
-  simples: { nome: "Embalagem Simples", adicional: 0, urso: false },
-  premium: { nome: "Embalagem Premium", adicional: 10, urso: true },
+  simples: { nome: "Embalagem Simples", adicional: 0 },
+  premium: { nome: "Embalagem Premium", adicional: 20 },
 };
 
 const OPCOES_VASO = [
   { valor: "plastico", nome: "Vaso de Plástico", adicional: 0 },
-  { valor: "barro", nome: "Vaso de Barro", adicional: 8 },
+  { valor: "barro", nome: "Vaso de Barro", adicional: 20 },
 ];
 
 const OPCOES_FITA = [
@@ -173,13 +174,15 @@ function obterDadosPersonalizacao() {
   const embalagem = document.querySelector('input[name="embalagem"]:checked');
   const vaso = document.querySelector('input[name="vaso"]:checked');
   const fita = document.querySelector('input[name="fita"]:checked');
+  const ursoRadio = document.querySelector('input[name="urso"]:checked'); // "sim" ou "nao"
   const mensagem = document.getElementById("mensagem-cartao")?.value || "";
   const observacoes = document.getElementById("observacoes")?.value || "";
 
   return {
     embalagem: embalagem ? embalagem.value : "simples",
-    vaso: vaso ? vaso.value : "barro",
+    vaso: vaso ? vaso.value : "plastico",
     fita: fita ? fita.value : "sem",
+    ursoPelucia: ursoRadio ? ursoRadio.value === "sim" : false, // true = +R$ 50,00
     mensagem,
     observacoes,
   };
@@ -189,8 +192,8 @@ function calcularAdicionais() {
   const dados = obterDadosPersonalizacao();
   let adicional = 0;
 
-  if (dados.embalagem === "premium") {
-    adicional += OPCOES_EMBALAGEM.premium.adicional;
+  if (dados.embalagem && OPCOES_EMBALAGEM[dados.embalagem]) {
+    adicional += OPCOES_EMBALAGEM[dados.embalagem].adicional;
   }
 
   const fitaOpcao = OPCOES_FITA.find(f => f.valor === dados.fita);
@@ -201,6 +204,10 @@ function calcularAdicionais() {
   const vasoOpcao = OPCOES_VASO.find(v => v.valor === dados.vaso);
   if (vasoOpcao) {
     adicional += vasoOpcao.adicional;
+  }
+
+  if (dados.ursoPelucia) { // Urso de Pelúcia: +R$ 50,00
+    adicional += 50;
   }
 
   return adicional;
@@ -322,35 +329,50 @@ function abrirModalPorId(id) {
       <div class="border border-gray-200 rounded-xl p-5">
         <h3 class="font-medium mb-4 text-[#1a2e1a]">Personalização</h3>
 
+        <!-- Embalagem: Simples (grátis) ou Premium (+R$ 20,00) -->
         <div class="mb-4">
-          <p class="text-sm font-medium mb-2">Tipo de Embalagem</p>
           <label class="flex items-center gap-2 cursor-pointer mb-2">
             <input type="radio" name="embalagem" value="simples" checked
                    onchange="atualizarPersonalizacao()" class="accent-[#1a2e1a]">
-            <span class="text-sm">Embalagem Simples (incluso)</span>
+            <span class="text-sm">Embalagem Simples</span>
           </label>
-          <label class="flex items-center gap-3 cursor-pointer p-2 rounded-lg border border-transparent hover:border-[#aea100] hover:bg-[#aea100]/5 transition">
+          <label class="flex items-center gap-2 cursor-pointer mb-2">
             <input type="radio" name="embalagem" value="premium"
                    onchange="atualizarPersonalizacao()" class="accent-[#1a2e1a]">
-            <span class="text-sm">
-              Embalagem Premium +R$ 10,00
-              <span class="block text-xs text-gray-400 mt-0.5">Inclui urso de pelúcia 🧸</span>
-            </span>
+            <span class="text-sm">Embalagem Premium +R$ 20,00</span>
           </label>
         </div>
 
+        <!-- Vaso: Plástico (grátis) ou Barro (+R$ 20,00) -->
         <div class="mb-4">
           <p class="text-sm font-medium mb-2">Tipo de Vaso</p>
           <div class="flex gap-4">
             <label class="flex items-center gap-2 cursor-pointer">
               <input type="radio" name="vaso" value="plastico" checked
                      onchange="atualizarPersonalizacao()" class="accent-[#1a2e1a]">
-              <span class="text-sm">Vaso de Plástico (incluso)</span>
+              <span class="text-sm">Vaso de Plástico</span>
             </label>
             <label class="flex items-center gap-2 cursor-pointer">
               <input type="radio" name="vaso" value="barro"
                      onchange="atualizarPersonalizacao()" class="accent-[#1a2e1a]">
-              <span class="text-sm">Vaso de Barro +R$ 8,00</span>
+              <span class="text-sm">Vaso de Barro +R$ 20,00</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Urso de Pelúcia: opção adicional +R$ 50,00 -->
+        <div class="mb-4">
+          <p class="text-sm font-medium mb-2">Urso de Pelúcia</p>
+          <div class="flex gap-4">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="urso" value="nao" checked
+                     onchange="atualizarPersonalizacao()" class="accent-[#1a2e1a]">
+              <span class="text-sm">Sem Urso de Pelúcia</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="urso" value="sim"
+                     onchange="atualizarPersonalizacao()" class="accent-[#1a2e1a]">
+              <span class="text-sm">Adicionar Urso de Pelúcia 🧸 +R$ 50,00</span>
             </label>
           </div>
         </div>
@@ -481,8 +503,8 @@ function adicionarAoCarrinhoModal() {
     imagem: produtoAtual.imagem,
     personalizacao: {
       embalagem: optEmbalagem ? optEmbalagem.nome : "Embalagem Simples",
-      urso: optEmbalagem ? optEmbalagem.urso : false,
-      vaso: OPCOES_VASO.find(v => v.valor === personalizacao.vaso)?.nome || "Vaso de Barro",
+      ursoPelucia: personalizacao.ursoPelucia ? "Sim" : false, // Urso de Pelúcia
+      vaso: OPCOES_VASO.find(v => v.valor === personalizacao.vaso)?.nome || "Vaso de Plástico",
       fita: OPCOES_FITA.find(f => f.valor === personalizacao.fita)?.nome || "Sem fita",
       mensagem: personalizacao.mensagem,
       observacoes: personalizacao.observacoes,
@@ -513,9 +535,10 @@ function comprarViaWhatsAppModal() {
 
   const optEmbalagem = OPCOES_EMBALAGEM[personalizacao.embalagem];
   const nomeEmbalagem = optEmbalagem ? optEmbalagem.nome : "Embalagem Simples";
-  texto += `🎁 Embalagem: ${nomeEmbalagem}${optEmbalagem?.urso ? ' (com urso de pelúcia 🧸)' : ''}%0A`;
-  texto += `🏺 Vaso: ${OPCOES_VASO.find(v => v.valor === personalizacao.vaso)?.nome || "Vaso de Barro"}%0A`;
+  texto += `🎁 Embalagem: ${nomeEmbalagem}%0A`;
+  texto += `🏺 Vaso: ${OPCOES_VASO.find(v => v.valor === personalizacao.vaso)?.nome || "Vaso de Plástico"}%0A`;
   texto += `🎀 Fita: ${OPCOES_FITA.find(f => f.valor === personalizacao.fita)?.nome || "Sem fita"}%0A`;
+  texto += `🧸 Urso de Pelúcia: ${personalizacao.ursoPelucia ? 'Sim' : 'Não'}%0A`; // +R$ 50,00 se Sim
 
   if (personalizacao.mensagem) {
     texto += `%0A💬 Mensagem: "${personalizacao.mensagem}"`;
