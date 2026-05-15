@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://viacep.com.br; frame-src 'self' https://wa.me;">
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap">
 
@@ -436,56 +437,13 @@
 
   <div id="footer"></div>
 
-  <!-- MODAL DE LOGIN -->
-  <div id="modal-login" class="fixed inset-0 z-[60] hidden">
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="fecharLogin()"></div>
-    <div class="absolute inset-0 overflow-y-auto">
-      <div class="min-h-full flex items-center justify-center p-4">
-        <div class="bg-[#fdfdfd] rounded-2xl w-full max-w-md shadow-2xl relative p-8">
-          <button onclick="fecharLogin()" class="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-          <div class="flex gap-4 mb-6 border-b">
-            <button id="tab-entrar" class="tab-auth active pb-2 text-sm font-medium border-b-2 transition" onclick="alternarAuth('entrar')">Entrar</button>
-            <button id="tab-cadastrar" class="tab-auth pb-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-[#1a2e1a] transition" onclick="alternarAuth('cadastrar')">Cadastrar</button>
-          </div>
-          <form id="form-entrar" class="auth-form">
-            <p class="text-sm text-gray-400 mb-6">Acesse sua conta para acompanhar pedidos.</p>
-            <div class="mb-4">
-              <label class="block text-sm mb-1">E-mail</label>
-              <input type="email" name="email" required class="w-full border rounded-full px-4 py-2 outline-none focus:border-[#1a2e1a] transition">
-            </div>
-            <div class="mb-6">
-              <label class="block text-sm mb-1">Senha</label>
-              <input type="password" name="senha" required class="w-full border rounded-full px-4 py-2 outline-none focus:border-[#1a2e1a] transition">
-            </div>
-            <button type="submit" class="w-full bg-[#1a2e1a] text-white py-3 rounded-full hover:opacity-90 transition">Entrar</button>
-          </form>
-          <form id="form-cadastrar" class="auth-form hidden">
-            <p class="text-sm text-gray-400 mb-6">Crie sua conta para fazer pedidos.</p>
-            <div class="mb-4">
-              <label class="block text-sm mb-1">Nome completo</label>
-              <input type="text" name="nome" required class="w-full border rounded-full px-4 py-2 outline-none focus:border-[#1a2e1a] transition">
-            </div>
-            <div class="mb-4">
-              <label class="block text-sm mb-1">E-mail</label>
-              <input type="email" name="email" required class="w-full border rounded-full px-4 py-2 outline-none focus:border-[#1a2e1a] transition">
-            </div>
-            <div class="mb-4">
-              <label class="block text-sm mb-1">Senha</label>
-              <input type="password" name="senha" required class="w-full border rounded-full px-4 py-2 outline-none focus:border-[#1a2e1a] transition">
-            </div>
-            <div class="mb-6">
-              <label class="block text-sm mb-1">Confirmar senha</label>
-              <input type="password" name="confirmar" required class="w-full border rounded-full px-4 py-2 outline-none focus:border-[#1a2e1a] transition">
-            </div>
-            <button type="submit" class="w-full bg-[#1a2e1a] text-white py-3 rounded-full hover:opacity-90 transition">Criar conta</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- TOAST: container para notificações -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
 
+  <!-- MODAL DE LOGIN: injetado via components.js -->
+  <div id="modal-login" class="fixed inset-0 z-[60] hidden"></div>
+
+  <script src="js/utils.js"></script>      <!-- Utilitários (escapeHtml, parseJSONSafe) -->
   <script src="js/cart.js"></script>
   <script src="js/toast.js"></script>
   <script src="js/auth.js"></script>

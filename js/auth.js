@@ -1,14 +1,21 @@
+// ================= AUTENTICAÇÃO =================
+// Gerencia login, cadastro, token JWT e UI do usuário logado.
+// Os tokens são persistidos no localStorage com validade de 30 dias.
+
 const API_BASE = 'api/';
 
+// Retorna o token salvo no localStorage, ou null se não logado.
 function getToken() {
     return localStorage.getItem('flordosol-token');
 }
 
+// Retorna os dados do usuário logado (objeto) ou null.
 function getUser() {
     const data = localStorage.getItem('flordosol-user');
-    return data ? JSON.parse(data) : null;
+    return data ? parseJSONSafe(data) : null;
 }
 
+// Faz login via API: envia email+senha, salva token e dados do usuário.
 async function login(email, senha) {
     const res = await fetch(API_BASE + 'usuarios/login.php', {
         method: 'POST',
@@ -22,6 +29,7 @@ async function login(email, senha) {
     return data.usuario;
 }
 
+// Cadastra novo usuário via API.
 async function cadastrar(nome, email, senha) {
     const res = await fetch(API_BASE + 'usuarios/cadastrar.php', {
         method: 'POST',
@@ -33,6 +41,7 @@ async function cadastrar(nome, email, senha) {
     return data;
 }
 
+// Remove token e dados do usuário, fecha modal e atualiza UI.
 function logout() {
     localStorage.removeItem('flordosol-token');
     localStorage.removeItem('flordosol-user');
@@ -40,11 +49,13 @@ function logout() {
     updateAuthUI();
 }
 
+// Alterna visibilidade do dropdown do menu do usuário.
 function toggleUserMenu() {
     const dropdown = document.getElementById('user-dropdown');
     if (dropdown) dropdown.classList.toggle('hidden');
 }
 
+// Atualiza a navbar: mostra botão de login ou nome do usuário logado.
 function updateAuthUI() {
     const user = getUser();
     const loginBtn = document.getElementById('login-btn');
@@ -63,6 +74,7 @@ function updateAuthUI() {
     }
 }
 
+// Fecha o dropdown ao clicar fora dele.
 document.addEventListener('click', function (e) {
     const dropdown = document.getElementById('user-dropdown');
     const menu = document.getElementById('user-menu');
@@ -71,6 +83,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// Expõe funções globalmente para uso via onclick no HTML.
 window.getToken = getToken;
 window.getUser = getUser;
 window.login = login;

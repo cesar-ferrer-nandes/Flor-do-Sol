@@ -1,11 +1,13 @@
 <?php
+// ================= CADASTRO DE USUÁRIO =================
+// Cria uma nova conta de usuário.
+// Valida campos obrigatórios, email único e tamanho mínimo de senha.
+// POST /api/usuarios/cadastrar.php
+
 require_once __DIR__ . '/../config.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    json_response(['erro' => 'Método não permitido'], 405);
-}
-
-$data = json_decode(file_get_contents('php://input'), true);
+require_method('POST');
+$data = get_json_input();
 $nome = trim($data['nome'] ?? '');
 $email = trim($data['email'] ?? '');
 $senha = $data['senha'] ?? '';
@@ -22,6 +24,7 @@ if (strlen($senha) < 6) {
     json_response(['erro' => 'Senha deve ter no mínimo 6 caracteres'], 400);
 }
 
+// Verifica se email já está em uso
 $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE email = ?");
 $stmt->execute([$email]);
 if ($stmt->fetch()) {

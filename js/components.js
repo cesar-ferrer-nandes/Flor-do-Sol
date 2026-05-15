@@ -20,8 +20,9 @@ async function loadComponent(id, file) {
 // ================= INICIALIZAÇÃO =================
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Carrega navbar e footer (a ordem importa: navbar primeiro para updateCartUI)
+  // Carrega navbar, footer e modal de login (a ordem importa: navbar primeiro para updateCartUI)
   await loadComponent("navbar", "components/navbar.html");
+  await loadComponent("modal-login", "components/modal-login.html");
   await loadComponent("footer", "components/footer.html");
 
   // Re-sincroniza os badges do carrinho e favoritos agora que a navbar existe no DOM

@@ -1,7 +1,6 @@
 // ================= CONSTANTES =================
 // Número do WhatsApp, limite para frete grátis e valor padrão do frete.
 
-const WHATSAPP_NUMBER = "5511999999999";
 const FRETE_GRATIS_LIMITE = 100;
 const FRETE_VALOR_PADRAO = 15;
 
@@ -138,23 +137,24 @@ function renderizarCarrinho() {
     const p = item.personalizacao;
     const temPersonalizacao = p && (p.embalagem || p.vaso || p.fita !== "Sem fita" || p.ursoPelucia || p.mensagem || p.observacoes);
 
-    const imgSrc = item.imagem || "assets/images/placeholder.jpg";
+    const imgSrc = escapeHtml(item.imagem || "assets/images/placeholder.jpg");
+    const nomeItem = escapeHtml(item.name);
     return `
     <div class="flex items-start gap-4 border-b pb-4">
-      <img src="${imgSrc}" alt="${item.name}"
+      <img src="${imgSrc}" alt="${nomeItem}"
            class="w-20 aspect-[4/5] object-cover rounded-lg shrink-0">
       <div class="flex-1 min-w-0">
-        <h3 class="font-medium">${item.name}</h3>
+        <h3 class="font-medium">${nomeItem}</h3>
         <p class="text-sm text-gray-400">${formatarMoeda(item.price)}</p>
 
         ${temPersonalizacao ? `
         <div class="mt-2 space-y-1 text-xs text-gray-500">
-          ${p.embalagem ? `<p>🎁 ${p.embalagem}</p>` : ""}
-          ${p.vaso ? `<p>🏺 ${p.vaso}</p>` : ""}
+          ${p.embalagem ? `<p>🎁 ${escapeHtml(p.embalagem)}</p>` : ""}
+          ${p.vaso ? `<p>🏺 ${escapeHtml(p.vaso)}</p>` : ""}
           ${p.ursoPelucia ? `<p>🧸 Urso de Pelúcia</p>` : ""}
-          ${p.fita && p.fita !== "Sem fita" ? `<p>🎀 Fita: ${p.fita}</p>` : ""}
-          ${p.mensagem ? `<p>💬 "${p.mensagem}"</p>` : ""}
-          ${p.observacoes ? `<p>📝 ${p.observacoes}</p>` : ""}
+          ${p.fita && p.fita !== "Sem fita" ? `<p>🎀 Fita: ${escapeHtml(p.fita)}</p>` : ""}
+          ${p.mensagem ? `<p>💬 "${escapeHtml(p.mensagem)}"</p>` : ""}
+          ${p.observacoes ? `<p>📝 ${escapeHtml(p.observacoes)}</p>` : ""}
         </div>
         ` : ""}
 
@@ -221,6 +221,10 @@ async function salvarPedidoBackend(itens, total, frete) {
 
 function finalizarPedido() {
   if (carrinho.length === 0) return;
+  if (!getUser()) {
+    showToast("Efetue o login para continuar a sua compra", "warning");
+    return;
+  }
 
   const subtotal = carrinho.reduce((acc, item) => {
     return acc + item.price * (item.qty || 1);
