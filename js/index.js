@@ -53,5 +53,9 @@ function renderPopulares() {
   `).join("");
 }
 
-// Inicializa ao carregar a página
-document.addEventListener("DOMContentLoaded", renderPopulares);
+// Inicializa ao carregar a página (aguarda produtos carregados da API)
+window.addEventListener("produtos-carregados", renderPopulares);
+// Fallback: se produtos já estiverem carregados
+if (typeof produtos !== 'undefined' && produtos.length > 0) {
+  document.addEventListener("DOMContentLoaded", renderPopulares);
+}

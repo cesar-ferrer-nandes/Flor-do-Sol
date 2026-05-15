@@ -1,17 +1,22 @@
 // ================= CONSTANTES GLOBAIS =================
 
-// Número do WhatsApp da loja (centralizado para evitar duplicação)
-const WHATSAPP_NUMBER = "5511999999999";
+// Número do WhatsApp da loja (fallback fixo enquanto API não carrega)
+let WHATSAPP_NUMBER = "5511999999999";
+
+// Tenta carregar o número da API
+fetch('api/whatsapp.php')
+  .then(r => r.ok ? r.json() : null)
+  .then(d => { if (d && d.numero) WHATSAPP_NUMBER = d.numero; })
+  .catch(() => {});
 
 // ================= ESTADO DO CARRINHO =================
 
-// Carrega o carrinho da sessão (sessionStorage) ou inicia vazio
-// sessionStorage persiste entre páginas na mesma aba, mas é limpo ao fechar a aba
-let cart = JSON.parse(sessionStorage.getItem("flordosol-cart")) || [];
+// Carrega o carrinho do localStorage (persiste entre sessões)
+let cart = JSON.parse(localStorage.getItem("flordosol-cart")) || [];
 
-// Persiste o carrinho na sessão atual
+// Persiste o carrinho no localStorage
 function saveCart() {
-  sessionStorage.setItem("flordosol-cart", JSON.stringify(cart));
+  localStorage.setItem("flordosol-cart", JSON.stringify(cart));
 }
 
 // Adiciona um produto ao carrinho

@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Re-sincroniza os badges do carrinho e favoritos agora que a navbar existe no DOM
   const cartBadge = document.getElementById("cart-count");
   if (cartBadge) {
-    const cartData = JSON.parse(sessionStorage.getItem("flordosol-cart"));
+    const cartData = JSON.parse(localStorage.getItem("flordosol-cart"));
     cartBadge.innerText = cartData ? cartData.length : 0;
   }
 
@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     favBadge.innerText = count;
     favBadge.classList.toggle("hidden", count === 0);
   }
+
+  // Atualiza a UI de autenticação (login / nome do usuário)
+  if (window.updateAuthUI) updateAuthUI();
 
   // Scroll reveal: ativa fade-in conforme o usuário rola a página
   const observer = new IntersectionObserver((entries) => {

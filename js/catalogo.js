@@ -1,9 +1,7 @@
 // ================= DADOS DOS PRODUTOS =================
-// Fonte única de verdade para o catálogo. Cada produto tem
-// id, nome, preço, categoria, badge opcional, imagem, avaliação,
-// especificações (tamanho, embalagem) e cuidados (rega, sol, umidade).
+// Carregados da API com fallback para dados locais (offline).
 
-const produtos = [
+const PRODUTOS_FALLBACK = [
   {id:1, nome:"Orquídea Branca", preco:89.9, categoria:"plantas", badge:"Popular", imagem:"assets/images/rox.jpeg", avaliacao:5, reviews:24, tamanho:"25x35cm", embalagem:"Vaso de Cerâmica",rega:"2x por semana", sol:"Meia sombra", umidade:"60%"},
   {id:2, nome:"Samambaia Verde", preco:49.9, categoria:"plantas", imagem:"assets/images/pal.jpeg", avaliacao:4, reviews:18, tamanho:"20x30cm", embalagem:"Vaso Plástico",rega:"3x por semana", sol:"Sombra parcial", umidade:"70%"},
   {id:3, nome:"Arranjo Luxo Rosas", preco:129.9, categoria:"arranjos", badge:"Popular", imagem:"assets/images/arranjos.jpeg", avaliacao:5, reviews:42, tamanho:"40x50cm", embalagem:"Papel Kraft Premium + Fita",rega:"Diariamente", sol:"Luz indireta", umidade:"65%"},
@@ -17,6 +15,19 @@ const produtos = [
   {id:11, nome:"Vaso de Girassóis", preco:89.9, categoria:"arranjos", imagem:"assets/images/rega.png", avaliacao:4, reviews:17, tamanho:"35x45cm", embalagem:"Vaso Decorado + Fita",rega:"Diariamente", sol:"Sol direto", umidade:"50%"},
   {id:12, nome:"Kit Terrário", preco:59.9, categoria:"servicos", badge:"Novidade", imagem:"assets/images/Cuidarplanta.png", avaliacao:4, reviews:14, tamanho:"20x20cm", embalagem:"Vidro + Kit montagem",rega:"1x por semana", sol:"Luz indireta", umidade:"70%"},
 ];
+
+let produtos = [];
+
+async function carregarProdutos() {
+  try {
+    const res = await fetch('api/produtos.php');
+    if (res.ok) {
+      produtos = await res.json();
+      return;
+    }
+  } catch (e) {}
+  produtos = [...PRODUTOS_FALLBACK];
+}
 
 // ================= CONFIGURAÇÃO DE PERSONALIZAÇÃO =================
 // Opções disponíveis no modal: embalagem (simples/premium), tipo de vaso (plástico/barro),
@@ -607,7 +618,12 @@ function handleAddToCart(produto) {
 const params = new URLSearchParams(window.location.search);
 const catURL = params.get("cat");
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
+  await carregarProdutos();
+
+  // Dispara evento para informar index.js etc.
+  window.dispatchEvent(new CustomEvent('produtos-carregados', { detail: produtos }));
+
   if (catURL) {
     categoriaAtual = catURL;
     document.querySelectorAll(".tab").forEach(btn => {

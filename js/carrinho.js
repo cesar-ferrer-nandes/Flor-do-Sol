@@ -5,14 +5,14 @@ const WHATSAPP_NUMBER = "5511999999999";
 const FRETE_GRATIS_LIMITE = 100;
 const FRETE_VALOR_PADRAO = 15;
 
-// ================= ESTADO (sessionStorage) =================
-// Carrinho persiste apenas na aba atual (sessionStorage).
+// ================= ESTADO (localStorage) =================
+// Carrinho persiste entre sessões (localStorage).
 // Compatilhado com cart.js via mesma chave.
 
-let carrinho = JSON.parse(sessionStorage.getItem("flordosol-cart")) || [];
+let carrinho = JSON.parse(localStorage.getItem("flordosol-cart")) || [];
 
 function salvarCarrinho() {
-  sessionStorage.setItem("flordosol-cart", JSON.stringify(carrinho));
+  localStorage.setItem("flordosol-cart", JSON.stringify(carrinho));
 }
 
 // ================= ELEMENTOS DO DOM =================
@@ -174,7 +174,48 @@ function renderizarCarrinho() {
   atualizarResumo();
 }
 
-// ================= FINALIZAR PEDIDO (WhatsApp) =================
+// ================= SALVAR PEDIDO NO BACKEND =================
+// Se o usuário estiver logado, salva o pedido no banco via API.
+
+async function salvarPedidoBackend(itens, total, frete) {
+  const token = getToken();
+  if (!token) return;
+
+  const entrega = JSON.parse(sessionStorage.getItem("flordosol-entrega"));
+  try {
+    const res = await fetch('api/pedidos/criar.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({
+        itens: itens.map(item => ({
+          nome: item.name,
+          quantidade: item.qty || 1,
+          preco_unitario: item.price,
+          personalizacao: item.personalizacao || null,
+        })),
+        entrega: entrega || null,
+        total,
+        frete,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      // Limpa carrinho após salvar no backend
+      carrinho = [];
+      salvarCarrinho();
+      renderizarCarrinho();
+    }
+    return data;
+  } catch (err) {
+    console.warn('Erro ao salvar pedido no servidor (pedido segue via WhatsApp):', err);
+    return null;
+  }
+}
+
+// ================= FINALIZAR PEDIDO (WhatsApp + Backend) =================
 // Gera mensagem com resumo completo: itens, personalização,
 // subtotal, frete, total e endereço de entrega se preenchido.
 
@@ -187,6 +228,9 @@ function finalizarPedido() {
 
   const frete = calcularFrete(subtotal);
   const total = subtotal + frete;
+
+  // Salva no backend se logado (não bloqueia o WhatsApp)
+  salvarPedidoBackend(carrinho, total, frete);
 
   let mensagem = "Pedido Flor do Sol 🌿\n\n";
 
