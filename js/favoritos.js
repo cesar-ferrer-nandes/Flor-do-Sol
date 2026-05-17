@@ -96,24 +96,52 @@ function renderizarFavoritos() {
     info.innerText = `${favoritos.length} ${favoritos.length === 1 ? "item" : "itens"}`;
   }
 
-  grid.innerHTML = favoritos.map(p => renderProductCard(p, {
-    heartAction: 'remove',
-    heartAlwaysVisible: true,
-    buttonText: 'Encomendar Agora',
-    buttonOnClick: `comprarFavorito(${p.id})`,
-    dataAttrs: `data-favorito-id="${p.id}"`,
-    extraClass: 'favorito-card',
-  })).join("");
+  grid.innerHTML = favoritos.map(p => `
+    <div data-favorito-id="${p.id}" class="favorito-card group bg-white rounded-xl shadow-sm overflow-hidden relative transition-all duration-300 hover:shadow-lg">
+      ${p.badge ? `
+        <span class="absolute m-3 px-2 py-1 text-xs text-white rounded z-10
+          ${p.badge === 'Popular' ? 'bg-[#aea100]' : 'bg-[#1a2e1a]'}">
+          ${p.badge}
+        </span>
+      ` : ""}
+
+      <!-- Botão de coração preenchido para remover dos favoritos -->
+      <button onclick="removerFavorito(${p.id})"
+              class="absolute top-3 right-3 z-20 w-8 h-8 flex items-center justify-center bg-white/80 rounded-full hover:bg-white transition shadow-sm"
+              aria-label="Remover dos favoritos">
+        <svg class="w-5 h-5 text-[#aea100]" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </button>
+
+      <!-- Imagem do produto: clique abre modal de detalhes -->
+      <div class="overflow-hidden cursor-pointer" onclick="abrirModalPorId(${p.id})">
+        <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
+             class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-300">
+      </div>
+
+      <div class="p-4">
+        <h3 class="font-medium">${p.nome}</h3>
+        <p class="text-sm text-gray-400 capitalize">${p.categoria}</p>
+        <p class="font-bold mt-1">R$ ${p.preco.toFixed(2)}</p>
+        <div class="flex items-center gap-2 text-sm my-2">
+          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+          Disponível
+        </div>
+        <!-- Botão de ação direta: encomenda via WhatsApp -->
+        <button onclick="comprarFavorito(${p.id})"
+                class="w-full bg-[#1a2e1a] text-white py-2 rounded-full mt-2 hover:opacity-90 transition">
+          Encomendar Agora
+        </button>
+      </div>
+    </div>
+  `).join("");
 }
 
 // ================= WHATSAPP =================
 // Abre WhatsApp com mensagem personalizada para o produto selecionado.
 
 function comprarFavorito(id) {
-  if (!getUser()) {
-    showToast("Efetue o login para continuar a sua compra", "warning");
-    return;
-  }
   const produto = produtos.find(p => p.id === id);
   if (!produto) return;
   const msg = `Olá! Tenho interesse em "${produto.nome}" (R$ ${produto.preco.toFixed(2)}) — vi no meu selecionados da Flor do Sol.`;

@@ -16,13 +16,15 @@
     <div class="flex items-center gap-4">
       <!-- Favoritos: badge atualizado via favoritos.js -->
       <a href="favoritos.html" class="relative">
-        <img src="assets/icons/fav.svg" class="w-5 h-5 text-[#1a2e1a]" alt="Favoritos">
+        <svg class="w-5 h-5 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+        </svg>
         <span id="favoritos-count"
               class="absolute -top-2 -right-3 bg-[#aea100] text-white text-xs px-2 py-0.5 rounded-full hidden">0</span>
       </a>
       <!-- Carrinho: badge atualizado via cart.js -->
       <a href="carrinho.html" class="relative">
-        <img src="assets/icons/Icon_Car.svg" class="w-5 h-5" alt="Carrinho">
+        <img src="https://img.icons8.com/?size=100&id=85180&format=png&color=000000" class="w-5 h-5" alt="Carrinho">
         <span id="cart-count"
               class="absolute -top-2 -right-3 bg-[#aea100] text-white text-xs px-2 py-0.5 rounded-full">0</span>
       </a>

@@ -1,16 +1,9 @@
 <?php
-// ================= API DE PRODUTOS =================
-// Retorna a lista de produtos ou um produto específico pelo ID.
-// GET /api/produtos.php       → todos os produtos
-// GET /api/produtos.php?id=5  → produto com ID 5
-
 require_once __DIR__ . '/config.php';
 
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: 0");
-
-require_method('GET');
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    json_response(['erro' => 'Método não permitido'], 405);
+}
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 

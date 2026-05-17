@@ -1,12 +1,9 @@
 <?php
-// ================= API DO WHATSAPP =================
-// Retorna o número de WhatsApp configurado no banco de dados.
-// O frontend usa este número para abrir o link direto do pedido.
-// GET /api/whatsapp.php → {"numero": "5511999999999"}
-
 require_once __DIR__ . '/config.php';
 
-require_method('GET');
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    json_response(['erro' => 'Método não permitido'], 405);
+}
 
 $stmt = $pdo->prepare("SELECT valor FROM config WHERE chave = 'whatsapp_number'");
 $stmt->execute();

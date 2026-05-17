@@ -12,7 +12,7 @@ fetch('api/whatsapp.php')
 // ================= ESTADO DO CARRINHO =================
 
 // Carrega o carrinho do localStorage (persiste entre sessões)
-let cart = parseJSONSafe(localStorage.getItem("flordosol-cart")) || [];
+let cart = JSON.parse(localStorage.getItem("flordosol-cart")) || [];
 
 // Persiste o carrinho no localStorage
 function saveCart() {
@@ -22,10 +22,6 @@ function saveCart() {
 // Adiciona um produto ao carrinho
 // Só mescla por nome se ambos (existente e novo) NÃO tiverem personalização
 function addToCart(product) {
-  if (!getUser()) {
-    showToast("Efetue o login para continuar a sua compra", "warning");
-    return;
-  }
   const semPersonalizacao = !product.personalizacao;
   const existing = semPersonalizacao
     ? cart.find(p => p.name === product.name && !p.personalizacao)

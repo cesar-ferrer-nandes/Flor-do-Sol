@@ -20,7 +20,7 @@ let produtos = [];
 
 async function carregarProdutos() {
   try {
-    const res = await fetch('api/produtos.php?_=' + Date.now());
+    const res = await fetch('api/produtos.php');
     if (res.ok) {
       produtos = await res.json();
       return;
@@ -80,9 +80,47 @@ function render(lista) {
 
   empty.classList.add("hidden");
 
-  grid.innerHTML = lista.map(p => renderProductCard(p, {
-    fadeIn: true,
-  })).join("");
+  grid.innerHTML = lista.map(p => `
+    <div class="fade-in group bg-white rounded-xl shadow-sm overflow-hidden relative transition duration-300 cursor-pointer hover:shadow-lg">
+
+      ${p.badge ? `
+        <span class="absolute m-3 px-2 py-1 text-xs text-white rounded
+          ${p.badge === 'Popular' ? 'bg-[#aea100]' : 'bg-[#1a2e1a]'}">
+          ${p.badge}
+        </span>
+      ` : ""}
+
+      <!-- Botão de coração: aparece ao hover, alterna favorito sem re-render -->
+      <button onclick="toggleFavoritoCard(${p.id}, this)"
+              class="absolute top-3 right-3 z-20 w-8 h-8 flex items-center justify-center bg-white/80 rounded-full hover:bg-white transition-all duration-300 shadow-sm opacity-0 group-hover:opacity-100 ${isFavorito(p.id) ? 'opacity-100' : ''}"
+              aria-label="Adicionar aos favoritos">
+        <svg class="w-5 h-5 ${isFavorito(p.id) ? 'text-[#aea100]' : 'text-gray-400'}" fill="${isFavorito(p.id) ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+        </svg>
+      </button>
+
+      <div class="overflow-hidden cursor-pointer" onclick="abrirModalPorId(${p.id})">
+        <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
+             class="aspect-[4/5] w-full object-cover group-hover:scale-105 transition duration-300">
+      </div>
+
+      <div class="p-4">
+        <h3 class="font-medium">${p.nome}</h3>
+        <p class="text-sm text-gray-400 capitalize">${p.categoria}</p>
+        <p class="font-bold mt-1">R$ ${p.preco.toFixed(2)}</p>
+        <div class="flex items-center gap-2 text-sm my-2">
+          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+          Disponível
+        </div>
+        <div class="flex gap-2">
+          <button onclick="abrirModalPorId(${p.id})"
+                  class="flex-1 bg-[#1a2e1a] text-white py-2 rounded-full mt-2 hover:opacity-90 transition">
+            Ver detalhes
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join("");
 
   // Animação fade-in para novos cards.
   setTimeout(() => {
@@ -231,32 +269,23 @@ function abrirModalPorId(id) {
     </label>
   `).join("");
 
-  const nomeProd = escapeHtml(produto.nome);
-  const badgeProd = escapeHtml(produto.badge || '');
-  const categoriaProd = escapeHtml(produto.categoria);
-  const imgEsc = escapeHtml(imagemUrl);
-  const tamanhoProd = escapeHtml(produto.tamanho);
-  const regaProd = escapeHtml(produto.rega);
-  const solProd = escapeHtml(produto.sol);
-  const umidadeProd = escapeHtml(produto.umidade);
-
   modalBody.innerHTML = `
     <div class="relative">
       <div class="aspect-[4/5] bg-gray-100 rounded-2xl overflow-hidden relative group">
-        <img src="${imgEsc}" alt="${nomeProd}" loading="lazy"
+        <img src="${imagemUrl}" alt="${produto.nome}" loading="lazy"
              class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
       </div>
       ${produto.badge ? `
         <span class="absolute top-4 left-4 px-3 py-1 text-sm text-white rounded-full
           ${produto.badge === 'Popular' ? 'bg-[#aea100]' : 'bg-[#1a2e1a]'}">
-          ${badgeProd}
+          ${produto.badge}
         </span>
       ` : ''}
     </div>
 
     <div class="flex flex-col gap-6">
       <div>
-        <h1 class="text-3xl lg:text-4xl font-playfair text-[#1a2e1a] mb-2">${nomeProd}</h1>
+        <h1 class="text-3xl lg:text-4xl font-playfair text-[#1a2e1a] mb-2">${produto.nome}</h1>
         <div class="flex items-center gap-2">
           <div class="flex text-[#aea100]">
             ${Array(5).fill(0).map((_, i) => `
@@ -272,7 +301,7 @@ function abrirModalPorId(id) {
       <div>
         <p class="text-4xl font-bold text-[#1a2e1a]">R$ ${produto.preco.toFixed(2)}</p>
         <div class="flex gap-2 mt-3">
-          <span class="px-3 py-1 text-sm border border-[#1a2e1a] rounded-full capitalize">${categoriaProd}</span>
+          <span class="px-3 py-1 text-sm border border-[#1a2e1a] rounded-full capitalize">${produto.categoria}</span>
           <span class="px-3 py-1 text-sm bg-green-100 text-green-700 rounded-full flex items-center gap-1">
             <span class="w-2 h-2 bg-green-500 rounded-full"></span>
             Disponível
@@ -291,7 +320,7 @@ function abrirModalPorId(id) {
             </div>
             <div>
               <p class="text-xs text-gray-500">Tamanho</p>
-              <p class="font-medium">${tamanhoProd}</p>
+              <p class="font-medium">${produto.tamanho}</p>
             </div>
           </div>
           <div class="flex items-center gap-3">
@@ -394,21 +423,21 @@ function abrirModalPorId(id) {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/>
             </svg>
             <p class="text-xs text-gray-500">Rega</p>
-            <p class="text-sm font-medium">${regaProd}</p>
+            <p class="text-sm font-medium">${produto.rega}</p>
           </div>
           <div>
             <svg class="w-5 h-5 mx-auto mb-1 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
             </svg>
             <p class="text-xs text-gray-500">Sol</p>
-            <p class="text-sm font-medium">${solProd}</p>
+            <p class="text-sm font-medium">${produto.sol}</p>
           </div>
           <div>
             <svg class="w-5 h-5 mx-auto mb-1 text-[#1a2e1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
             <p class="text-xs text-gray-500">Umidade</p>
-            <p class="text-sm font-medium">${umidadeProd}</p>
+            <p class="text-sm font-medium">${produto.umidade}</p>
           </div>
         </div>
       </div>
@@ -503,10 +532,6 @@ function adicionarAoCarrinhoModal() {
 
 function comprarViaWhatsAppModal() {
   if (!produtoAtual) return;
-  if (!getUser()) {
-    showToast("Efetue o login para continuar a sua compra", "warning");
-    return;
-  }
 
   const personalizacao = obterDadosPersonalizacao();
   const adicional = calcularAdicionais();

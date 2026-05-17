@@ -107,14 +107,6 @@ button:active {
   animation: slideIn 0.3s ease-out;
 }
 
-.toast-warning {
-  background: #b8860b;
-}
-
-.toast-error {
-  background: #c0392b;
-}
-
 .toast.removing {
   animation: slideOut 0.3s ease-in forwards;
 }
@@ -142,39 +134,12 @@ button:active {
 }
 
 /* Utilitários para usar Playfair Display em elementos específicos */
-.font-playfair, .font-heading {
+.font-playfair {
   font-family: 'Playfair Display', serif;
 }
 
-.input-field {
-  @apply w-full border-2 border-gray-200 rounded-full px-5 py-3 outline-none text-sm transition;
-}
-
-.input-field:focus {
-  border-color: #1a2e1a;
-  box-shadow: 0 0 0 3px rgba(26, 46, 26, 0.08);
-}
-
-.btn-primary {
-  @apply bg-[#1a2e1a] text-white py-3 rounded-full font-medium text-sm transition;
-  border: 2px solid #1a2e1a;
-}
-
-.btn-primary:hover {
-  background-color: #152215;
-  box-shadow: 0 2px 8px rgba(26, 46, 26, 0.25);
-}
-
-/* ================= AUTH MODAL ================= */
-/* Abas pill-style do modal de login/cadastro */
-
-.tab-auth.active {
-  background-color: #1a2e1a;
-  color: white;
-}
-
-.tab-auth:not(.active) {
-  background-color: transparent;
+.font-heading {
+  font-family: 'Playfair Display', serif;
 }
 
 /* ================= HERO SLIDE-IN ================= */
@@ -198,6 +163,13 @@ button:active {
 
 .hero-slide-in-delay-3 {
   animation-delay: 0.4s;
+}
+
+@keyframes slideInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideInLeft {
